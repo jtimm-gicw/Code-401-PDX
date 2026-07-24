@@ -28,7 +28,7 @@ You've been provided a working demo server by your instructor. Get this code wor
 1. Create the correct content in the files
 1. Test your server -- `npm test`
    - You should see 100% of tests passing
-1. Start your server -- `nodemon`
+1. Start your server -- `nodemon` or **`node server.js`**
    - confirm that the server is working by performing a get request from the browser.  i.e. visit `http://localhost:3000/endpoint`
 
 ## Deploy!
