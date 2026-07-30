@@ -6,10 +6,23 @@ Express Server Mechanics: Routing, Middleware, and Approaches to Testing
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
-- Code Review
-- Warmup question
-- Lecture
+- Reading Assignment
+  - Discussion
+- Demo
+  - Insert/Shift Arrays
+  - Adding routes
+- Code Challenge
+  - Whiteboarding
+    - Insert and shift an array in middle at index
+- Lab Prep
+  - Dynamic API Phase 1
+
+### Classwork
+
+- Code Challenge
+- Labwork
+  - Lab 2
+- Learning Journal
 
 ## Learning Objectives
 

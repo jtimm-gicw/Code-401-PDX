@@ -6,10 +6,24 @@ Express servers can quickly get big and out of control if you build them in one 
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
-- Code Review
-- Warmup question
-- Lecture
+- Reading Assignment
+  - Discussion
+- Demo
+  - Binary Search
+  - REST APIs
+- Code Challenge
+  - Whiteboarding
+    - Binary search in a sorted 1D array
+- Lab Prep
+  - Dynamic API Phase 2
+
+### Classwork
+
+- Code Challenge
+- Labwork
+  - Lab 3
+- Career: Class 03: Workshop #1 Prep - Networking Gameplan
+- Learning Journal
 
 ## Learning Objectives
 
@@ -121,9 +135,9 @@ Sequelize has a partner tool: `sequelize-cli` that can be used to configure your
 
 1. Once your configuration file has been created, you can add your database environment details:
 
-    1. Modify the username and database fields. 
-    1. Ensure `postgres` is specified as the dialect in the `config/config.json`.  
-    1. Your password should not be necessary unless this security feature has been enabled; setup did not instruct you to enable this feature. 
+    1. Modify the username and database fields.
+    1. Ensure `postgres` is specified as the dialect in the `config/config.json`.
+    1. Your password should not be necessary unless this security feature has been enabled; setup did not instruct you to enable this feature.
     1. This configuration will only be used for development.  You will test with `sqlite` and your deployed database will be self managed.
     1. The test and production objects do not need to be modified.
 

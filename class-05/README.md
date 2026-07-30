@@ -2,7 +2,17 @@
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading Assignment
+  - Discussion
+- Demo
+  - Linked Listss
+
+### Classwork
+
+- Code Challenge
+- Career: Class 05: Partner Power Hour - Report #1
+- Career: Class 05: Workshop #1: Completed Resume
+- Learning Journal
 
 ## Learning Objectives
 

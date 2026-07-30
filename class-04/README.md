@@ -5,10 +5,21 @@
 Data Modeling: The process of taking a real world or conceptual idea and encoding it into Javascript's built in data types. Models typically describe the physical characteristics (properties) and behaviors (methods) of an object in a way that lets you write code that uses your models to problem solve and create applications.
 
 ## Class Outline
-<!-- To Be Completed By Instructor -->
-- Code Review
-- Warmup question
-- Lecture
+
+- Reading Assignment
+  - Discussion
+- Demo
+  - Data Modeling
+- Code Challenge
+- Lab Prep
+  - Dynamic API Phase 3
+
+### Classwork
+
+- Career: Class 04: Workshop #1 Prep - Resume
+- Code Challenge
+  - Mock Interview Questions
+- Learning Journal
 
 ## Learning Objectives
 

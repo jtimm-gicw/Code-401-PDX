@@ -6,9 +6,26 @@ Application development in the Node.js ecosystem, including the writing of modul
 
 ## Class Outline
 
-- Kick-off and Introductions
-- Course Overview
-- Setup Questions
+- 401 Overview
+  - Modules & Grades
+  - Pre-work
+- Reading Assignment
+  - Discussion
+- Intro to Technical Whiteboarding
+  - Explanations
+  - Example
+  - Sign up & Use Figma
+- Code Challenge
+- Quick Computer Setup
+  - Install some programs
+- Lab Prep
+  - Create a basic server
+
+### Classwork
+
+- Code Challenge
+- Labwork
+- Learning Journal
 
 ## Learning Objectives
 

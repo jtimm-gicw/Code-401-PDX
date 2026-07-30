@@ -171,3 +171,228 @@ Upon satisfactory completion of this course, a student should be able to:
 | 48 | MVP |
 | 49 | Final Polish, Presentation Practice |
 | 50 | Live Project Presentations |
+
+# Code 401 Grading Breakdown
+
+Understanding how your grade is calculated will help you prioritize your time and stay on track throughout the course.
+
+---
+
+## Overall Grading Breakdown
+
+| Coursework | Weight |
+|------------|:------:|
+| 📚 Prep Work | **5%** |
+| 📖 Readings & Reflections | **5%** |
+| 💼 Career Coaching | **10%** |
+| 🙋 Attendance, Participation & Feedback | **10%** |
+| ⭐ Professionalism: Competencies & Proficiencies | **10%** |
+| 💻 Labs & Code Challenges | **25%** |
+| 🚀 Projects | **25%** |
+| 📝 Final Exam | **10%** |
+| **Total** | **100%** |
+
+---
+
+# Grade Categories Explained
+
+## 📚 Prep Work (5%)
+
+Prep work helps prepare you for class before instruction begins.
+
+Examples include:
+
+- Reviewing assigned materials
+- Watching instructional videos
+- Completing setup instructions
+- Installing required software
+- Reading documentation
+
+**Goal:** Come to class prepared and ready to participate.
+
+---
+
+## 📖 Readings & Reflections (5%)
+
+These assignments reinforce what you learn during class.
+
+Examples include:
+
+- Reading technical articles
+- Answering reflection questions
+- Summarizing key concepts
+- Demonstrating understanding of new topics
+
+**Goal:** Build a deeper understanding of software development concepts.
+
+---
+
+## 💼 Career Coaching (10%)
+
+Technical skills are only part of becoming a software developer.
+
+Career coaching activities may include:
+
+- Resume development
+- LinkedIn updates
+- Mock interviews
+- Personal pitch practice
+- Networking activities
+- Job search preparation
+
+**Goal:** Prepare for a successful job search after graduation.
+
+---
+
+## 🙋 Attendance, Participation & Feedback (10%)
+
+Being present and engaged is an important part of learning.
+
+This includes:
+
+- Attending class
+- Participating in discussions
+- Asking questions
+- Helping classmates
+- Completing feedback surveys
+- Being an active member of your team
+
+**Goal:** Learn by participating, not just observing.
+
+---
+
+## ⭐ Professionalism: Competencies & Proficiencies (10%)
+
+Professional developers are evaluated on more than just writing code.
+
+Examples include:
+
+- Communication
+- Teamwork
+- Time management
+- Problem solving
+- Accountability
+- Collaboration
+- Growth mindset
+- Professional conduct
+
+**Goal:** Develop the habits expected in a professional software development environment.
+
+---
+
+## 💻 Labs & Code Challenges (25%)
+
+This category represents one of the largest portions of your grade.
+
+Assignments include:
+
+- Daily labs
+- Coding challenges
+- Data structures
+- Algorithms
+- Individual programming assignments
+
+Students are expected to:
+
+- Follow assignment requirements
+- Write clean, organized code
+- Submit work on time
+- Test their code
+- Document their solutions
+
+**Goal:** Practice programming through consistent hands-on experience.
+
+---
+
+## 🚀 Projects (25%)
+
+Projects allow you to apply everything you've learned.
+
+Projects often include:
+
+- Team collaboration
+- Agile development
+- Git workflow
+- Planning
+- Documentation
+- Presentations
+- Deployments
+
+Projects are completed throughout the course, including:
+
+- Midterm Project
+- Capstone Project
+
+**Goal:** Build real-world applications using professional development practices.
+
+---
+
+## 📝 Final Exam (10%)
+
+The final exam measures your understanding of the concepts covered throughout the course.
+
+Topics may include:
+
+- JavaScript
+- Node.js
+- Express
+- React
+- Databases
+- Authentication
+- Testing
+- APIs
+- Software Engineering Best Practices
+
+**Goal:** Demonstrate mastery of the core learning objectives from Code 401.
+
+---
+
+# Visual Breakdown
+
+```text
+Labs & Code Challenges     █████████████████████████ 25%
+
+Projects                   █████████████████████████ 25%
+
+Career Coaching            ██████████              10%
+
+Attendance & Participation ██████████              10%
+
+Professionalism            ██████████              10%
+
+Final Exam                 ██████████              10%
+
+Prep Work                  █████                   5%
+
+Readings & Reflections     █████                   5%
+```
+
+---
+
+# Tips for Success
+
+✅ Complete prep work before class.
+
+✅ Stay current with readings and reflections.
+
+✅ Attend every class and actively participate.
+
+✅ Ask questions when you're stuck.
+
+✅ Submit labs and code challenges on time.
+
+✅ Contribute to your team during projects.
+
+✅ Practice technical interview questions regularly.
+
+✅ Treat every assignment like a professional software developer.
+
+---
+
+# Key Takeaways
+
+- **Labs & Code Challenges (25%)** and **Projects (25%)** make up **50%** of your overall grade.
+- Professional behaviors—including attendance, participation, teamwork, and communication—account for **20%** of your grade.
+- Career coaching activities are an important part of preparing for employment and contribute **10%** of your final grade.
+- Small assignments like prep work and readings may have lower percentages individually, but together they account for **10%** of your course grade.
+- Every assignment contributes toward your overall success, so staying consistent throughout the course is the best strategy.

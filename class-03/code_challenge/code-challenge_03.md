@@ -59,6 +59,7 @@ Instead of checking every element one at a time, Binary Search repeatedly:
 Because it cuts the search space in half each time, Binary Search runs in **O(log n)** time.
 
 ---
+![binary-search](binary-search.png)
 
 # 📚 Resources
 
