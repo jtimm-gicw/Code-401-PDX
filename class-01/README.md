@@ -6,22 +6,36 @@ Application development in the Node.js ecosystem, including the writing of modul
 
 ## Class Outline
 
+### Part 1
+
 - 401 Overview
   - Modules & Grades
   - Pre-work
-- Reading Assignment
-  - Discussion
+- Clone 401 Class Repo
+- Accept 401 Google Classroom Invite
+- Quick Computer Setup
+  - Install some programs
 - Intro to Technical Whiteboarding
   - Explanations
   - Example
   - Sign up & Use Figma
+
+#### Classwork
+
+- Pre-work Assignments
+
+### Part 2
+
+- Reading Assignment
+  - Discussion
 - Code Challenge
-- Quick Computer Setup
-  - Install some programs
+  - ReverseArray
+- Demo
+  - server.js from scratch
 - Lab Prep
   - Create a basic server
 
-### Classwork
+#### Classwork
 
 - Code Challenge
 - Labwork
