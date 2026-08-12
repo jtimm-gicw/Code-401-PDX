@@ -46,7 +46,7 @@ If there are:
 
 The more houses there are, the more work you do.
 
-Big-O describes **how the amount of work grows** as the number of houses (or data) grows.
+*Big-O* describes **how the amount of work grows** as the number of houses (or data) grows.
 
 ---
 
@@ -54,7 +54,7 @@ Big-O describes **how the amount of work grows** as the number of houses (or dat
 
 You'll see this everywhere:
 
-```
+```text
 O(n)
 ```
 
@@ -62,8 +62,9 @@ The **n** simply means:
 
 > **The amount of data.**
 
-Examples:
+*Examples:*
 
+- number of elements in an array
 - number of students
 - number of books
 - number of numbers in an array
@@ -145,7 +146,7 @@ Your backpack is like your computer's memory.
 
 ---
 
-## Example
+*Example*
 
 Suppose you make a new list.
 
@@ -220,7 +221,7 @@ You only do **one thing.**
 
 ---
 
-Example
+*Example*
 
 ```
 Return the first item.
@@ -234,17 +235,17 @@ You never look at the rest.
 
 Always one operation.
 
-✅ Time
+**✅ Time**
 
 ```
 O(1)
 ```
 
-Memory?
+*Memory?*
 
 No extra storage.
 
-✅ Space
+**✅ Space**
 
 ```
 O(1)
@@ -254,7 +255,7 @@ O(1)
 
 ## Easy Way to Recognize O(1)
 
-Ask yourself:
+**Ask yourself:**
 
 > "Am I only touching one thing?"
 
@@ -276,9 +277,9 @@ One operation for each item.
 
 ---
 
-Example
+*Example*
 
-```
+```text
 Print every student.
 ```
 
@@ -291,13 +292,13 @@ If students double...
 
 The work doubles.
 
-```
+```text
 10 students
 
 10 prints
 ```
 
-```
+```text
 100 students
 
 100 prints
@@ -305,17 +306,17 @@ The work doubles.
 
 ---
 
-Time
+**Time**
 
-```
+```text
 O(n)
 ```
 
-Memory
+**Memory**
 
 No extra list.
 
-```
+```text
 O(1)
 ```
 
@@ -325,9 +326,9 @@ O(1)
 
 Look for:
 
-✅ One loop
+**✅ One loop**
 
-```
+```text
 for
 
 while
@@ -339,7 +340,7 @@ forEach
 
 One loop usually means:
 
-```
+```text
 O(n)
 ```
 
@@ -351,11 +352,11 @@ This is one students often miss.
 
 ---
 
-Example
+*Example*
 
 Every student shakes hands with every other student.
 
-```
+```text
 Student A → everyone
 
 Student B → everyone
@@ -367,7 +368,7 @@ Everyone compares with everyone.
 
 ---
 
-Code
+*Code*
 
 ```javascript
 for student
@@ -378,11 +379,9 @@ Nested loops.
 
 ---
 
-If there are
+If there are...10 students
 
-10 students
-
-```
+```text
 10 × 10
 
 100 operations
@@ -390,7 +389,7 @@ If there are
 
 100 students
 
-```
+```text
 100 × 100
 
 10,000 operations
@@ -400,19 +399,19 @@ Very expensive!
 
 ---
 
-Time
+**Time**
 
-```
+```text
 O(n²)
 ```
 
 ---
 
-Memory
+**Memory**
 
 Usually
 
-```
+```text
 O(1)
 ```
 
@@ -422,7 +421,7 @@ O(1)
 
 Look for:
 
-```
+```text
 Loop
 
 inside another loop
@@ -430,7 +429,7 @@ inside another loop
 
 Nested loops almost always mean:
 
-```
+```text
 O(n²)
 ```
 
@@ -470,13 +469,13 @@ Searching gets smaller and smaller.
 
 That's
 
-```
+```text
 O(log n)
 ```
 
 ---
 
-Common example
+*Common example*
 
 Binary Search
 
@@ -484,13 +483,13 @@ Binary Search
 
 ## Easy Way to Recognize O(log n)
 
-Ask:
+**Ask:**
 
 > "Am I cutting the problem in half each time?"
 
-If yes...
+If **yes**...
 
-```
+```text
 O(log n)
 ```
 
@@ -500,21 +499,21 @@ O(log n)
 
 This appears in sorting algorithms.
 
-Imagine:
+*Imagine:*
 
 You still visit everything...
 
-BUT...
+**BUT...**
 
 You also keep splitting the work in half.
 
 This is much better than
 
-```
+```text
 O(n²)
 ```
 
-Examples:
+*Examples:*
 
 - Merge Sort
 - Quick Sort (average)
@@ -525,7 +524,7 @@ Examples:
 
 This grows VERY fast.
 
-Imagine:
+*Imagine:*
 
 Every choice creates two more choices.
 
@@ -541,13 +540,9 @@ This is even worse.
 
 Imagine every student can stand in every possible order.
 
-Five students already have
+Five students already have 120 arrangements.
 
-120 arrangements.
-
-Ten students have over
-
-3.6 million arrangements.
+Ten students have over 3.6 million arrangements.
 
 This becomes impossible quickly.
 
@@ -557,13 +552,13 @@ This becomes impossible quickly.
 
 | You See... | Usually Means |
 |------------|---------------|
-| One line | O(1) |
-| One loop | O(n) |
-| Two nested loops | O(n²) |
-| Divide by 2 each step | O(log n) |
-| Sorting (Merge Sort) | O(n log n) |
-| Every possibility | O(2ⁿ) |
-| Every arrangement | O(n!) |
+| One line | `O(1)` |
+| One loop | `O(n)` |
+| Two nested loops | `O(n²)` |
+| Divide by 2 each step | `O(log n)` |
+| Sorting (Merge Sort) | `O(n log n)` |
+| Every possibility | `O(2ⁿ)` |
+| Every arrangement | `O(n!)` |
 
 ---
 
@@ -602,9 +597,9 @@ for (let number of numbers)
 }
 ```
 
-Time?
+**Time?**
 
-Why?
+*Why?*
 
 ---
 
@@ -620,9 +615,9 @@ for (let i=0;i<n;i++)
 }
 ```
 
-Time?
+**Time?**
 
-Why?
+*Why?*
 
 ---
 
@@ -637,11 +632,11 @@ for (let number of numbers)
 }
 ```
 
-Time?
+**Time?**
 
-Space?
+**Space?**
 
-Why?
+*Why?*
 
 ---
 
@@ -649,9 +644,9 @@ Why?
 
 You repeatedly divide the search area in half until one item remains.
 
-Time?
+**Time?**
 
-Why?
+*Why?*
 
 ---
 
@@ -668,11 +663,11 @@ for (let number of numbers)
 return total;
 ```
 
-Time?
+**Time?**
 
-Space?
+**Space?**
 
-Why?
+*Why?*
 
 ---
 
@@ -691,11 +686,11 @@ for (let number of numbers)
 }
 ```
 
-Time?
+**Time?**
 
-Why?
+*Why?*
 
-(Hint: Think about the **worst case**.)
+(*Hint:* Think about the **worst case**.)
 
 ---
 
@@ -710,11 +705,11 @@ for (let word of words)
 }
 ```
 
-Time?
+**Time?**
 
-Space?
+**Space?**
 
-Why?
+*Why?*
 
 ---
 
@@ -724,13 +719,13 @@ Why?
 
 ## Problem 1
 
-Time
+**Time**
 
-```
+```text
 O(1)
 ```
 
-Reason:
+*Reason:*
 
 Only one item is accessed.
 
@@ -738,13 +733,13 @@ Only one item is accessed.
 
 ## Problem 2
 
-Time
+**Time**
 
-```
+```text
 O(n)
 ```
 
-Reason:
+*Reason:*
 
 One loop visits every item once.
 
@@ -752,13 +747,13 @@ One loop visits every item once.
 
 ## Problem 3
 
-Time
+**Time**
 
-```
+```text
 O(n²)
 ```
 
-Reason:
+*Reason:*
 
 A loop inside another loop.
 
@@ -768,23 +763,23 @@ Every item compares with every item.
 
 ## Problem 4
 
-Time
+**Time**
 
-```
+```text
 O(n)
 ```
 
-Reason:
+*Reason:*
 
 One pass through the list.
 
-Space
+**Space**
 
-```
+```text
 O(n)
 ```
 
-Reason:
+*Reason:*
 
 A whole new array is created.
 
@@ -792,13 +787,13 @@ A whole new array is created.
 
 ## Problem 5
 
-Time
+**Time**
 
-```
+```text
 O(log n)
 ```
 
-Reason:
+*Reason:*
 
 The problem gets cut in half each step.
 
@@ -806,23 +801,23 @@ The problem gets cut in half each step.
 
 ## Problem 6
 
-Time
+**Time**
 
-```
+```text
 O(n)
 ```
 
-Reason:
+*Reason:*
 
 Every number is added once.
 
-Space
+**Space**
 
-```
+```text
 O(1)
 ```
 
-Reason:
+*Reason:*
 
 Only one variable (`total`) is used regardless of input size.
 
@@ -830,13 +825,13 @@ Only one variable (`total`) is used regardless of input size.
 
 ## Problem 7
 
-Time
+**Time**
 
-```
+```text
 O(n)
 ```
 
-Reason:
+*Reason:*
 
 Although the loop *might* stop early, Big-O measures the **worst case**. If the target is the last item (or not present), every element must be checked.
 
@@ -844,23 +839,23 @@ Although the loop *might* stop early, Big-O measures the **worst case**. If the 
 
 ## Problem 8
 
-Time
+**Time**
 
-```
+```text
 O(n)
 ```
 
-Reason:
+*Reason:*
 
 Each word is processed one time.
 
-Space
+**Space**
 
-```
+```text
 O(n)
 ```
 
-Reason:
+*Reason:*
 
 A new dictionary (hash map) stores every word, so memory grows with the number of words.
 
