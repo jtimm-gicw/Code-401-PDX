@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Linked List Insertion Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #172554, #2563eb);
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      max-width: 750px;
+      margin: auto;
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    main {
+      width: min(1100px, 92%);
+      margin: 35px auto 60px;
+    }
+
+    section {
+      background: white;
+      margin-bottom: 25px;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    h2 {
+      color: #1d4ed8;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #334155;
+    }
+
+    code {
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+
+    .definition {
+      border-left: 5px solid #2563eb;
+      background: #eff6ff;
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .list-visual {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+
+    .node {
+      background: #dbeafe;
+      border: 2px solid #3b82f6;
+      padding: 12px 18px;
+      border-radius: 10px;
+      min-width: 55px;
+      text-align: center;
+    }
+
+    .arrow {
+      color: #64748b;
+      font-size: 1.4rem;
+    }
+
+    .method {
+      border: 1px solid #dbe4f0;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 18px;
+    }
+
+    .method h3 {
+      margin-top: 0;
+    }
+
+    .signature {
+      display: inline-block;
+      background: #111827;
+      color: #f9fafb;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: Consolas, monospace;
+      margin-bottom: 10px;
+    }
+
+    .example {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+      overflow-x: auto;
+    }
+
+    pre {
+      margin: 0;
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .tip {
+      background: #fefce8;
+      border-left: 5px solid #eab308;
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    .comparison {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    .comparison th,
+    .comparison td {
+      border: 1px solid #dbe4f0;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .comparison th {
+      background: #eff6ff;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Linked List Insertion in JavaScript</h1>
+    <p>
+      A beginner-friendly demonstration of nodes, links, and the
+      <strong>append</strong>, <strong>insert before</strong>, and
+      <strong>insert after</strong> operations.
+    </p>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>What Is a Linked List?</h2>
+
+      <div class="definition">
+        <strong>Definition:</strong>
+        A linked list is a data structure made of individual objects called
+        <strong>nodes</strong>. Each node stores a value and a reference to
+        the next node.
+      </div>
+
+      <p>
+        Think of a linked list like a chain. Each link in the chain knows
+        where the next link is.
+      </p>
+
+      <div class="list-visual">
+        <span>head</span>
+        <span class="arrow">→</span>
+        <span class="node">1</span>
+        <span class="arrow">→</span>
+        <span class="node">3</span>
+        <span class="arrow">→</span>
+        <span class="node">2</span>
+        <span class="arrow">→</span>
+        <span>X</span>
+      </div>
+
+      <p>
+        The <strong>head</strong> points to the first node. Each node has a
+        <code>next</code> property that points to the next node.
+        <strong>X</strong> represents <code>null</code>, meaning there is
+        no next node.
+      </p>
+    </section>
+
+    <section>
+      <h2>What Is a Node?</h2>
+
+      <p>
+        A node is a simple object containing two important pieces of
+        information:
+      </p>
+
+      <ul>
+        <li><strong>value</strong> — the data stored in the node.</li>
+        <li><strong>next</strong> — a reference to the next node.</li>
+      </ul>
+
+      <div class="example">
+<pre>
+const node = {
+  value: 5,
+  next: null
+};
+</pre>
+      </div>
+
+      <p>
+        In our JavaScript file, we create nodes with a <code>Node</code>
+        class so we can easily create as many nodes as we need.
+      </p>
+    </section>
+
+    <section>
+      <h2>Linked List Insertion</h2>
+
+      <p>
+        <strong>Insertion</strong> means adding a new node to an existing
+        linked list.
+      </p>
+
+      <p>
+        There are three insertion operations in this demonstration:
+      </p>
+
+      <table class="comparison">
+        <tr>
+          <th>Method</th>
+          <th>What it does</th>
+        </tr>
+        <tr>
+          <td><code>append()</code></td>
+          <td>Adds a node to the end of the list.</td>
+        </tr>
+        <tr>
+          <td><code>insertBefore()</code></td>
+          <td>Adds a node immediately before the first matching value.</td>
+        </tr>
+        <tr>
+          <td><code>insertAfter()</code></td>
+          <td>Adds a node immediately after the first matching value.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>1. Append</h2>
+
+      <div class="method">
+        <div class="signature">append(value)</div>
+
+        <p>
+          <code>append()</code> adds a new node to the end of the linked list.
+        </p>
+
+        <h3>Example</h3>
+
+        <div class="example">
+<pre>
+Before:
+
+head → {1} → {3} → {2} → X
+
+append(5)
+
+After:
+
+head → {1} → {3} → {2} → {5} → X
+</pre>
+        </div>
+
+        <p>
+          If the list is empty, the new node becomes the
+          <code>head</code>.
+        </p>
+
+        <div class="example">
+<pre>
+Before:
+
+head → X
+
+append(1)
+
+After:
+
+head → {1} → X
+</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Insert Before</h2>
+
+      <div class="method">
+        <div class="signature">insertBefore(value, newValue)</div>
+
+        <p>
+          <code>insertBefore()</code> searches for the first node containing
+          the specified value and places the new node immediately before it.
+        </p>
+
+        <div class="example">
+<pre>
+Before:
+
+head → {1} → {3} → {2} → X
+
+insertBefore(3, 5)
+
+After:
+
+head → {1} → {5} → {3} → {2} → X
+</pre>
+        </div>
+
+        <h3>Why is this method a little tricky?</h3>
+
+        <p>
+          To insert a node before another node, we need to change the
+          <code>next</code> reference of the node that comes before the
+          target.
+        </p>
+
+        <div class="example">
+<pre>
+Before:
+
+{1} → {3}
+
+After:
+
+{1} → {5} → {3}
+</pre>
+        </div>
+
+        <p>
+          If the target is the head, we handle it as a special case because
+          the new node must become the new head.
+        </p>
+
+        <div class="tip">
+          <strong>Important:</strong>
+          If the target value is not found, the list does not change.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Insert After</h2>
+
+      <div class="method">
+        <div class="signature">insertAfter(value, newValue)</div>
+
+        <p>
+          <code>insertAfter()</code> searches for the first node containing
+          the specified value and places the new node immediately after it.
+        </p>
+
+        <div class="example">
+<pre>
+Before:
+
+head → {1} → {3} → {2} → X
+
+insertAfter(3, 5)
+
+After:
+
+head → {1} → {3} → {5} → {2} → X
+</pre>
+        </div>
+
+        <h3>How does it work?</h3>
+
+        <p>
+          First, the new node points to the node that originally came after
+          the target. Then the target node points to the new node.
+        </p>
+
+        <div class="example">
+<pre>
+Before:
+
+{3} → {2}
+
+Step 1:
+
+{3} → {5} → {2}
+
+Step 2:
+
+The links are now correct.
+</pre>
+        </div>
+
+        <div class="tip">
+          <strong>Important:</strong>
+          If the target value is not found, the list does not change.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What Happens with Duplicate Values?</h2>
+
+      <p>
+        The feature tasks specify that insertion should happen around the
+        <strong>first node</strong> that contains the target value.
+      </p>
+
+      <div class="example">
+<pre>
+Starting list:
+
+head → {1} → {2} → {2} → X
+
+insertBefore(2, 5)
+
+Result:
+
+head → {1} → {5} → {2} → {2} → X
+</pre>
+      </div>
+
+      <p>
+        Only the first <code>2</code> is used as the target.
+      </p>
+
+      <div class="example">
+<pre>
+Starting list:
+
+head → {1} → {2} → {2} → X
+
+insertAfter(2, 5)
+
+Result:
+
+head → {1} → {2} → {5} → {2} → X
+</pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Most Important Idea</h2>
+
+      <p>
+        Linked list insertion is primarily about changing
+        <strong>references</strong>.
+      </p>
+
+      <div class="list-visual">
+        <span class="node">A</span>
+        <span class="arrow">→</span>
+        <span class="node">B</span>
+      </div>
+
+      <p>
+        If we insert <strong>X</strong> between A and B:
+      </p>
+
+      <div class="list-visual">
+        <span class="node">A</span>
+        <span class="arrow">→</span>
+        <span class="node">X</span>
+        <span class="arrow">→</span>
+        <span class="node">B</span>
+      </div>
+
+      <p>
+        We do not need to move every other node. We change which node points
+        to which node.
+      </p>
+
+      <div class="tip">
+        <strong>Student tip:</strong>
+        When learning linked lists, draw the nodes and arrows on paper.
+        Think about which <code>next</code> references need to change before
+        writing the JavaScript.
+      </div>
+    </section>
+
+    <section>
+      <h2>Try the Demo</h2>
+
+      <p>
+        Open the browser's developer console to see the JavaScript examples
+        run. In Chrome or Edge, press <strong>F12</strong>, select
+        <strong>Console</strong>, and reload this page.
+      </p>
+
+      <div class="example">
+<pre>
+append(1)
+append(3)
+append(2)
+
+head → {1} → {3} → {2} → X
+
+insertBefore(3, 5)
+
+head → {1} → {5} → {3} → {2} → X
+
+insertAfter(3, 7)
+
+head → {1} → {5} → {3} → {7} → {2} → X
+</pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    JavaScript Linked List Insertion Demo • Beginner Coding Exercise
+  </footer>
+
+  <script src="linked-list.js"></script>
+</body>
+</html>

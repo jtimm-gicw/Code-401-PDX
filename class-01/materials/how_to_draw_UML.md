@@ -79,7 +79,7 @@ Ask yourself:
 
 Example:
 
-```
+```text
 User
 ```
 
@@ -101,7 +101,7 @@ Examples:
 
 Example:
 
-```
+```text
 User
    ↓
 React Frontend
@@ -122,7 +122,7 @@ Examples:
 
 Example:
 
-```
+```text
 User
    ↓
 React Frontend
@@ -144,7 +144,7 @@ Examples:
 
 Example:
 
-```
+```text
 User
    ↓
 React Frontend

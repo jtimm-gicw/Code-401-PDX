@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Reverse Array - JavaScript Code Challenge</title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       HEADER
+       ===================================================== */
+
+    header {
+      background: linear-gradient(
+        135deg,
+        #312e81,
+        #4f46e5,
+        #7c3aed
+      );
+
+      color: white;
+
+      padding: 55px 20px;
+
+      text-align: center;
+    }
+
+
+    header h1 {
+      font-size: 2.7rem;
+
+      margin: 0 0 10px;
+    }
+
+
+    header p {
+      max-width: 750px;
+
+      margin: auto;
+
+      font-size: 1.15rem;
+    }
+
+
+    /* =====================================================
+       MAIN CONTENT
+       ===================================================== */
+
+    main {
+      width: min(1100px, 92%);
+
+      margin: 35px auto 60px;
+    }
+
+
+    section {
+      background: white;
+
+      padding: 30px;
+
+      margin-bottom: 25px;
+
+      border-radius: 15px;
+
+      box-shadow:
+        0 5px 20px rgba(15, 23, 42, 0.08);
+    }
+
+
+    h2 {
+      color: #4338ca;
+
+      margin-top: 0;
+    }
+
+
+    h3 {
+      color: #334155;
+    }
+
+
+    /* =====================================================
+       DEFINITION BOX
+       ===================================================== */
+
+    .definition {
+      background: #eef2ff;
+
+      border-left: 5px solid #4f46e5;
+
+      padding: 18px;
+
+      border-radius: 8px;
+    }
+
+
+    /* =====================================================
+       ARRAY VISUALIZATION
+       ===================================================== */
+
+    .array-container {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      margin: 25px 0;
+    }
+
+
+    .array-item {
+      min-width: 70px;
+
+      padding: 14px;
+
+      text-align: center;
+
+      background: #e0e7ff;
+
+      border: 2px solid #6366f1;
+
+      border-radius: 9px;
+
+      font-weight: bold;
+
+      font-size: 1.1rem;
+    }
+
+
+    .arrow {
+      display: flex;
+
+      align-items: center;
+
+      font-size: 1.5rem;
+
+      color: #64748b;
+    }
+
+
+    /* =====================================================
+       CODE
+       ===================================================== */
+
+    code {
+      background: #eef2ff;
+
+      color: #3730a3;
+
+      padding: 3px 7px;
+
+      border-radius: 5px;
+
+      font-family: Consolas, monospace;
+    }
+
+
+    pre {
+      background: #0f172a;
+
+      color: #e2e8f0;
+
+      padding: 20px;
+
+      border-radius: 10px;
+
+      overflow-x: auto;
+
+      font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+    }
+
+
+    /* =====================================================
+       STEP BOXES
+       ===================================================== */
+
+    .step {
+      border: 1px solid #dbe4f0;
+
+      border-radius: 12px;
+
+      padding: 20px;
+
+      margin: 18px 0;
+    }
+
+
+    .step-number {
+      display: inline-block;
+
+      background: #4f46e5;
+
+      color: white;
+
+      width: 35px;
+
+      height: 35px;
+
+      line-height: 35px;
+
+      text-align: center;
+
+      border-radius: 50%;
+
+      font-weight: bold;
+
+      margin-right: 8px;
+    }
+
+
+    /* =====================================================
+       TIP BOX
+       ===================================================== */
+
+    .tip {
+      background: #fefce8;
+
+      border-left: 5px solid #eab308;
+
+      padding: 18px;
+
+      border-radius: 8px;
+    }
+
+
+    /* =====================================================
+       CHALLENGE BOX
+       ===================================================== */
+
+    .challenge {
+      background: #ecfdf5;
+
+      border: 2px solid #10b981;
+
+      padding: 25px;
+
+      border-radius: 12px;
+    }
+
+
+    /* =====================================================
+       COMPARISON TABLE
+       ===================================================== */
+
+    table {
+      width: 100%;
+
+      border-collapse: collapse;
+
+      margin-top: 20px;
+    }
+
+
+    th,
+    td {
+      border: 1px solid #dbe4f0;
+
+      padding: 12px;
+
+      text-align: left;
+    }
+
+
+    th {
+      background: #eef2ff;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    footer {
+      text-align: center;
+
+      padding: 25px;
+
+      color: #64748b;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 600px) {
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+
+      section {
+        padding: 20px;
+      }
+
+
+      .array-item {
+        min-width: 55px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header>
+
+    <h1>Reverse an Array</h1>
+
+    <p>
+      A beginner-friendly JavaScript demonstration of how
+      to reverse an array without using the built-in
+      <code>reverse()</code> method.
+    </p>
+
+  </header>
+
+
+  <main>
+
+
+    <!-- ===================================================
+         WHAT ARE WE SOLVING?
+         =================================================== -->
+
+    <section>
+
+      <h2>What Is the Challenge?</h2>
+
+      <div class="definition">
+
+        <strong>Goal:</strong>
+
+        Write a function called
+        <code>reverseArray</code> that takes an array
+        as an argument and returns the elements in
+        reverse order.
+
+      </div>
+
+
+      <p>
+        The important restriction is that we cannot use
+        JavaScript's built-in <code>reverse()</code> method.
+      </p>
+
+
+      <pre><code>array.reverse();</code></pre>
+
+
+      <p>
+        Instead, we need to think about how arrays work
+        and solve the problem ourselves.
+      </p>
+
+    </section>
+
+
+    <!-- ===================================================
+         ORIGINAL ARRAY
+         =================================================== -->
+
+    <section>
+
+      <h2>Understanding an Array</h2>
+
+      <p>
+        Arrays store values in numbered positions called
+        <strong>indexes</strong>.
+      </p>
+
+
+      <div class="array-container">
+
+        <div class="array-item">1</div>
+
+        <div class="array-item">2</div>
+
+        <div class="array-item">3</div>
+
+        <div class="array-item">4</div>
+
+        <div class="array-item">5</div>
+
+      </div>
+
+
+      <p style="text-align:center;">
+        Index:
+        <strong>0 &nbsp;&nbsp; 1 &nbsp;&nbsp; 2 &nbsp;&nbsp; 3 &nbsp;&nbsp; 4</strong>
+      </p>
+
+
+      <p>
+        Notice that the first element is at index
+        <code>0</code>, not index <code>1</code>.
+      </p>
+
+
+      <div class="tip">
+
+        <strong>Remember:</strong>
+
+        The last index of an array is always:
+
+        <br><br>
+
+        <code>array.length - 1</code>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         WHAT DOES REVERSE MEAN?
+         =================================================== -->
+
+    <section>
+
+      <h2>What Does "Reverse" Mean?</h2>
+
+      <p>
+        Reversing an array means that the last element
+        becomes the first element, the second-to-last
+        becomes the second element, and so on.
+      </p>
+
+
+      <h3>Original</h3>
+
+      <div class="array-container">
+
+        <div class="array-item">1</div>
+
+        <div class="array-item">2</div>
+
+        <div class="array-item">3</div>
+
+        <div class="array-item">4</div>
+
+        <div class="array-item">5</div>
+
+      </div>
+
+
+      <h3>Reversed</h3>
+
+      <div class="array-container">
+
+        <div class="array-item">5</div>
+
+        <div class="array-item">4</div>
+
+        <div class="array-item">3</div>
+
+        <div class="array-item">2</div>
+
+        <div class="array-item">1</div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         ALGORITHM
+         =================================================== -->
+
+    <section>
+
+      <h2>Our Algorithm</h2>
+
+      <p>
+        An algorithm is simply a series of steps we follow
+        to solve a problem.
+      </p>
+
+
+      <div class="step">
+
+        <h3>
+          <span class="step-number">1</span>
+          Create an empty array
+        </h3>
+
+        <p>
+          We need somewhere to store our reversed values.
+        </p>
+
+        <pre><code>const reversedArray = [];</code></pre>
+
+      </div>
+
+
+      <div class="step">
+
+        <h3>
+          <span class="step-number">2</span>
+          Start at the last index
+        </h3>
+
+        <p>
+          Instead of starting at index 0, start at the
+          last index and move backward.
+        </p>
+
+        <pre><code>array.length - 1</code></pre>
+
+      </div>
+
+
+      <div class="step">
+
+        <h3>
+          <span class="step-number">3</span>
+          Move backward through the array
+        </h3>
+
+        <p>
+          A <code>for</code> loop can move from the last
+          index toward index 0.
+        </p>
+
+        <pre><code>for (
+  let index = array.length - 1;
+  index >= 0;
+  index--
+)</code></pre>
+
+      </div>
+
+
+      <div class="step">
+
+        <h3>
+          <span class="step-number">4</span>
+          Add each value to the new array
+        </h3>
+
+        <p>
+          As we move backward through the original array,
+          we add each value to our new array.
+        </p>
+
+        <pre><code>reversedArray[reversedArray.length] = array[index];</code></pre>
+
+      </div>
+
+
+      <div class="step">
+
+        <h3>
+          <span class="step-number">5</span>
+          Return the result
+        </h3>
+
+        <pre><code>return reversedArray;</code></pre>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         WALKTHROUGH
+         =================================================== -->
+
+    <section>
+
+      <h2>Step-by-Step Example</h2>
+
+      <p>
+        Suppose we have:
+      </p>
+
+      <pre><code>const numbers = [10, 20, 30, 40];</code></pre>
+
+
+      <p>
+        The indexes are:
+      </p>
+
+      <pre><code>
+Value:    10    20    30    40
+Index:     0     1     2     3
+                         ↑
+                     Last index
+      </code></pre>
+
+
+      <h3>First iteration</h3>
+
+      <p>
+        Start at index <code>3</code>.
+      </p>
+
+      <pre><code>numbers[3] = 40</code></pre>
+
+      <p>
+        New array:
+      </p>
+
+      <pre><code>[40]</code></pre>
+
+
+      <h3>Second iteration</h3>
+
+      <p>
+        Move backward to index <code>2</code>.
+      </p>
+
+      <pre><code>numbers[2] = 30</code></pre>
+
+      <p>
+        New array:
+      </p>
+
+      <pre><code>[40, 30]</code></pre>
+
+
+      <h3>Third iteration</h3>
+
+      <pre><code>numbers[1] = 20</code></pre>
+
+      <p>
+        New array:
+      </p>
+
+      <pre><code>[40, 30, 20]</code></pre>
+
+
+      <h3>Fourth iteration</h3>
+
+      <pre><code>numbers[0] = 10</code></pre>
+
+      <p>
+        Final result:
+      </p>
+
+      <pre><code>[40, 30, 20, 10]</code></pre>
+
+    </section>
+
+
+    <!-- ===================================================
+         CODE
+         =================================================== -->
+
+    <section>
+
+      <h2>The Solution</h2>
+
+      <p>
+        The complete function is intentionally small.
+        It has one responsibility: reverse an array.
+      </p>
+
+      <pre><code>function reverseArray(array) {
+
+  const reversedArray = [];
+
+  for (
+    let index = array.length - 1;
+    index >= 0;
+    index--
+  ) {
+
+    reversedArray[reversedArray.length] = array[index];
+
+  }
+
+  return reversedArray;
+}</code></pre>
+
+    </section>
+
+
+    <!-- ===================================================
+         SINGLE RESPONSIBILITY
+         =================================================== -->
+
+    <section>
+
+      <h2>Single-Responsibility Principle</h2>
+
+      <p>
+        The challenge asks us to use the
+        <strong>Single-responsibility principle</strong>.
+      </p>
+
+      <p>
+        This means a function should have one clear job.
+      </p>
+
+
+      <table>
+
+        <tr>
+          <th>Function</th>
+          <th>Responsibility</th>
+        </tr>
+
+        <tr>
+          <td><code>reverseArray()</code></td>
+          <td>Reverse the array.</td>
+        </tr>
+
+        <tr>
+          <td>Testing code</td>
+          <td>Test and display the results.</td>
+        </tr>
+
+      </table>
+
+
+      <p>
+        We don't want one giant function that tries to
+        reverse the array, print the results, validate
+        every possible input, and perform unrelated tasks.
+      </p>
+
+    </section>
+
+
+    <!-- ===================================================
+         EXAMPLES
+         =================================================== -->
+
+    <section>
+
+      <h2>Challenge Examples</h2>
+
+
+      <h3>Example 1</h3>
+
+      <pre><code>Input:
+
+[1, 2, 3, 4, 5, 6]
+
+Output:
+
+[6, 5, 4, 3, 2, 1]</code></pre>
+
+
+      <h3>Example 2</h3>
+
+      <pre><code>Input:
+
+[89, 2354, 3546, 23, 10, -923, 823, -12]
+
+Output:
+
+[-12, 823, -923, 10, 23, 3546, 2354, 89]</code></pre>
+
+
+      <h3>Example 3</h3>
+
+      <pre><code>Input:
+
+[2, 3, 5, 7, 11]
+
+Output:
+
+[11, 7, 5, 3, 2]</code></pre>
+
+    </section>
+
+
+    <!-- ===================================================
+         WHITEBOARD STRATEGY
+         =================================================== -->
+
+    <section>
+
+      <h2>Whiteboard Strategy</h2>
+
+      <div class="challenge">
+
+        <h3>Before writing code, ask yourself:</h3>
+
+        <ol>
+
+          <li>
+            What is my input?
+          </li>
+
+          <li>
+            What should my output look like?
+          </li>
+
+          <li>
+            Where does the last element live?
+          </li>
+
+          <li>
+            How can I move through the array backward?
+          </li>
+
+          <li>
+            Where will I store the reversed values?
+          </li>
+
+          <li>
+            When should my loop stop?
+          </li>
+
+        </ol>
+
+      </div>
+
+
+      <h3>Think Before You Code</h3>
+
+      <pre><code>
+Original:
+
+[1] [2] [3] [4] [5]
+ ↑               ↑
+ 0               4
+
+Start here ─────────┘
+                  ↓
+                 [5]
+
+Then:
+
+                [4]
+                 ↓
+            [5] [4]
+
+Then:
+
+            [3]
+             ↓
+        [5] [4] [3]
+
+Continue until index 0.
+      </code></pre>
+
+    </section>
+
+
+    <!-- ===================================================
+         IMPORTANT TAKEAWAY
+         =================================================== -->
+
+    <section>
+
+      <h2>Key Takeaway</h2>
+
+      <div class="definition">
+
+        <strong>
+          To reverse an array without using
+          <code>reverse()</code>:
+        </strong>
+
+        <ol>
+
+          <li>Create a new empty array.</li>
+
+          <li>Start at the last index.</li>
+
+          <li>Move backward toward index 0.</li>
+
+          <li>Add each value to the new array.</li>
+
+          <li>Return the new array.</li>
+
+        </ol>
+
+      </div>
+
+
+      <p>
+        The key idea is simple:
+        <strong>
+          Instead of changing the direction of the
+          original array, read the original array
+          from right to left.
+        </strong>
+      </p>
+
+    </section>
+
+
+    <!-- ===================================================
+         RUN THE DEMO
+         =================================================== -->
+
+    <section>
+
+      <h2>Run the JavaScript Demo</h2>
+
+      <p>
+        The JavaScript file connected to this page contains
+        several test cases.
+      </p>
+
+      <p>
+        Open your browser's developer tools and select the
+        <strong>Console</strong> tab to see the results.
+      </p>
+
+      <div class="tip">
+
+        <strong>Chrome / Edge:</strong>
+
+        Press <code>F12</code> → select
+        <strong>Console</strong> → reload the page.
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <footer>
+
+    JavaScript Data Structures & Algorithms
+    <br>
+    Reverse Array Code Challenge
+
+  </footer>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+  <script src="reverse-array.js"></script>
+
+</body>
+
+</html>
