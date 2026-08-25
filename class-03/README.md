@@ -15,7 +15,7 @@ Express servers can quickly get big and out of control if you build them in one 
   - Whiteboarding
     - Binary search in a sorted 1D array
 - Lab Prep
-  - Dynamic API Phase 2
+  - Dynamic API Phase 3
 
 ### Classwork
 

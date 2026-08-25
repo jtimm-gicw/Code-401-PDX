@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insert Shift Array | Coding Demo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #172554, #2563eb);
+      color: white;
+      padding: 55px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 2.8rem;
+    }
+
+    header p {
+      margin: 0 auto;
+      max-width: 750px;
+      font-size: 1.15rem;
+    }
+
+    main {
+      width: min(1050px, 92%);
+      margin: 35px auto 60px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    h2 {
+      color: #1d4ed8;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #334155;
+    }
+
+    .goal {
+      border-left: 6px solid #2563eb;
+    }
+
+    .array {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .box {
+      min-width: 55px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: #e0e7ff;
+      border: 2px solid #6366f1;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .new-value {
+      background: #dcfce7;
+      border-color: #16a34a;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 2rem;
+      color: #2563eb;
+      margin: 5px;
+    }
+
+    .step {
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      margin: 18px 0;
+    }
+
+    .number {
+      flex: 0 0 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    code {
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 3px 7px;
+      border-radius: 5px;
+      font-family: "Courier New", monospace;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 22px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 0.95rem;
+    }
+
+    .example {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .example-card {
+      background: #f8fafc;
+      border: 1px solid #dbeafe;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .complexity {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .complexity div {
+      background: #eff6ff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .complexity strong {
+      display: block;
+      font-size: 1.8rem;
+      color: #1d4ed8;
+    }
+
+    .challenge {
+      background: #fff7ed;
+      border-left: 6px solid #f97316;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .example,
+      .complexity {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🔀 Insert Shift Array</h1>
+    <p>
+      Learn how to insert a new value into the middle of an array
+      without using built-in array methods.
+    </p>
+  </header>
+
+  <main>
+
+    <section class="card goal">
+      <h2>🎯 The Goal</h2>
+
+      <p>
+        Write a function called <code>insertShiftArray</code>.
+        The function receives an array and a new value.
+      </p>
+
+      <p>
+        Your job is to create a new array with the new value
+        inserted into the middle.
+      </p>
+
+      <p>
+        We are practicing the algorithm, so don't use
+        <code>splice()</code>, <code>push()</code>,
+        <code>unshift()</code>, or similar built-in methods.
+      </p>
+    </section>
+
+
+    <section class="card">
+      <h2>🧠 Think of an Array Like a Row of Boxes</h2>
+
+      <p>
+        Start with this array:
+      </p>
+
+      <div class="array">
+        <div class="box">2</div>
+        <div class="box">4</div>
+        <div class="box">6</div>
+        <div class="box">-8</div>
+      </div>
+
+      <p>
+        We want to insert <strong>5</strong> into the middle.
+      </p>
+
+      <div class="array">
+        <div class="box">2</div>
+        <div class="box">4</div>
+        <div class="box new-value">5</div>
+        <div class="box">6</div>
+        <div class="box">-8</div>
+      </div>
+
+      <p>
+        The important idea is:
+        <strong>we are creating a new array instead of changing
+        the original array.</strong>
+      </p>
+    </section>
+
+
+    <section class="card">
+      <h2>📍 Step 1: Find the Middle</h2>
+
+      <p>
+        JavaScript arrays start counting at index <strong>0</strong>.
+      </p>
+
+      <div class="array">
+        <div class="box">0<br><small>2</small></div>
+        <div class="box">1<br><small>4</small></div>
+        <div class="box">2<br><small>6</small></div>
+        <div class="box">3<br><small>-8</small></div>
+      </div>
+
+      <p>
+        We can calculate the middle with:
+      </p>
+
+      <pre>const middleIndex = Math.floor(array.length / 2);</pre>
+
+      <p>
+        For an array with 4 items:
+      </p>
+
+      <pre>Math.floor(4 / 2)
+2</pre>
+
+      <p>
+        So index <strong>2</strong> is our insertion point.
+      </p>
+    </section>
+
+
+    <section class="card">
+      <h2>🚶 Step-by-Step Algorithm</h2>
+
+      <div class="step">
+        <div class="number">1</div>
+        <div>
+          <strong>Create an empty result array.</strong>
+          <p>
+            This is where we will build our answer.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="number">2</div>
+        <div>
+          <strong>Find the middle index.</strong>
+          <p>
+            Use <code>Math.floor(array.length / 2)</code>.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="number">3</div>
+        <div>
+          <strong>Loop through the original array.</strong>
+          <p>
+            Look at each value one at a time.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="number">4</div>
+        <div>
+          <strong>When you reach the middle, add the new value first.</strong>
+          <p>
+            Then add the original value that was already there.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="number">5</div>
+        <div>
+          <strong>Copy all other values.</strong>
+          <p>
+            Values before and after the middle are copied normally.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="number">6</div>
+        <div>
+          <strong>Return the result.</strong>
+          <p>
+            Our new array now contains the inserted value.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="card">
+      <h2>🧪 Example 1</h2>
+
+      <div class="example">
+        <div class="example-card">
+          <h3>Input</h3>
+          <p><code>[2, 4, 6, -8]</code></p>
+          <p>New value: <code>5</code></p>
+        </div>
+
+        <div class="example-card">
+          <h3>Output</h3>
+          <p><code>[2, 4, 5, 6, -8]</code></p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="card">
+      <h2>🧪 Example 2</h2>
+
+      <div class="example">
+        <div class="example-card">
+          <h3>Input</h3>
+          <p><code>[42, 8, 15, 23, 42]</code></p>
+          <p>New value: <code>16</code></p>
+        </div>
+
+        <div class="example-card">
+          <h3>Output</h3>
+          <p><code>[42, 8, 15, 16, 23, 42]</code></p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="card">
+      <h2>⏱️ Big-O</h2>
+
+      <div class="complexity">
+        <div>
+          <strong>O(n)</strong>
+          <span>Time Complexity</span>
+          <p>
+            We loop through the array once.
+          </p>
+        </div>
+
+        <div>
+          <strong>O(n)</strong>
+          <span>Space Complexity</span>
+          <p>
+            We create a new array to hold the result.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="card challenge">
+      <h2>🚀 Student Challenge</h2>
+
+      <p>
+        Before looking at the completed JavaScript file,
+        try writing the function yourself.
+      </p>
+
+      <h3>Ask yourself:</h3>
+
+      <ol>
+        <li>How can I find the middle index?</li>
+        <li>How can I create a new empty array?</li>
+        <li>How can I loop through the original array?</li>
+        <li>How can I detect when I reach the middle?</li>
+        <li>How can I insert the new value without using <code>splice()</code>?</li>
+        <li>How can I return the new array?</li>
+      </ol>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>JavaScript Algorithms Practice • Insert Shift Array</p>
+  </footer>
+
+  <script src="insertShiftArray.js"></script>
+</body>
+</html>

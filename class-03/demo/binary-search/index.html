@@ -1,0 +1,659 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Binary Search Practice</title>
+
+  <style>
+    /* -------------------------------------------------
+       PAGE RESET
+    ------------------------------------------------- */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    /* -------------------------------------------------
+       HEADER
+    ------------------------------------------------- */
+
+    header {
+      background: #172554;
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.15rem;
+      opacity: 0.9;
+    }
+
+    /* -------------------------------------------------
+       MAIN CONTENT
+    ------------------------------------------------- */
+
+    main {
+      width: min(1100px, 92%);
+      margin: 40px auto;
+    }
+
+    section {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      color: #172554;
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+    }
+
+    h3 {
+      margin-top: 20px;
+      margin-bottom: 8px;
+      color: #1e3a8a;
+    }
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    /* -------------------------------------------------
+       ARRAY VISUALIZATION
+    ------------------------------------------------- */
+
+    .array {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 25px 0;
+    }
+
+    .array-item {
+      min-width: 65px;
+      padding: 15px 10px;
+      background: #dbeafe;
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .middle {
+      background: #fef3c7;
+      border-color: #d97706;
+    }
+
+    /* -------------------------------------------------
+       PROCESS CARDS
+    ------------------------------------------------- */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .step {
+      padding: 20px;
+      background: #eff6ff;
+      border-radius: 10px;
+      border-left: 5px solid #2563eb;
+    }
+
+    .step-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    /* -------------------------------------------------
+       CODE
+    ------------------------------------------------- */
+
+    code {
+      background: #e5e7eb;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-family: "Courier New", monospace;
+    }
+
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-top: 15px;
+    }
+
+    /* -------------------------------------------------
+       COMPLEXITY
+    ------------------------------------------------- */
+
+    .complexity {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .complexity-card {
+      padding: 25px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+    }
+
+    .big-o {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #1d4ed8;
+      margin-bottom: 8px;
+    }
+
+    /* -------------------------------------------------
+       PRACTICE SECTION
+    ------------------------------------------------- */
+
+    .practice {
+      background: #ecfeff;
+      border-left: 6px solid #0891b2;
+    }
+
+    .practice ol {
+      margin-left: 25px;
+    }
+
+    .practice li {
+      margin-bottom: 10px;
+    }
+
+    /* -------------------------------------------------
+       CONSOLE NOTICE
+    ------------------------------------------------- */
+
+    .console-box {
+      background: #111827;
+      color: #d1d5db;
+      padding: 25px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .console-box strong {
+      color: white;
+    }
+
+    /* -------------------------------------------------
+       FOOTER
+    ------------------------------------------------- */
+
+    footer {
+      background: #172554;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+    }
+
+    /* -------------------------------------------------
+       RESPONSIVE DESIGN
+    ------------------------------------------------- */
+
+    @media (max-width: 800px) {
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .steps,
+      .complexity {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =================================================
+       HEADER
+  ================================================== -->
+
+  <header>
+    <h1>🔎 Binary Search</h1>
+
+    <p>
+      Learn how to search a sorted array by repeatedly
+      cutting the search area in half.
+    </p>
+  </header>
+
+
+  <!-- =================================================
+       MAIN CONTENT
+  ================================================== -->
+
+  <main>
+
+    <!-- -------------------------------------------------
+         WHAT IS BINARY SEARCH?
+    -------------------------------------------------- -->
+
+    <section>
+      <h2>🧠 What Is Binary Search?</h2>
+
+      <p>
+        Binary search is an algorithm used to find a value
+        inside a <strong>sorted array</strong>.
+      </p>
+
+      <p>
+        Instead of checking every item one at a time,
+        binary search looks at the middle of the array
+        and eliminates half of the possible answers.
+      </p>
+
+      <div class="array">
+        <div class="array-item">4</div>
+        <div class="array-item">8</div>
+        <div class="array-item middle">15</div>
+        <div class="array-item">16</div>
+        <div class="array-item">23</div>
+        <div class="array-item">42</div>
+      </div>
+
+      <p style="text-align: center;">
+        👆 The middle value is <strong>15</strong>.
+      </p>
+    </section>
+
+
+    <!-- -------------------------------------------------
+         HOW IT WORKS
+    -------------------------------------------------- -->
+
+    <section>
+      <h2>⚙️ How Binary Search Works</h2>
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-number">1</div>
+
+          <strong>Start</strong>
+
+          <p>
+            Set <code>left</code> to the beginning and
+            <code>right</code> to the end.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+
+          <strong>Find Middle</strong>
+
+          <p>
+            Calculate the middle index between
+            <code>left</code> and <code>right</code>.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+
+          <strong>Compare</strong>
+
+          <p>
+            Compare the middle value with the search key.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">4</div>
+
+          <strong>Eliminate</strong>
+
+          <p>
+            Search either the left half or the right half.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- -------------------------------------------------
+         ALGORITHM
+    -------------------------------------------------- -->
+
+    <section>
+      <h2>📝 The Algorithm</h2>
+
+      <p>
+        Before writing code, we can describe the solution
+        in plain English:
+      </p>
+
+      <ol>
+        <li>Start at the beginning of the array.</li>
+        <li>Start at the end of the array.</li>
+        <li>Find the middle index.</li>
+        <li>Compare the middle value to the search key.</li>
+        <li>
+          If they match, return the middle index.
+        </li>
+        <li>
+          If the key is larger, search the right half.
+        </li>
+        <li>
+          If the key is smaller, search the left half.
+        </li>
+        <li>
+          If nothing is found, return <code>-1</code>.
+        </li>
+      </ol>
+
+      <pre><code>left = 0
+right = array.length - 1
+
+while left &lt;= right
+
+    middle = middle index
+
+    if array[middle] == key
+        return middle
+
+    if key &gt; array[middle]
+        search right half
+
+    else
+        search left half
+
+return -1</code></pre>
+    </section>
+
+
+    <!-- -------------------------------------------------
+         BIG-O
+    -------------------------------------------------- -->
+
+    <section>
+      <h2>⏱️ Big-O Complexity</h2>
+
+      <div class="complexity">
+
+        <div class="complexity-card">
+          <div class="big-o">O(log n)</div>
+
+          <h3>Time Complexity</h3>
+
+          <p>
+            Each search eliminates approximately half of
+            the remaining values.
+          </p>
+
+          <p>
+            That's why binary search is much faster than
+            checking every item one at a time.
+          </p>
+        </div>
+
+        <div class="complexity-card">
+          <div class="big-o">O(1)</div>
+
+          <h3>Space Complexity</h3>
+
+          <p>
+            We only need a few variables:
+            <code>left</code>, <code>right</code>, and
+            <code>middle</code>.
+          </p>
+
+          <p>
+            We don't create another array.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- -------------------------------------------------
+         IMPORTANT RULE
+    -------------------------------------------------- -->
+
+    <section>
+      <h2>⚠️ Important Rule</h2>
+
+      <p>
+        Binary search requires the array to be
+        <strong>sorted</strong>.
+      </p>
+
+      <div class="array">
+        <div class="array-item">4</div>
+        <div class="array-item">8</div>
+        <div class="array-item">15</div>
+        <div class="array-item">16</div>
+        <div class="array-item">23</div>
+        <div class="array-item">42</div>
+      </div>
+
+      <p>
+        ✅ This array is sorted, so binary search works.
+      </p>
+
+      <div class="array">
+        <div class="array-item">4</div>
+        <div class="array-item">15</div>
+        <div class="array-item">8</div>
+        <div class="array-item">42</div>
+        <div class="array-item">16</div>
+        <div class="array-item">23</div>
+      </div>
+
+      <p>
+        ❌ This array is not sorted, so binary search
+        cannot reliably determine which half to eliminate.
+      </p>
+    </section>
+
+
+    <!-- -------------------------------------------------
+         CONSOLE PRACTICE
+    -------------------------------------------------- -->
+
+    <section>
+      <h2>💻 Console Practice</h2>
+
+      <p>
+        The JavaScript file connected to this page contains
+        several examples and prints the search process to
+        the browser console.
+      </p>
+
+      <div class="console-box">
+
+        <p>
+          <strong>How to view the output:</strong>
+        </p>
+
+        <p>
+          1. Open your browser's Developer Tools.
+        </p>
+
+        <p>
+          2. Select the <strong>Console</strong> tab.
+        </p>
+
+        <p>
+          3. Refresh this page.
+        </p>
+
+        <p>
+          4. Watch the binary search process step by step.
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- -------------------------------------------------
+         PRACTICE CHALLENGES
+    -------------------------------------------------- -->
+
+    <section class="practice">
+
+      <h2>🏋️ Student Practice</h2>
+
+      <p>
+        Before looking at the console output, try to
+        predict what binary search will do.
+      </p>
+
+      <h3>Challenge 1</h3>
+
+      <p>
+        Search for <strong>23</strong>:
+      </p>
+
+      <pre><code>[2, 5, 8, 12, 16, 23, 38, 56, 72, 91]</code></pre>
+
+      <ol>
+        <li>What is the starting <code>left</code>?</li>
+        <li>What is the starting <code>right</code>?</li>
+        <li>What is the first <code>middle</code>?</li>
+        <li>Is 23 greater or smaller than the middle?</li>
+        <li>Which half can we eliminate?</li>
+      </ol>
+
+
+      <h3>Challenge 2</h3>
+
+      <p>
+        Search for <strong>50</strong>:
+      </p>
+
+      <pre><code>[2, 5, 8, 12, 16, 23, 38, 56, 72, 91]</code></pre>
+
+      <p>
+        Remember: if the value isn't found, the function
+        should return <code>-1</code>.
+      </p>
+
+    </section>
+
+
+    <!-- -------------------------------------------------
+         INTERVIEW TIP
+    -------------------------------------------------- -->
+
+    <section>
+      <h2>🎤 Technical Interview Tip</h2>
+
+      <p>
+        When explaining binary search in an interview,
+        don't just say:
+      </p>
+
+      <p>
+        <strong>
+          "I'm using binary search."
+        </strong>
+      </p>
+
+      <p>
+        Explain <em>why</em> it works:
+      </p>
+
+      <pre><code>
+"The array is sorted, so I can compare the search key
+to the middle value. Based on that comparison, I can
+eliminate half of the remaining search space.
+
+I continue doing that until I find the value or there
+are no values left to search.
+
+The time complexity is O(log n) and the extra space
+complexity is O(1)."
+      </code></pre>
+
+    </section>
+
+  </main>
+
+
+  <!-- =================================================
+       FOOTER
+  ================================================== -->
+
+  <footer>
+    <p>
+      🔎 Binary Search Practice
+    </p>
+
+    <p>
+      Technical Interview & Algorithm Practice
+    </p>
+  </footer>
+
+
+  <!-- =================================================
+       JAVASCRIPT
+       
+       This connects the HTML page to:
+       binary-search-practice.js
+
+       The JavaScript will run when the page loads
+       and its console.log() messages will appear
+       in the browser Developer Console.
+  ================================================== -->
+
+  <script src="binary-search.js"></script>
+
+</body>
+</html>
+```
