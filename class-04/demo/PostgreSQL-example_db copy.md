@@ -224,18 +224,19 @@ Let's add a few records:
 ```sql
 INSERT INTO people (name, age)
 VALUES
-  ('Alice', 25),
-  ('Bob', 30),
-  ('Charlie', 22);
+  ('Sarah', 18),
+  ('Tom', 37),
+  ('Mary', 29)
+  ('Michael', 51);
 ```
 
 You should see:
 
 ```text
-INSERT 0 3
+INSERT 0 4
 ```
 
-That means **three records were inserted**.
+That means **four records were inserted**.
 
 ---
 
