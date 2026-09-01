@@ -2,17 +2,19 @@
 
 ## Class Outline
 
-- Reading Assignment
-  - Discussion
+- Check-in
+  - Code Challenges 1, 2, & 3
+  - Backend Server builds
+    - Labs 1, 2, 3, & 4
 - Demo
-  - Linked Listss
+  - Linked Lists
 
 ### Classwork
 
-- Code Challenge
+- Code Challenge 5
+  - Linked Lists
 - Career: Class 05: Partner Power Hour - Report #1
 - Career: Class 05: Workshop #1: Completed Resume
-- Learning Journal
 
 ## Learning Objectives
 
@@ -22,6 +24,4 @@
 - Document
 - Test
 
-### Career Coaching Workshop
 
-<!-- Summary To Be Completed By Instructor -->

@@ -12,14 +12,14 @@ Data Modeling: The process of taking a real world or conceptual idea and encodin
   - Data Modeling
 - Code Challenge
 - Lab Prep
-  - Dynamic API Phase 3
+  - Data Modeling
 
 ### Classwork
 
-- Career: Class 04: Workshop #1 Prep - Resume
-- Code Challenge
+- Code Challenge 4
   - Mock Interview Questions
-- Learning Journal
+- Labwork
+  - Lab 4
 
 ## Learning Objectives
 

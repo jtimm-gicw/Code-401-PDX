@@ -23,7 +23,6 @@ Express servers can quickly get big and out of control if you build them in one 
 - Labwork
   - Lab 3
 - Career: Class 03: Workshop #1 Prep - Networking Gameplan
-- Learning Journal
 
 ## Learning Objectives
 

@@ -4,11 +4,11 @@
 
 By the end of this guide, you will:
 
-✅ Create a backend project folder  
-✅ Initialize Node.js  
-✅ Install common backend packages  
-✅ Create a Git repository  
-✅ Connect your project to GitHub  
+✅ Create a backend project folder
+✅ Initialize Node.js
+✅ Install common backend packages
+✅ Create a Git repository
+✅ Connect your project to GitHub
 ✅ Push your code online
 
 ---
@@ -89,7 +89,7 @@ package.json
 Install common backend packages:
 
 ```bash
-npm install express axios dotenv cors
+npm install express axios dotenv cors jest supertest sequelize pg
 ```
 
 ### What These Packages Do
