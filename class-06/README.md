@@ -6,10 +6,22 @@ Today, we'll be looking at ways to create an account and securely authenticate a
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
-- Code Review
-- Warmup question
-- Lecture
+## Class Outline
+
+- Reading 6
+  - Discussion
+- Demo
+  - Authentication & Password Hashing
+  - Linked Lists Insertion
+- Lab Prep
+  - Authentication
+
+### Classwork
+
+- Code Challenge 6
+  - Linked Lists Insertion
+- Labwork
+  - Lab 6
 
 ## Learning Objectives
 
