@@ -8,10 +8,24 @@ Given a proper and valid user with a set of permissions, we can grant or restric
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
-- Code Review
-- Warmup question
-- Lecture
+- Reading 8
+  - Discussion
+- Demo
+  - Role-based auth
+  - Zip Two Linked Lists
+- Career Class 8
+  - Your Why?
+- Lab Prep
+  - Role-based auth
+
+### Classwork
+
+- Code Challenge 8
+  - Zip Two Linked Lists
+- Career Class 8
+  - Your Why?
+- Labwork
+  - Lab 8
 
 ## Learning Objectives
 

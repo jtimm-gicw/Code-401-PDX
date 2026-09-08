@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Linked List — Kth From the End</title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+      line-height: 1.6;
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    header {
+      background: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 45px 20px;
+    }
+
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 2.5rem;
+    }
+
+
+    header p {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    main {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+
+    section {
+      background: white;
+      margin-bottom: 25px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+
+    h2 {
+      margin-top: 0;
+      color: #1f2937;
+    }
+
+
+    /* =========================================
+       LINKED LIST VISUAL
+    ========================================= */
+
+    .linked-list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 30px 0;
+    }
+
+
+    .node {
+      min-width: 70px;
+      padding: 15px;
+      border: 3px solid #1f2937;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      background: white;
+    }
+
+
+    .arrow {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+
+    .pointer {
+      text-align: center;
+      margin-top: 5px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+
+    /* =========================================
+       EXAMPLES
+    ========================================= */
+
+    .examples {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+
+    .example {
+      background: #f3f4f6;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+
+    .example strong {
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+
+    /* =========================================
+       STEPS
+    ========================================= */
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+
+    .step-number {
+      min-width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #1f2937;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+
+    /* =========================================
+       CODE
+    ========================================= */
+
+    .code {
+      background: #111827;
+      color: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: Consolas, monospace;
+      margin: 15px 0;
+    }
+
+
+    /* =========================================
+       EDGE CASES
+    ========================================= */
+
+    .edge-cases {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+
+    .edge {
+      border: 2px solid #d1d5db;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+
+    .edge h3 {
+      margin-top: 0;
+    }
+
+
+    /* =========================================
+       CONSOLE SECTION
+    ========================================= */
+
+    .console-box {
+      background: #111827;
+      color: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: Consolas, monospace;
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 700px) {
+
+      .edge-cases {
+        grid-template-columns: 1fr;
+      }
+
+
+      header h1 {
+        font-size: 1.9rem;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================================
+       HEADER
+  ========================================= -->
+
+  <header>
+
+    <h1>Linked List: Kth From the End</h1>
+
+    <p>
+      Using two pointers to find a node from the tail
+    </p>
+
+  </header>
+
+
+
+  <main>
+
+
+    <!-- =========================================
+         SECTION 1 — CONCEPT
+    ========================================= -->
+
+    <section>
+
+      <h2>What Does "Kth From the End" Mean?</h2>
+
+      <p>
+        We want to find a node by counting backward
+        from the <strong>tail</strong> of the linked list.
+      </p>
+
+
+      <div class="linked-list">
+
+        <div>
+
+          <div class="node">A</div>
+
+          <div class="pointer">
+            HEAD
+          </div>
+
+        </div>
+
+
+        <div class="arrow">→</div>
+
+
+        <div class="node">B</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">C</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">D</div>
+
+
+        <div class="arrow">→</div>
+
+
+        <div>
+
+          <div class="node">E</div>
+
+          <div class="pointer">
+            TAIL
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <p>
+        With this list:
+      </p>
+
+
+      <div class="examples">
+
+        <div class="example">
+          <strong>k = 0</strong>
+          E
+        </div>
+
+        <div class="example">
+          <strong>k = 1</strong>
+          D
+        </div>
+
+        <div class="example">
+          <strong>k = 2</strong>
+          C
+        </div>
+
+        <div class="example">
+          <strong>k = 3</strong>
+          B
+        </div>
+
+        <div class="example">
+          <strong>k = 4</strong>
+          A
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SECTION 2 — TWO POINTERS
+    ========================================= -->
+
+    <section>
+
+      <h2>The Two-Pointer Strategy</h2>
+
+      <p>
+        We can solve this problem efficiently by using
+        two pointers: <strong>FAST</strong> and
+        <strong>SLOW</strong>.
+      </p>
+
+
+      <div class="step">
+
+        <div class="step-number">1</div>
+
+        <div>
+          Start both FAST and SLOW at the head.
+        </div>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">2</div>
+
+        <div>
+          Move FAST forward by <strong>k</strong>
+          positions.
+        </div>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">3</div>
+
+        <div>
+          Move FAST and SLOW together.
+        </div>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">4</div>
+
+        <div>
+          When FAST reaches the tail, SLOW is pointing
+          at the kth node from the end.
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SECTION 3 — WALK THROUGH
+    ========================================= -->
+
+    <section>
+
+      <h2>Walk Through: k = 2</h2>
+
+      <p>
+        Let's find the node that is
+        <strong>2 places from the end</strong>.
+      </p>
+
+
+      <h3>Step 1: Start Both Pointers</h3>
+
+
+      <div class="linked-list">
+
+        <div>
+
+          <div class="node">A</div>
+
+          <div class="pointer">
+            FAST + SLOW
+          </div>
+
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">B</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">C</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">D</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">E</div>
+
+      </div>
+
+
+      <h3>Step 2: Move FAST 2 Positions</h3>
+
+
+      <div class="linked-list">
+
+        <div>
+
+          <div class="node">A</div>
+
+          <div class="pointer">
+            SLOW
+          </div>
+
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">B</div>
+
+        <div class="arrow">→</div>
+
+        <div>
+
+          <div class="node">C</div>
+
+          <div class="pointer">
+            FAST
+          </div>
+
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">D</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">E</div>
+
+      </div>
+
+
+      <h3>Step 3: Move Both Together</h3>
+
+
+      <p>
+        FAST and SLOW now move together until FAST reaches
+        the tail.
+      </p>
+
+
+      <div class="linked-list">
+
+        <div class="node">A</div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">B</div>
+
+        <div class="arrow">→</div>
+
+        <div>
+
+          <div class="node">C</div>
+
+          <div class="pointer">
+            SLOW
+          </div>
+
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">D</div>
+
+        <div class="arrow">→</div>
+
+        <div>
+
+          <div class="node">E</div>
+
+          <div class="pointer">
+            FAST / TAIL
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <h3>Step 4: Return SLOW</h3>
+
+      <p>
+        FAST has reached the tail, so SLOW is pointing at
+        <strong>C</strong>.
+      </p>
+
+
+      <div class="code">
+
+        list.kthFromEnd(2);
+
+        <br><br>
+
+        // Returns: "C"
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SECTION 4 — CODE
+    ========================================= -->
+
+    <section>
+
+      <h2>The Important Part of the Code</h2>
+
+      <p>
+        The key idea is to keep FAST exactly
+        <strong>k positions ahead</strong> of SLOW.
+      </p>
+
+
+      <div class="code">
+
+        let fast = this.head;
+        <br>
+        let slow = this.head;
+
+        <br><br>
+
+        // Move FAST k positions
+        <br>
+
+        for (let i = 0; i &lt; k; i++) {
+
+        <br>
+        &nbsp;&nbsp;fast = fast.next;
+
+        <br>
+        }
+
+        <br><br>
+
+        // Move both pointers
+        <br>
+
+        while (fast.next !== null) {
+
+        <br>
+        &nbsp;&nbsp;fast = fast.next;
+        <br>
+        &nbsp;&nbsp;slow = slow.next;
+
+        <br>
+        }
+
+        <br><br>
+
+        return slow.value;
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SECTION 5 — EDGE CASES
+    ========================================= -->
+
+    <section>
+
+      <h2>Edge Cases</h2>
+
+
+      <div class="edge-cases">
+
+
+        <div class="edge">
+
+          <h3>Edge Case #1: k Is Too Large</h3>
+
+          <p>
+            Our list contains:
+          </p>
+
+          <div class="code">
+            A → B → C → D → E
+          </div>
+
+          <p>
+            But we ask for:
+          </p>
+
+          <div class="code">
+            list.kthFromEnd(5);
+          </div>
+
+          <p>
+            There is no valid node at that position.
+            The method returns <strong>null</strong>.
+          </p>
+
+        </div>
+
+
+
+        <div class="edge">
+
+          <h3>Edge Case #2: Empty List</h3>
+
+          <p>
+            What happens when the list contains no nodes?
+          </p>
+
+          <div class="code">
+            const list = new LinkedList();
+
+            <br><br>
+
+            list.kthFromEnd(0);
+          </div>
+
+          <p>
+            There is no node to return, so the method
+            safely returns <strong>null</strong>.
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SECTION 6 — CONSOLE
+    ========================================= -->
+
+    <section>
+
+      <h2>Watch the Algorithm in the Console</h2>
+
+      <p>
+        Open your browser's Developer Tools and select
+        the <strong>Console</strong> tab.
+      </p>
+
+
+      <div class="console-box">
+
+        STEP 1
+        <br>
+        FAST starts at A
+        <br>
+        SLOW starts at A
+
+        <br><br>
+
+        STEP 2
+        <br>
+        Move FAST k positions forward
+
+        <br><br>
+
+        STEP 3
+        <br>
+        Move FAST and SLOW together
+
+        <br><br>
+
+        STEP 4
+        <br>
+        FAST reaches the tail
+        <br>
+        SLOW is the answer
+
+      </div>
+
+
+      <p>
+        The JavaScript file contains
+        <strong>console.log()</strong> statements that
+        show each step while the algorithm runs.
+      </p>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SECTION 7 — COMPLEXITY
+    ========================================= -->
+
+    <section>
+
+      <h2>Big-O Complexity</h2>
+
+
+      <div class="examples">
+
+
+        <div class="example">
+
+          <strong>Time: O(n)</strong>
+
+          <p>
+            We move through the linked list once.
+          </p>
+
+        </div>
+
+
+        <div class="example">
+
+          <strong>Space: O(1)</strong>
+
+          <p>
+            We only use two pointers.
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SECTION 8 — STUDENT CHALLENGE
+    ========================================= -->
+
+    <section>
+
+      <h2>Student Practice</h2>
+
+      <ol>
+
+        <li>
+          Create a linked list containing numbers.
+        </li>
+
+        <li>
+          Try different values of <strong>k</strong>.
+        </li>
+
+        <li>
+          Predict the answer before running the code.
+        </li>
+
+        <li>
+          Open the browser console and watch the
+          pointers move.
+        </li>
+
+        <li>
+          Try <strong>k = 0</strong>.
+        </li>
+
+        <li>
+          Try a value of <strong>k</strong> that is too large.
+        </li>
+
+        <li>
+          Try an empty linked list.
+        </li>
+
+      </ol>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
+
+  <footer>
+
+    <p>
+      Code Challenge 7 — Linked List: Kth From the End
+    </p>
+
+  </footer>
+
+
+
+  <!-- =========================================
+       JAVASCRIPT CONNECTION
+  ========================================= -->
+
+  <script src="linked-list-kth.js"></script>
+
+
+</body>
+
+</html>
+

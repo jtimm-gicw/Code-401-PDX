@@ -6,8 +6,6 @@ Today, we'll be looking at ways to create an account and securely authenticate a
 
 ## Class Outline
 
-## Class Outline
-
 - Reading 6
   - Discussion
 - Demo

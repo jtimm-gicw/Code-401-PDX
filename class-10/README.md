@@ -2,7 +2,22 @@
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 10
+  - Discussion
+    - Stacks & Queues
+- Demo
+  - Stacks & Queues
+- Career Class 10
+  - Complete Personal Pitch
+
+### Classwork
+
+- Code Challenge 10
+  - Stacks & Queues
+- Partner Power Hour
+  - Report # 2
+- Career Class 10
+  - Complete Personal Pitch
 
 ## Learning Objectives
 

@@ -6,10 +6,24 @@ Using a "Bearer Token" to re-authenticate with a server following a successful l
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
-- Code Review
-- Warmup question
-- Lecture
+- Reading 7
+  - Discussion
+- Demo
+  - bearer auth
+  - Linked Lists kth to the end
+- Career Class 7
+  - Personal Pitch
+- Lab Prep
+  - Authentication
+
+### Classwork
+
+- Code Challenge 7
+  - k-th to the end
+- Career Class 7
+  - Personal Pitch
+- Labwork
+  - Lab 7
 
 ## Learning Objectives
 

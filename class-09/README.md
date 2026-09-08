@@ -4,7 +4,7 @@ Work with a group to build something amazing with your Authenticated API
 
 ## Learning Objectives
 
-Reinforce learning from this module and create a project that could potentially shorten your learning curve during midterm projects. 
+Reinforce learning from this module and create a project that could potentially shorten your learning curve during midterm projects.
 
 #### Execute
 
@@ -12,12 +12,14 @@ Reinforce learning from this module and create a project that could potentially 
 - Perform RESTful CRUD operations.
 - See [Lab-09 Instructions](https://codefellows.github.io/code-401-javascript-guide/curriculum/class-09/lab/) for project scope.
 
-## Today's Outline
+## Class Outline
 
-- Recap
-  - REST APIs
-  - Authentication and Authorization
-  - Postgres and Data Modeling
-  - Testing and TDD
+- Reading 09
+  - Read auth bookmarks for project prep
+- Code Challenge
+  - Mock Interviews
 
-<!-- To Be Completed By Instructor -->
+## Classwork
+
+- End of Module Project
+- Mock Technical Whiteboard Interviews
