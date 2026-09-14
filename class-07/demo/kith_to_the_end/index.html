@@ -2,56 +2,93 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Linked List — Kth From the End</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
+
+    :root {
+      --navy: #10172a;
+      --navy-light: #1b2544;
+      --panel: #ffffff;
+      --bg: #eef1fb;
+
+      --purple: #7c5cff;
+      --purple-deep: #5b3df0;
+      --teal: #14b8c4;
+      --orange: #ff8a3d;
+      --pink: #ff5da2;
+      --green: #24c98b;
+      --yellow: #ffc93c;
+
+      --ink: #1c2340;
+      --ink-soft: #4c5478;
+    }
 
     * {
       box-sizing: border-box;
     }
 
-
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-      line-height: 1.6;
+      font-family: 'Nunito', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
     }
 
+    h1, h2, h3 {
+      font-family: 'Fredoka', 'Nunito', sans-serif;
+    }
+
+    code, .mono {
+      font-family: 'JetBrains Mono', Consolas, monospace;
+    }
 
     /* =========================================
        HEADER
     ========================================= */
 
     header {
-      background: #1f2937;
+      background: linear-gradient(120deg, var(--navy) 0%, var(--purple-deep) 65%, var(--pink) 130%);
       color: white;
       text-align: center;
-      padding: 45px 20px;
+      padding: 55px 20px 50px;
+      position: relative;
+      overflow: hidden;
     }
 
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 201, 60, 0.25), transparent 35%),
+        radial-gradient(circle at 85% 75%, rgba(20, 184, 196, 0.3), transparent 40%);
+      pointer-events: none;
+    }
 
     header h1 {
-      margin: 0 0 10px;
-      font-size: 2.5rem;
+      margin: 0 0 12px;
+      font-size: 2.7rem;
+      font-weight: 700;
+      position: relative;
     }
-
 
     header p {
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      letter-spacing: 0.03em;
+      color: #ffe9b8;
+      font-weight: 600;
+      position: relative;
     }
-
 
     /* =========================================
        MAIN
@@ -63,22 +100,43 @@
       padding: 0 20px;
     }
 
-
     section {
-      background: white;
-      margin-bottom: 25px;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.08);
+      background: var(--panel);
+      margin-bottom: 28px;
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(28, 35, 64, 0.08);
+      border-top: 6px solid var(--purple);
     }
 
+    section:nth-of-type(2) { border-top-color: var(--teal); }
+    section:nth-of-type(3) { border-top-color: var(--orange); }
+    section:nth-of-type(4) { border-top-color: var(--pink); }
+    section:nth-of-type(5) { border-top-color: var(--green); }
+    section:nth-of-type(6) { border-top-color: var(--yellow); }
+    section:nth-of-type(7) { border-top-color: var(--purple); }
+    section:nth-of-type(8) { border-top-color: var(--teal); }
+    section:nth-of-type(9) { border-top-color: var(--orange); }
+    section:nth-of-type(10) { border-top-color: var(--pink); }
 
     h2 {
       margin-top: 0;
-      color: #1f2937;
+      color: var(--ink);
+      font-size: 1.5rem;
     }
 
+    h3 {
+      color: var(--purple-deep);
+      font-size: 1.1rem;
+    }
+
+    .important {
+      background: #fff4e5;
+      border-left: 6px solid var(--orange);
+      padding: 18px 20px;
+      border-radius: 10px;
+      font-size: 1.03rem;
+    }
 
     /* =========================================
        LINKED LIST VISUAL
@@ -87,65 +145,108 @@
     .linked-list {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       flex-wrap: wrap;
       gap: 8px;
       margin: 30px 0;
     }
 
+    .node-wrapper {
+      text-align: center;
+      min-width: 70px;
+    }
 
     .node {
       min-width: 70px;
       padding: 15px;
-      border: 3px solid #1f2937;
-      border-radius: 8px;
+      border-radius: 12px;
       text-align: center;
-      font-size: 1.3rem;
-      font-weight: bold;
-      background: white;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
     }
 
+    .node-a { background: var(--purple); }
+    .node-b { background: var(--teal); }
+    .node-c { background: var(--orange); }
+    .node-d { background: var(--pink); }
+    .node-e { background: var(--green); }
+
+    .node.target {
+      outline: 4px solid var(--navy);
+      outline-offset: 3px;
+      transform: scale(1.08);
+    }
 
     .arrow {
       font-size: 1.8rem;
       font-weight: bold;
+      padding-top: 12px;
+      color: var(--ink-soft);
     }
 
-
-    .pointer {
-      text-align: center;
-      margin-top: 5px;
-      font-size: 0.8rem;
-      font-weight: bold;
+    .label {
+      margin-top: 8px;
+      min-height: 24px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink-soft);
     }
 
+    .label.tag-head { color: var(--purple-deep); }
+    .label.tag-tail { color: var(--green); }
+    .label.tag-fast { color: var(--orange); }
+    .label.tag-slow { color: var(--teal); }
 
     /* =========================================
-       EXAMPLES
+       EXAMPLES / GRID
     ========================================= */
 
     .examples {
       display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 15px;
+      margin-top: 20px;
     }
-
 
     .example {
-      background: #f3f4f6;
+      background: #f3f4fb;
       padding: 20px;
       text-align: center;
-      border-radius: 8px;
+      border-radius: 12px;
+      border-bottom: 4px solid var(--purple);
     }
 
+    .example:nth-child(5n+2) { border-bottom-color: var(--teal); }
+    .example:nth-child(5n+3) { border-bottom-color: var(--orange); }
+    .example:nth-child(5n+4) { border-bottom-color: var(--pink); }
+    .example:nth-child(5n+5) { border-bottom-color: var(--green); }
 
     .example strong {
       display: block;
       font-size: 1.3rem;
       margin-bottom: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--ink);
     }
 
+    /* =========================================
+       FORMULA
+    ========================================= */
+
+    .formula {
+      background: var(--navy);
+      color: #ffe9b8;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.25rem;
+      margin: 20px 0;
+      border: 2px dashed var(--yellow);
+    }
 
     /* =========================================
        STEPS
@@ -155,37 +256,93 @@
       display: flex;
       align-items: flex-start;
       gap: 15px;
-      margin: 20px 0;
+      margin: 25px 0;
     }
 
-
     .step-number {
-      min-width: 38px;
-      height: 38px;
+      min-width: 42px;
+      height: 42px;
       border-radius: 50%;
-      background: #1f2937;
+      background: var(--purple);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
+      font-weight: 700;
+      font-family: 'Fredoka', sans-serif;
+      box-shadow: 0 4px 10px rgba(124, 92, 255, 0.4);
     }
 
+    .step:nth-of-type(2) .step-number { background: var(--teal); box-shadow: 0 4px 10px rgba(20,184,196,0.4); }
+    .step:nth-of-type(3) .step-number { background: var(--orange); box-shadow: 0 4px 10px rgba(255,138,61,0.4); }
+    .step:nth-of-type(4) .step-number { background: var(--pink); box-shadow: 0 4px 10px rgba(255,93,162,0.4); }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-content h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
 
     /* =========================================
        CODE
     ========================================= */
 
     .code {
-      background: #111827;
-      color: #f9fafb;
+      background: var(--navy);
+      color: #eef1fb;
       padding: 20px;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow-x: auto;
-      font-family: Consolas, monospace;
+      font-family: 'JetBrains Mono', monospace;
       margin: 15px 0;
+      font-size: 0.98rem;
     }
 
+    .code .comment {
+      color: #9fb3ff;
+    }
+
+    .code .kw { color: var(--pink); }
+    .code .fn { color: var(--teal); }
+    .code .num { color: var(--yellow); }
+
+    /* =========================================
+       WALK THROUGH BOX
+    ========================================= */
+
+    .walk-box {
+      background: #f3f4fb;
+      padding: 25px;
+      border-radius: 14px;
+      margin: 20px 0;
+      border: 2px solid #dfe3f7;
+    }
+
+    .walk-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 15px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+
+    .answer-box {
+      background: #e3fbf1;
+      border: 3px solid var(--green);
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 1.3rem;
+      margin-top: 20px;
+      font-weight: 700;
+      color: #0a7a56;
+    }
 
     /* =========================================
        EDGE CASES
@@ -197,31 +354,42 @@
       gap: 20px;
     }
 
-
     .edge {
-      border: 2px solid #d1d5db;
-      border-radius: 8px;
+      border-radius: 14px;
       padding: 20px;
+      color: white;
     }
 
+    .edge:nth-child(1) { background: linear-gradient(160deg, var(--purple), var(--purple-deep)); }
+    .edge:nth-child(2) { background: linear-gradient(160deg, var(--teal), #0d8b95); }
 
     .edge h3 {
       margin-top: 0;
+      color: white;
     }
 
+    .edge .code {
+      background: rgba(0,0,0,0.25);
+    }
 
     /* =========================================
        CONSOLE SECTION
     ========================================= */
 
     .console-box {
-      background: #111827;
-      color: #f9fafb;
+      background: var(--navy);
+      color: #eef1fb;
       padding: 20px;
-      border-radius: 8px;
-      font-family: Consolas, monospace;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      overflow-x: auto;
+      border-left: 6px solid var(--teal);
     }
 
+    .console-box .step-label {
+      color: var(--yellow);
+      font-weight: 700;
+    }
 
     /* =========================================
        FOOTER
@@ -229,10 +397,10 @@
 
     footer {
       text-align: center;
-      padding: 30px;
-      color: #666;
+      padding: 34px;
+      color: var(--ink-soft);
+      font-weight: 600;
     }
-
 
     /* =========================================
        MOBILE
@@ -244,7 +412,6 @@
         grid-template-columns: 1fr;
       }
 
-
       header h1 {
         font-size: 1.9rem;
       }
@@ -252,119 +419,65 @@
     }
 
   </style>
-
 </head>
 
 
 <body>
 
-
-  <!-- =========================================
-       HEADER
-  ========================================= -->
-
   <header>
-
     <h1>Linked List: Kth From the End</h1>
-
-    <p>
-      Using two pointers to find a node from the tail
-    </p>
-
+    <p>COUNT → CALCULATE → WALK → ANSWER</p>
   </header>
-
 
 
   <main>
 
-
-    <!-- =========================================
-         SECTION 1 — CONCEPT
-    ========================================= -->
+    <!-- ==================================================
+         SECTION 1 — GOAL
+    =================================================== -->
 
     <section>
 
-      <h2>What Does "Kth From the End" Mean?</h2>
+      <h2>🎯 Our Goal</h2>
 
-      <p>
-        We want to find a node by counting backward
-        from the <strong>tail</strong> of the linked list.
-      </p>
-
+      <div class="important">
+        We want to find a node by counting from the
+        <strong>end</strong> of a linked list.
+      </div>
 
       <div class="linked-list">
 
-        <div>
-
-          <div class="node">A</div>
-
-          <div class="pointer">
-            HEAD
-          </div>
-
+        <div class="node-wrapper">
+          <div class="node node-a">A</div>
+          <div class="label tag-head">HEAD</div>
         </div>
-
 
         <div class="arrow">→</div>
 
-
-        <div class="node">B</div>
+        <div class="node-wrapper">
+          <div class="node node-b">B</div>
+          <div class="label">&nbsp;</div>
+        </div>
 
         <div class="arrow">→</div>
 
-        <div class="node">C</div>
+        <div class="node-wrapper">
+          <div class="node node-c">C</div>
+          <div class="label">&nbsp;</div>
+        </div>
 
         <div class="arrow">→</div>
 
-        <div class="node">D</div>
-
+        <div class="node-wrapper">
+          <div class="node node-d">D</div>
+          <div class="label">&nbsp;</div>
+        </div>
 
         <div class="arrow">→</div>
 
-
-        <div>
-
-          <div class="node">E</div>
-
-          <div class="pointer">
-            TAIL
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <p>
-        With this list:
-      </p>
-
-
-      <div class="examples">
-
-        <div class="example">
-          <strong>k = 0</strong>
-          E
-        </div>
-
-        <div class="example">
-          <strong>k = 1</strong>
-          D
-        </div>
-
-        <div class="example">
-          <strong>k = 2</strong>
-          C
-        </div>
-
-        <div class="example">
-          <strong>k = 3</strong>
-          B
-        </div>
-
-        <div class="example">
-          <strong>k = 4</strong>
-          A
+        <div class="node-wrapper">
+          <div class="node node-e">E</div>
+          <div class="label tag-tail">TAIL</div>
         </div>
 
       </div>
@@ -372,28 +485,78 @@
     </section>
 
 
-
-    <!-- =========================================
-         SECTION 2 — TWO POINTERS
-    ========================================= -->
+    <!-- ==================================================
+         SECTION 2 — WHAT K MEANS
+    =================================================== -->
 
     <section>
 
-      <h2>The Two-Pointer Strategy</h2>
+      <h2>🔢 What Does <code>k</code> Mean?</h2>
 
       <p>
-        We can solve this problem efficiently by using
-        two pointers: <strong>FAST</strong> and
-        <strong>SLOW</strong>.
+        <code>k</code> tells us how far the target is from
+        the <strong>tail</strong>.
       </p>
 
+      <div class="examples">
+
+        <div class="example">
+          <strong>k = 0</strong>
+          Last node → E
+        </div>
+
+        <div class="example">
+          <strong>k = 1</strong>
+          One before last → D
+        </div>
+
+        <div class="example">
+          <strong>k = 2</strong>
+          Two before last → C
+        </div>
+
+        <div class="example">
+          <strong>k = 3</strong>
+          Three before last → B
+        </div>
+
+        <div class="example">
+          <strong>k = 4</strong>
+          Four before last → A
+        </div>
+
+      </div>
+
+      <div class="important">
+        <strong>Important:</strong>
+        <code>k = 0</code> means the tail itself.
+        We start counting at zero.
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         SECTION 3 — SIMPLE STRATEGY
+    =================================================== -->
+
+    <section>
+
+      <h2>🧠 The Simple Strategy</h2>
+
+      <p>
+        We can turn the problem into three easy jobs:
+      </p>
 
       <div class="step">
 
         <div class="step-number">1</div>
 
-        <div>
-          Start both FAST and SLOW at the head.
+        <div class="step-content">
+          <h3>COUNT</h3>
+          <p>
+            How many nodes are in the linked list?
+          </p>
         </div>
 
       </div>
@@ -403,9 +566,12 @@
 
         <div class="step-number">2</div>
 
-        <div>
-          Move FAST forward by <strong>k</strong>
-          positions.
+        <div class="step-content">
+          <h3>CALCULATE</h3>
+          <p>
+            Use the number of nodes and <code>k</code> to
+            find the target's position from the HEAD.
+          </p>
         </div>
 
       </div>
@@ -415,35 +581,33 @@
 
         <div class="step-number">3</div>
 
-        <div>
-          Move FAST and SLOW together.
+        <div class="step-content">
+          <h3>WALK</h3>
+          <p>
+            Start at HEAD and walk to that position.
+          </p>
         </div>
 
       </div>
 
-
-      <div class="step">
-
-        <div class="step-number">4</div>
-
-        <div>
-          When FAST reaches the tail, SLOW is pointing
-          at the kth node from the end.
-        </div>
-
+      <div class="formula">
+        target index = length - 1 - k
       </div>
+
+      <p>
+        Then return the value at that position.
+      </p>
 
     </section>
 
 
-
-    <!-- =========================================
-         SECTION 3 — WALK THROUGH
-    ========================================= -->
+    <!-- ==================================================
+         SECTION 4 — WALK THROUGH
+    =================================================== -->
 
     <section>
 
-      <h2>Walk Through: k = 2</h2>
+      <h2>🚶 Walk Through: <code>k = 2</code></h2>
 
       <p>
         Let's find the node that is
@@ -451,228 +615,274 @@
       </p>
 
 
-      <h3>Step 1: Start Both Pointers</h3>
-
-
-      <div class="linked-list">
-
-        <div>
-
-          <div class="node">A</div>
-
-          <div class="pointer">
-            FAST + SLOW
-          </div>
-
-        </div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">B</div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">C</div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">D</div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">E</div>
-
-      </div>
-
-
-      <h3>Step 2: Move FAST 2 Positions</h3>
-
-
-      <div class="linked-list">
-
-        <div>
-
-          <div class="node">A</div>
-
-          <div class="pointer">
-            SLOW
-          </div>
-
-        </div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">B</div>
-
-        <div class="arrow">→</div>
-
-        <div>
-
-          <div class="node">C</div>
-
-          <div class="pointer">
-            FAST
-          </div>
-
-        </div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">D</div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">E</div>
-
-      </div>
-
-
-      <h3>Step 3: Move Both Together</h3>
-
+      <h3>STEP 1 — COUNT</h3>
 
       <p>
-        FAST and SLOW now move together until FAST reaches
-        the tail.
+        First, count the nodes.
+      </p>
+
+      <div class="linked-list">
+
+        <div class="node-wrapper">
+          <div class="node node-a">A</div>
+          <div class="label">1</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-b">B</div>
+          <div class="label">2</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-c">C</div>
+          <div class="label">3</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-d">D</div>
+          <div class="label">4</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-e">E</div>
+          <div class="label">5</div>
+        </div>
+
+      </div>
+
+      <p>
+        There are <strong>5 nodes</strong>.
       </p>
 
 
-      <div class="linked-list">
-
-        <div class="node">A</div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">B</div>
-
-        <div class="arrow">→</div>
-
-        <div>
-
-          <div class="node">C</div>
-
-          <div class="pointer">
-            SLOW
-          </div>
-
-        </div>
-
-        <div class="arrow">→</div>
-
-        <div class="node">D</div>
-
-        <div class="arrow">→</div>
-
-        <div>
-
-          <div class="node">E</div>
-
-          <div class="pointer">
-            FAST / TAIL
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <h3>Step 4: Return SLOW</h3>
+      <h3>STEP 2 — CALCULATE</h3>
 
       <p>
-        FAST has reached the tail, so SLOW is pointing at
-        <strong>C</strong>.
+        Now calculate where the target is when we start
+        counting from the HEAD.
       </p>
 
-
-      <div class="code">
-
-        list.kthFromEnd(2);
-
+      <div class="formula">
+        target index = 5 - 1 - 2
         <br><br>
+        target index = 2
+      </div>
 
-        // Returns: "C"
+      <p>
+        So we need to walk to index <strong>2</strong>.
+      </p>
 
+
+      <div class="linked-list">
+
+        <div class="node-wrapper">
+          <div class="node node-a">A</div>
+          <div class="label">index 0</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-b">B</div>
+          <div class="label">index 1</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-c target">C</div>
+          <div class="label"><strong>index 2</strong></div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-d">D</div>
+          <div class="label">index 3</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-e">E</div>
+          <div class="label">index 4</div>
+        </div>
+
+      </div>
+
+
+      <h3>STEP 3 — WALK</h3>
+
+      <p>
+        Start at HEAD and move forward until we reach
+        index 2.
+      </p>
+
+      <div class="walk-box">
+
+        <div class="walk-row">
+          <strong>Start:</strong>
+          A
+        </div>
+
+        <div class="walk-row">
+          A → B
+          <strong>1 step</strong>
+        </div>
+
+        <div class="walk-row">
+          B → C
+          <strong>2 steps</strong>
+        </div>
+
+      </div>
+
+
+      <div class="answer-box">
+        🎯 ANSWER: <strong>C</strong>
       </div>
 
     </section>
 
 
-
-    <!-- =========================================
-         SECTION 4 — CODE
-    ========================================= -->
+    <!-- ==================================================
+         SECTION 5 — CODE
+    =================================================== -->
 
     <section>
 
-      <h2>The Important Part of the Code</h2>
+      <h2>💻 The Code</h2>
 
       <p>
-        The key idea is to keep FAST exactly
-        <strong>k positions ahead</strong> of SLOW.
+        Notice how the code follows the same three ideas
+        we just used on the whiteboard.
       </p>
 
-
       <div class="code">
+        <span class="comment">// 1. COUNT</span><br>
+        <span class="kw">const</span> length = <span class="fn">this.countNodes()</span>;<br><br>
 
-        let fast = this.head;
-        <br>
-        let slow = this.head;
+        <span class="comment">// 2. CALCULATE</span><br>
+        <span class="kw">const</span> targetIndex = length - <span class="num">1</span> - k;<br><br>
 
+        <span class="comment">// 3. WALK</span><br>
+        <span class="kw">let</span> current = this.head;<br><br>
+
+        <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; targetIndex; i++) {<br>
+        &nbsp;&nbsp;current = current.next;<br>
+        }<br><br>
+
+        <span class="comment">// 4. RETURN</span><br>
+        <span class="kw">return</span> current.value;
+      </div>
+
+      <div class="important">
+        <strong>Teacher tip:</strong>
+        Have students say the four actions out loud:
         <br><br>
-
-        // Move FAST k positions
-        <br>
-
-        for (let i = 0; i &lt; k; i++) {
-
-        <br>
-        &nbsp;&nbsp;fast = fast.next;
-
-        <br>
-        }
-
-        <br><br>
-
-        // Move both pointers
-        <br>
-
-        while (fast.next !== null) {
-
-        <br>
-        &nbsp;&nbsp;fast = fast.next;
-        <br>
-        &nbsp;&nbsp;slow = slow.next;
-
-        <br>
-        }
-
-        <br><br>
-
-        return slow.value;
-
+        <strong>COUNT → CALCULATE → WALK → RETURN</strong>
       </div>
 
     </section>
 
 
-
-    <!-- =========================================
-         SECTION 5 — EDGE CASES
-    ========================================= -->
+    <!-- ==================================================
+         SECTION 6 — WHY -1?
+    =================================================== -->
 
     <section>
 
-      <h2>Edge Cases</h2>
+      <h2>❓ Why Do We Subtract 1?</h2>
 
+      <p>
+        This is usually the trickiest part of the formula.
+      </p>
+
+      <p>
+        Remember that indexes start at <strong>0</strong>.
+      </p>
+
+      <div class="linked-list">
+
+        <div class="node-wrapper">
+          <div class="node node-a">A</div>
+          <div class="label">index 0</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-b">B</div>
+          <div class="label">index 1</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-c">C</div>
+          <div class="label">index 2</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-d">D</div>
+          <div class="label">index 3</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node-wrapper">
+          <div class="node node-e">E</div>
+          <div class="label">index 4</div>
+        </div>
+
+      </div>
+
+      <p>
+        Five nodes means the last index is
+        <strong>4</strong>, not 5.
+      </p>
+
+      <div class="formula">
+        5 nodes → last index is 5 - 1 → index 4
+      </div>
+
+      <p>
+        That's why our formula is:
+      </p>
+
+      <div class="formula">
+        length - 1 - k
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         SECTION 7 — EDGE CASES
+    =================================================== -->
+
+    <section>
+
+      <h2>⚠️ Edge Cases</h2>
 
       <div class="edge-cases">
 
-
         <div class="edge">
 
-          <h3>Edge Case #1: k Is Too Large</h3>
+          <h3>1. k Is Too Large</h3>
 
           <p>
-            Our list contains:
+            Our list has 5 nodes:
           </p>
 
           <div class="code">
@@ -680,217 +890,193 @@
           </div>
 
           <p>
-            But we ask for:
+            Valid values are:
           </p>
 
           <div class="code">
-            list.kthFromEnd(5);
+            k = 0, 1, 2, 3, 4
           </div>
 
           <p>
-            There is no valid node at that position.
-            The method returns <strong>null</strong>.
+            If we ask for <code>k = 5</code>, there is no
+            valid node.
           </p>
 
         </div>
-
 
 
         <div class="edge">
 
-          <h3>Edge Case #2: Empty List</h3>
+          <h3>2. Empty List</h3>
 
           <p>
-            What happens when the list contains no nodes?
+            What if the linked list has no nodes?
           </p>
 
           <div class="code">
-            const list = new LinkedList();
-
-            <br><br>
-
-            list.kthFromEnd(0);
+            head → null
           </div>
 
           <p>
-            There is no node to return, so the method
-            safely returns <strong>null</strong>.
+            There is nothing to find, so the method returns
+            <strong>null</strong>.
           </p>
 
         </div>
 
-
       </div>
 
     </section>
 
 
-
-    <!-- =========================================
-         SECTION 6 — CONSOLE
-    ========================================= -->
+    <!-- ==================================================
+         SECTION 8 — CONSOLE
+    =================================================== -->
 
     <section>
 
-      <h2>Watch the Algorithm in the Console</h2>
+      <h2>🖥️ Watch the Algorithm in the Console</h2>
 
       <p>
-        Open your browser's Developer Tools and select
-        the <strong>Console</strong> tab.
+        Open your browser Developer Tools and select
+        <strong>Console</strong>.
       </p>
 
+      <p>
+        The JavaScript shows the same process:
+      </p>
 
       <div class="console-box">
-
-        STEP 1
+        <span class="step-label">STEP 1 — COUNT</span>
         <br>
-        FAST starts at A
-        <br>
-        SLOW starts at A
-
+        The linked list has 5 nodes.
         <br><br>
 
-        STEP 2
+        <span class="step-label">STEP 2 — CALCULATE</span>
         <br>
-        Move FAST k positions forward
-
+        length = 5
+        <br>
+        k = 2
+        <br>
+        target index = 5 - 1 - 2
+        <br>
+        target index = 2
         <br><br>
 
-        STEP 3
+        <span class="step-label">STEP 3 — WALK</span>
         <br>
-        Move FAST and SLOW together
-
+        Step 1: A → B
+        <br>
+        Step 2: B → C
         <br><br>
 
-        STEP 4
+        <span class="step-label">STEP 4 — ANSWER</span>
         <br>
-        FAST reaches the tail
-        <br>
-        SLOW is the answer
-
+        ANSWER: C
       </div>
-
-
-      <p>
-        The JavaScript file contains
-        <strong>console.log()</strong> statements that
-        show each step while the algorithm runs.
-      </p>
 
     </section>
 
 
-
-    <!-- =========================================
-         SECTION 7 — COMPLEXITY
-    ========================================= -->
+    <!-- ==================================================
+         SECTION 9 — BIG O
+    =================================================== -->
 
     <section>
 
-      <h2>Big-O Complexity</h2>
-
+      <h2>📈 Big-O Complexity</h2>
 
       <div class="examples">
-
 
         <div class="example">
 
           <strong>Time: O(n)</strong>
 
           <p>
-            We move through the linked list once.
+            We walk through the list to count it and then
+            walk to the target.
           </p>
 
         </div>
-
 
         <div class="example">
 
           <strong>Space: O(1)</strong>
 
           <p>
-            We only use two pointers.
+            We only use a few variables. We do not create
+            another list.
           </p>
 
         </div>
 
+      </div>
 
+      <div class="important">
+        <strong>Interview note:</strong>
+        FAST & SLOW can solve this in one pass, but students
+        do not need that technique to understand the basic
+        problem first.
       </div>
 
     </section>
 
 
-
-    <!-- =========================================
-         SECTION 8 — STUDENT CHALLENGE
-    ========================================= -->
+    <!-- ==================================================
+         SECTION 10 — STUDENT PRACTICE
+    =================================================== -->
 
     <section>
 
-      <h2>Student Practice</h2>
+      <h2>🎯 Student Practice</h2>
 
       <ol>
 
         <li>
-          Create a linked list containing numbers.
+          Draw a linked list:
+          <strong>A → B → C → D → E</strong>
         </li>
 
         <li>
-          Try different values of <strong>k</strong>.
+          How many nodes are there?
         </li>
 
         <li>
-          Predict the answer before running the code.
+          What is the last index?
         </li>
 
         <li>
-          Open the browser console and watch the
-          pointers move.
+          If <code>k = 2</code>, what is the target index?
         </li>
 
         <li>
-          Try <strong>k = 0</strong>.
+          Start at HEAD and walk to that index.
         </li>
 
         <li>
-          Try a value of <strong>k</strong> that is too large.
-        </li>
-
-        <li>
-          Try an empty linked list.
+          What value should the method return?
         </li>
 
       </ol>
 
-    </section>
+      <div class="formula">
+        COUNT → CALCULATE → WALK → RETURN
+      </div>
 
+    </section>
 
   </main>
 
 
-
-  <!-- =========================================
-       FOOTER
-  ========================================= -->
-
   <footer>
-
     <p>
       Code Challenge 7 — Linked List: Kth From the End
     </p>
-
   </footer>
 
 
-
-  <!-- =========================================
-       JAVASCRIPT CONNECTION
-  ========================================= -->
-
   <script src="linked-list-kth.js"></script>
-
 
 </body>
 
 </html>
-

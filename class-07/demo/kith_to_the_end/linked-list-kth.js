@@ -3,15 +3,17 @@
 CODE CHALLENGE 7: LINKED LIST — KTH FROM THE END
 ==========================================================
 
-Goal:
-Find the value of the node that is k places from the
-END (tail) of a linked list.
+GOAL
+----
+Find the value of the node that is k places from the END
+of a linked list.
 
-Remember:
+The simple way to think about this is:
 
-k = 0 → last node
-k = 1 → one node before the last
-k = 2 → two nodes before the last
+1. COUNT the nodes.
+2. CALCULATE the target position.
+3. WALK to the target.
+4. RETURN the value.
 
 Example:
 
@@ -23,19 +25,7 @@ k = 2 → C
 k = 3 → B
 k = 4 → A
 
-
-THE TWO-POINTER APPROACH
-
-We use two pointers:
-
-FAST
-SLOW
-
-1. Start both pointers at the HEAD.
-2. Move FAST forward k positions.
-3. Move FAST and SLOW together.
-4. When FAST reaches the tail, SLOW is the answer.
-
+IMPORTANT:
 Time Complexity: O(n)
 Space Complexity: O(1)
 */
@@ -71,7 +61,8 @@ class LinkedList {
   append(value) {
     const newNode = new Node(value);
 
-    // If the list is empty, make the new node the head.
+    // If the list is empty,
+    // the new node becomes the head.
     if (this.head === null) {
       this.head = newNode;
       return;
@@ -80,13 +71,32 @@ class LinkedList {
     // Start at the head.
     let current = this.head;
 
-    // Move until we reach the last node.
+    // Walk until we reach the last node.
     while (current.next !== null) {
       current = current.next;
     }
 
-    // Add the new node.
+    // Connect the new node to the end.
     current.next = newNode;
+  }
+
+
+  // --------------------------------------------------------
+  // COUNT NODES
+  // Find out how many nodes are in the list.
+  // --------------------------------------------------------
+
+  countNodes() {
+
+    let current = this.head;
+    let count = 0;
+
+    while (current !== null) {
+      count++;
+      current = current.next;
+    }
+
+    return count;
   }
 
 
@@ -102,10 +112,11 @@ class LinkedList {
 
 
     // ------------------------------------------------------
-    // EDGE CASE #1: EMPTY LIST
+    // CHECK #1: EMPTY LIST
     // ------------------------------------------------------
 
     if (this.head === null) {
+
       console.log("The linked list is empty.");
       console.log("There is no node to return.");
 
@@ -114,10 +125,11 @@ class LinkedList {
 
 
     // ------------------------------------------------------
-    // INVALID K
+    // CHECK #2: INVALID K
     // ------------------------------------------------------
 
     if (k < 0) {
+
       console.log("ERROR: k cannot be negative.");
 
       return null;
@@ -125,87 +137,94 @@ class LinkedList {
 
 
     // ------------------------------------------------------
-    // STEP 1: CREATE TWO POINTERS
+    // STEP 1: COUNT
     // ------------------------------------------------------
 
-    let fast = this.head;
-    let slow = this.head;
+    const length = this.countNodes();
 
-    console.log("\nSTEP 1");
-    console.log("--------------------");
-    console.log(`FAST starts at: ${fast.value}`);
-    console.log(`SLOW starts at: ${slow.value}`);
-
-
-    // ------------------------------------------------------
-    // STEP 2: MOVE FAST k POSITIONS
-    // ------------------------------------------------------
-
-    console.log("\nSTEP 2");
-    console.log("--------------------");
-    console.log(`Move FAST ${k} position(s) forward.`);
-
-    for (let i = 0; i < k; i++) {
-
-      // If FAST cannot move another position,
-      // k is too large.
-      if (fast.next === null) {
-        console.log("\nERROR:");
-        console.log("k is larger than the valid range.");
-        console.log("No node exists at this position.");
-
-        return null;
-      }
-
-      console.log(
-        `FAST: ${fast.value} → ${fast.next.value}`
-      );
-
-      fast = fast.next;
-    }
-
-
-    console.log(`FAST is now at: ${fast.value}`);
-    console.log(`SLOW is still at: ${slow.value}`);
-
-
-    // ------------------------------------------------------
-    // STEP 3: MOVE BOTH POINTERS
-    // ------------------------------------------------------
-
-    console.log("\nSTEP 3");
+    console.log("\nSTEP 1 — COUNT");
     console.log("--------------------");
     console.log(
-      "Move FAST and SLOW together until FAST reaches the tail."
+      `The linked list has ${length} nodes.`
     );
 
-    while (fast.next !== null) {
 
+    // ------------------------------------------------------
+    // CHECK #3: K IS TOO LARGE
+    // ------------------------------------------------------
+
+    if (k >= length) {
+
+      console.log("\nERROR");
+      console.log(`k = ${k} is too large.`);
       console.log(
-        `FAST = ${fast.value} | SLOW = ${slow.value}`
+        `Valid k values are 0 through ${length - 1}.`
       );
 
-      fast = fast.next;
-      slow = slow.next;
+      return null;
     }
 
 
     // ------------------------------------------------------
-    // STEP 4: FIND THE ANSWER
+    // STEP 2: CALCULATE
     // ------------------------------------------------------
 
-    console.log("\nSTEP 4");
+    const targetIndex = length - 1 - k;
+
+    console.log("\nSTEP 2 — CALCULATE");
     console.log("--------------------");
 
-    console.log(`FAST reached the tail: ${fast.value}`);
+    console.log(`length = ${length}`);
+    console.log(`k = ${k}`);
 
     console.log(
-      `SLOW is ${k} position(s) from the tail.`
+      `target index = ${length} - 1 - ${k}`
     );
 
-    console.log(`ANSWER: ${slow.value}`);
+    console.log(
+      `target index = ${targetIndex}`
+    );
 
-    return slow.value;
+
+    // ------------------------------------------------------
+    // STEP 3: WALK
+    // ------------------------------------------------------
+
+    console.log("\nSTEP 3 — WALK");
+    console.log("--------------------");
+
+    console.log(
+      `Walk ${targetIndex} step(s) from HEAD.`
+    );
+
+    let current = this.head;
+
+    for (let i = 0; i < targetIndex; i++) {
+
+      console.log(
+        `Step ${i + 1}: ${current.value} → ${current.next.value}`
+      );
+
+      current = current.next;
+    }
+
+
+    // ------------------------------------------------------
+    // STEP 4: RETURN ANSWER
+    // ------------------------------------------------------
+
+    console.log("\nSTEP 4 — ANSWER");
+    console.log("--------------------");
+
+    console.log(
+      `The target node is: ${current.value}`
+    );
+
+    console.log(
+      `ANSWER: ${current.value}`
+    );
+
+    return current.value;
   }
 }
 
@@ -221,7 +240,9 @@ function displayList(list) {
   const values = [];
 
   while (current !== null) {
+
     values.push(current.value);
+
     current = current.next;
   }
 
@@ -232,7 +253,7 @@ function displayList(list) {
 
 
 // ==========================================================
-// EXAMPLE 1
+// EXAMPLE 1 — k = 0
 // ==========================================================
 
 console.log("\n\n######################################");
@@ -255,7 +276,7 @@ list1.kthFromEnd(0);
 
 
 // ==========================================================
-// EXAMPLE 2
+// EXAMPLE 2 — k = 1
 // ==========================================================
 
 console.log("\n\n######################################");
@@ -270,7 +291,7 @@ list1.kthFromEnd(1);
 
 
 // ==========================================================
-// EXAMPLE 3
+// EXAMPLE 3 — k = 2
 // ==========================================================
 
 console.log("\n\n######################################");
@@ -285,7 +306,7 @@ list1.kthFromEnd(2);
 
 
 // ==========================================================
-// EXAMPLE 4
+// EXAMPLE 4 — k = 4
 // ==========================================================
 
 console.log("\n\n######################################");
@@ -300,8 +321,7 @@ list1.kthFromEnd(4);
 
 
 // ==========================================================
-// EDGE CASE #1
-// k IS TOO LARGE
+// EDGE CASE #1 — k IS TOO LARGE
 // ==========================================================
 
 console.log("\n\n######################################");
@@ -311,15 +331,20 @@ console.log("######################################");
 displayList(list1);
 
 console.log("\nTrying k = 5");
-console.log("The list contains only 5 nodes.");
-console.log("Valid k values are 0 through 4.");
+
+console.log(
+  "The list contains 5 nodes."
+);
+
+console.log(
+  "Valid k values are 0 through 4."
+);
 
 list1.kthFromEnd(5);
 
 
 // ==========================================================
-// EDGE CASE #2
-// EMPTY LIST
+// EDGE CASE #2 — EMPTY LIST
 // ==========================================================
 
 console.log("\n\n######################################");
@@ -336,7 +361,7 @@ emptyList.kthFromEnd(0);
 
 
 // ==========================================================
-// EXTRA EXAMPLE WITH NUMBERS
+// EXTRA EXAMPLE — NUMBERS
 // ==========================================================
 
 console.log("\n\n######################################");
@@ -369,30 +394,63 @@ console.log("STUDENT SUMMARY");
 console.log("======================================");
 
 console.log(`
-The kthFromEnd() method finds a node based on its
-distance from the tail.
+
+KTH FROM THE END
+
+Think:
+
+1. COUNT the nodes.
+2. CALCULATE the target index.
+3. WALK from HEAD to that index.
+4. RETURN the value.
+
+
+Example:
+
+A → B → C → D → E
+
+There are 5 nodes.
+
+If k = 2:
+
+target index = 5 - 1 - 2
+
+target index = 2
+
+
+Index:
+
+0    1    2    3    4
+
+A → B → C → D → E
+          ↑
+        ANSWER
+
+
+So:
+
+list.kthFromEnd(2)
+
+returns:
+
+C
+
 
 Remember:
 
-k = 0 → tail
-k = 1 → one node before tail
-k = 2 → two nodes before tail
+k = 0 → last node
+k = 1 → one node before last
+k = 2 → two nodes before last
 
-TWO-POINTER PROCESS:
 
-1. FAST and SLOW start at HEAD.
-2. Move FAST k positions forward.
-3. Move FAST and SLOW together.
-4. When FAST reaches the tail,
-   SLOW points to the answer.
+Simple Process:
 
-Advantages:
+COUNT → CALCULATE → WALK → RETURN
 
-• We do not reverse the list.
-• We do not create another list.
-• We only use two pointers.
 
 Time Complexity: O(n)
+
 Space Complexity: O(1)
+
 `);
 
