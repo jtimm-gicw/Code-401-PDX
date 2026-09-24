@@ -17,6 +17,7 @@ Given a proper and valid user with a set of permissions, we can grant or restric
   - Your Why?
 - Lab Prep
   - Role-based auth
+- Briefly discuss Class 9 Group Project
 
 ### Classwork
 

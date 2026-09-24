@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PseudoQueue: A Queue Using Two Stacks</title>
+  <style>
+    :root {
+      --navy: #102a43;
+      --blue: #1f6feb;
+      --light-blue: #eaf3ff;
+      --green: #157347;
+      --light-green: #e8f7ef;
+      --orange: #b45309;
+      --light-orange: #fff4df;
+      --purple: #6f42c1;
+      --light-purple: #f2ebff;
+      --red: #b42318;
+      --gray: #52606d;
+      --light: #f7f9fc;
+      --white: #ffffff;
+      --border: #cbd5e1;
+      --code: #0b1220;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.65;
+      color: #172b4d;
+      background: #eef3f8;
+      font-size: 18px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #102a43, #1f6feb);
+      color: white;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    header h1 { margin: 0 0 12px; font-size: clamp(2rem, 5vw, 3.5rem); }
+    header p { max-width: 850px; margin: auto; font-size: 1.2rem; }
+
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 12px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    nav a {
+      display: inline-block;
+      color: var(--navy);
+      font-weight: bold;
+      margin: 6px 10px;
+      text-decoration: none;
+    }
+
+    main { max-width: 1050px; margin: auto; padding: 28px 20px 60px; }
+
+    section {
+      background: white;
+      margin: 24px 0;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(16, 42, 67, .08);
+    }
+
+    h2 { color: var(--navy); border-bottom: 3px solid var(--blue); padding-bottom: 8px; }
+    h3 { color: var(--purple); margin-top: 28px; }
+
+    .goal, .why, .remember, .milestone {
+      padding: 18px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+    }
+
+    .goal { background: var(--light-blue); border-left: 7px solid var(--blue); }
+    .why { background: var(--light-orange); border-left: 7px solid var(--orange); }
+    .remember { background: var(--light-green); border-left: 7px solid var(--green); }
+    .milestone { background: var(--light-purple); border-left: 7px solid var(--purple); }
+
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      background: var(--light);
+    }
+
+    .visual {
+      font-family: "Courier New", monospace;
+      white-space: pre;
+      overflow-x: auto;
+      background: #f8fafc;
+      border: 2px dashed #94a3b8;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+    }
+
+    pre {
+      background: var(--code);
+      color: #d8f3dc;
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+
+    code { font-family: Consolas, "Courier New", monospace; }
+
+    .console {
+      background: #111827;
+      color: #f9fafb;
+      padding: 18px;
+      border-radius: 10px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    .console strong { color: #86efac; }
+
+    .steps li { margin-bottom: 10px; }
+
+    .real-world li { margin-bottom: 14px; }
+
+    .big-idea {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding: 24px;
+      background: var(--navy);
+      color: white;
+      border-radius: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: var(--gray);
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 17px; }
+      section { padding: 20px; }
+      nav { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📥 PseudoQueue</h1>
+    <p>Learning how to make a Queue using two Stacks — one small step at a time.</p>
+  </header>
+
+  <nav>
+    <a href="#idea">The Idea</a>
+    <a href="#why">Why Use It?</a>
+    <a href="#stacks">Stacks</a>
+    <a href="#queue">Queue</a>
+    <a href="#build">Build It</a>
+    <a href="#test">Test It</a>
+  </nav>
+
+  <main>
+    <section id="idea">
+      <h2>1. 🌱 Start With the Big Idea</h2>
+
+      <div class="goal">
+        <strong>🎯 Goal:</strong> We want to build something that behaves like a
+        <strong>Queue</strong>, but we are only allowed to use <strong>two Stacks</strong>.
+      </div>
+
+      <p>
+        This is called a <strong>PseudoQueue</strong>. “Pseudo” means something that
+        acts like something else. Our PseudoQueue will <em>act like a Queue</em>,
+        even though it is built from Stacks.
+      </p>
+
+      <div class="compare">
+        <div class="card">
+          <h3>📚 Stack</h3>
+          <p><strong>Last In, First Out (LIFO)</strong></p>
+          <p>Think of a stack of cafeteria trays. The last tray placed on top is the first tray removed.</p>
+        </div>
+
+        <div class="card">
+          <h3>🚶 Queue</h3>
+          <p><strong>First In, First Out (FIFO)</strong></p>
+          <p>Think of a checkout line. The first person to enter the line should be the first person served.</p>
+        </div>
+      </div>
+
+      <div class="remember">
+        <strong>💡 Main challenge:</strong> A Stack naturally gives us the newest
+        item first. A Queue needs to give us the oldest item first. We will use a
+        second Stack to reverse the order.
+      </div>
+    </section>
+
+    <section id="why">
+      <h2>2. 🌎 Why Would We Learn This?</h2>
+
+      <p>
+        In a real application, you would normally use the data structure or tool
+        that best fits the job. This exercise is useful because it teaches us how
+        data can be rearranged when the tools we have do not directly match the
+        behavior we need.
+      </p>
+
+      <div class="why">
+        <strong>Why two Stacks?</strong> Moving items from one Stack to another
+        reverses their order. That reversal lets us turn LIFO behavior into FIFO behavior.
+      </div>
+
+      <ul class="real-world">
+        <li><strong>Task processing:</strong> jobs may need to be handled in the same order they arrived.</li>
+        <li><strong>Customer requests:</strong> support tickets or requests can be processed oldest-first.</li>
+        <li><strong>Printing:</strong> print jobs are commonly handled in arrival order.</li>
+        <li><strong>Messaging:</strong> applications often need to preserve the order in which messages arrive.</li>
+        <li><strong>Learning problem solving:</strong> sometimes programmers must build one behavior from simpler tools already available to them.</li>
+      </ul>
+
+      <p>
+        The important lesson is not that every real queue should literally be
+        built from two Stacks. The lesson is understanding <strong>how data
+        structures control the order in which data is added and removed.</strong>
+      </p>
+    </section>
+
+    <section id="stacks">
+      <h2>3. 📚 Milestone 1 — Remember How a Stack Works</h2>
+
+      <div class="milestone">
+        <strong>Milestone:</strong> Create a Stack and practice <code>push()</code>,
+        <code>pop()</code>, and <code>peek()</code>.
+      </div>
+
+      <p>We will use our own simple Stack class. It stores Nodes linked together from the top.</p>
+
+      <pre><code>const practiceStack = new Stack();
+
+practiceStack.push("Book A");
+practiceStack.push("Book B");
+practiceStack.push("Book C");
+
+console.log("Top item:", practiceStack.peek());
+console.log("Removed:", practiceStack.pop());
+console.log("New top:", practiceStack.peek());</code></pre>
+
+      <div class="console"><strong>Expected console:</strong>
+Top item: Book C
+Removed: Book C
+New top: Book B</div>
+
+      <p>
+        Notice that <strong>Book C went in last and came out first</strong>.
+        That is LIFO.
+      </p>
+    </section>
+
+    <section id="queue">
+      <h2>4. 🚶 Milestone 2 — Understand What Our Queue Must Do</h2>
+
+      <p>Suppose these three students join a line:</p>
+
+      <div class="visual">FRONT                         BACK
+  ↓                             ↓
+[Ana]  →  [Ben]  →  [Carlos]</div>
+
+      <p>The correct removal order is:</p>
+
+      <pre><code>Ana
+Ben
+Carlos</code></pre>
+
+      <p>
+        Ana entered first, so Ana must leave first. Our two Stacks need to
+        produce this same result.
+      </p>
+    </section>
+
+    <section id="build">
+      <h2>5. 🏗️ Milestone 3 — Create the PseudoQueue</h2>
+
+      <p>Our PseudoQueue owns two Stack objects:</p>
+
+      <pre><code>class PseudoQueue {
+  constructor() {
+    this.inputStack = new Stack();
+    this.outputStack = new Stack();
+  }
+}</code></pre>
+
+      <div class="compare">
+        <div class="card">
+          <h3>📥 inputStack</h3>
+          <p>New values arrive here.</p>
+        </div>
+        <div class="card">
+          <h3>📤 outputStack</h3>
+          <p>Values leave the Queue from here.</p>
+        </div>
+      </div>
+
+      <div class="console"><strong>Milestone check:</strong>
+console.log("PseudoQueue created with two Stacks.");</div>
+
+      <h3>Milestone 4 — Enqueue</h3>
+
+      <p>
+        <code>enqueue(value)</code> means <strong>add a value to the back of the Queue</strong>.
+        This part is simple: push the new value onto <code>inputStack</code>.
+      </p>
+
+      <pre><code>enqueue(value) {
+  this.inputStack.push(value);
+}</code></pre>
+
+      <p>If we enqueue Ana, Ben, and Carlos, our input Stack looks like this:</p>
+
+      <div class="visual">inputStack
+
+TOP → Carlos
+      Ben
+      Ana</div>
+
+      <p>
+        There is a problem: <code>pop()</code> would give us Carlos, but our Queue
+        needs Ana first.
+      </p>
+
+      <h3>Milestone 5 — Use the Second Stack to Reverse the Order</h3>
+
+      <p>
+        When we need to dequeue and <code>outputStack</code> is empty, we move
+        every value from <code>inputStack</code> to <code>outputStack</code>.
+      </p>
+
+      <div class="visual">BEFORE MOVING              AFTER MOVING
+
+inputStack                 outputStack
+
+TOP → Carlos               TOP → Ana
+      Ben                         Ben
+      Ana                         Carlos</div>
+
+      <p>
+        Moving the values reversed them. Now Ana — the oldest value — is on top.
+      </p>
+
+      <pre><code>while (!this.inputStack.isEmpty()) {
+  const movedValue = this.inputStack.pop();
+  this.outputStack.push(movedValue);
+}</code></pre>
+
+      <h3>Milestone 6 — Dequeue</h3>
+
+      <p>
+        <code>dequeue()</code> means <strong>remove the oldest value from the Queue</strong>.
+      </p>
+
+      <ol class="steps">
+        <li>Check whether <code>outputStack</code> is empty.</li>
+        <li>If it is empty, move everything from <code>inputStack</code> into it.</li>
+        <li>Pop the top of <code>outputStack</code>.</li>
+        <li>Return that value.</li>
+      </ol>
+
+      <pre><code>dequeue() {
+  if (this.outputStack.isEmpty()) {
+    while (!this.inputStack.isEmpty()) {
+      this.outputStack.push(this.inputStack.pop());
+    }
+  }
+
+  return this.outputStack.pop();
+}</code></pre>
+
+      <div class="remember">
+        <strong>💡 Important:</strong> We only move the values when
+        <code>outputStack</code> is empty. If it still has values waiting to
+        leave, we keep using them first.
+      </div>
+    </section>
+
+    <section id="test">
+      <h2>6. 🧪 Milestone 7 — Put Everything Together</h2>
+
+      <p>Open the browser console and watch the JavaScript file explain each step.</p>
+
+      <pre><code>const line = new PseudoQueue();
+
+line.enqueue("Ana");
+line.enqueue("Ben");
+line.enqueue("Carlos");
+
+console.log(line.dequeue()); // Ana
+console.log(line.dequeue()); // Ben
+
+line.enqueue("Diana");
+
+console.log(line.dequeue()); // Carlos
+console.log(line.dequeue()); // Diana</code></pre>
+
+      <div class="console"><strong>Expected order:</strong>
+Ana
+Ben
+Carlos
+Diana</div>
+
+      <h3>What did we prove?</h3>
+
+      <p>
+        Even though both internal containers are Stacks, our
+        <code>PseudoQueue</code> behaves like a Queue:
+      </p>
+
+      <div class="big-idea">
+        📥 First value IN → 📤 First value OUT<br />
+        Two LIFO Stacks worked together to create FIFO behavior.
+      </div>
+
+      <h3>🧪 Edge Case — Empty Queue</h3>
+
+      <p>
+        What happens if both Stacks are empty? There is nothing to remove.
+        Our example returns <code>null</code> and prints a helpful message.
+      </p>
+
+      <div class="console"><strong>Expected console:</strong>
+⚠️ The queue is empty. Nothing to dequeue.</div>
+    </section>
+
+    <section>
+      <h2>7. 🧠 Student Check-In</h2>
+      <ol>
+        <li>What does LIFO mean?</li>
+        <li>What does FIFO mean?</li>
+        <li>Which Stack receives new values?</li>
+        <li>Why do we move values into the second Stack?</li>
+        <li>Why don't we move the values every time we call <code>dequeue()</code>?</li>
+        <li>If we enqueue A, B, C, and D, which value should dequeue first?</li>
+      </ol>
+
+      <div class="remember">
+        <strong>⭐ Remember:</strong> One Stack accepts new values. The other Stack
+        lets old values leave first. Moving between the Stacks reverses the order.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    PseudoQueue Learning Demo • Open DevTools → Console to follow the JavaScript walkthrough
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

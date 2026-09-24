@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Challenge 10 — Stacks & Queues</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #eef7ff, #f7f0ff);
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #352f8f, #6848c7);
+      color: white;
+      padding: 42px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    header p {
+      margin: 0 auto;
+      max-width: 850px;
+      font-size: 1.15rem;
+    }
+
+    main {
+      width: min(1100px, 92%);
+      margin: 30px auto 60px;
+    }
+
+    section {
+      background: white;
+      margin: 24px 0;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(35, 45, 75, 0.10);
+      border-left: 7px solid #6848c7;
+    }
+
+    h2 {
+      color: #352f8f;
+      margin-top: 0;
+      font-size: 1.9rem;
+    }
+
+    h3 {
+      color: #4a3ca3;
+    }
+
+    .goal {
+      background: #fff4cf;
+      border-left-color: #e5a900;
+    }
+
+    .stack {
+      border-left-color: #ef476f;
+    }
+
+    .queue {
+      border-left-color: #06a77d;
+    }
+
+    .challenge {
+      border-left-color: #ff7a00;
+    }
+
+    .important {
+      background: #fff0f3;
+      border: 2px solid #ef476f;
+      border-left-width: 7px;
+    }
+
+    .tip {
+      background: #eaf9f4;
+      border-left: 7px solid #06a77d;
+      padding: 18px;
+      border-radius: 12px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: 15px;
+      background: #f7f8ff;
+      border: 2px solid #e1e4f4;
+    }
+
+    .stack-card {
+      background: #fff1f4;
+      border-color: #f6b1c0;
+    }
+
+    .queue-card {
+      background: #eafaf5;
+      border-color: #a7dfce;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: bold;
+      margin: 3px;
+    }
+
+    .lifo {
+      background: #ffd6df;
+      color: #8b1635;
+    }
+
+    .fifo {
+      background: #c9f3e6;
+      color: #075d49;
+    }
+
+    .code-box {
+      background: #172033;
+      color: #f8f9ff;
+      padding: 18px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.95rem;
+    }
+
+    code {
+      background: #edf0fa;
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: #352f8f;
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .node {
+      min-width: 85px;
+      padding: 13px 16px;
+      text-align: center;
+      border-radius: 10px;
+      background: #e8e5ff;
+      border: 2px solid #6848c7;
+      font-weight: bold;
+    }
+
+    .arrow {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #6848c7;
+    }
+
+    ol li, ul li {
+      margin: 8px 0;
+    }
+
+    .method {
+      margin: 18px 0;
+      padding: 18px;
+      border-radius: 12px;
+      background: #fafaff;
+      border: 1px solid #dddff0;
+    }
+
+    .method h4 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+      color: #352f8f;
+    }
+
+    .check {
+      background: #f0f7ff;
+      border-left-color: #2388ff;
+    }
+
+    .footer {
+      text-align: center;
+      font-weight: bold;
+      color: #4a3ca3;
+      padding: 30px;
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 20px; }
+      .flow { flex-direction: column; }
+      .arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>📚 Code Challenge 10</h1>
+    <p>Stacks & Queues — A visual refresher before we build them with Linked Lists</p>
+  </header>
+
+  <main>
+
+    <section class="goal">
+      <h2>🎯 Goal</h2>
+      <p>
+        Before starting the challenge, refresh your memory about two ways of organizing data:
+        <strong>Stacks</strong> and <strong>Queues</strong>.
+      </p>
+      <p>
+        Then use what you already know about <strong>Nodes</strong> and
+        <strong>Linked Lists</strong> to build both data structures.
+      </p>
+    </section>
+
+    <section>
+      <h2>🧠 Part 1 — What Are Stacks & Queues?</h2>
+
+      <p>
+        A <strong>data structure</strong> is simply a way to organize information so a program
+        can use it efficiently.
+      </p>
+
+      <div class="two-column">
+        <div class="card stack-card">
+          <h3>📚 Stack</h3>
+          <p>
+            Think about a stack of plates. You normally put a new plate on the
+            <strong>top</strong>, and you take a plate from the <strong>top</strong>.
+          </p>
+          <span class="badge lifo">LIFO</span>
+          <strong>Last In, First Out</strong>
+        </div>
+
+        <div class="card queue-card">
+          <h3>🚶 Queue</h3>
+          <p>
+            Think about people waiting in line. A new person joins the
+            <strong>back</strong>, and the person at the <strong>front</strong> gets served first.
+          </p>
+          <span class="badge fifo">FIFO</span>
+          <strong>First In, First Out</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <h2>📚 Stack = LIFO</h2>
+
+      <h3>What does LIFO mean?</h3>
+      <p>
+        <strong>Last In, First Out</strong>.
+      </p>
+      <p>
+        The <strong>last thing you add</strong> is the <strong>first thing you remove</strong>.
+      </p>
+
+      <div class="flow">
+        <div class="node">🥞 A</div>
+        <div class="arrow">←</div>
+        <div class="node">🥞 B</div>
+        <div class="arrow">←</div>
+        <div class="node">🥞 C<br><small>TOP</small></div>
+      </div>
+
+      <p>
+        If <strong>C</strong> was added last, C comes off first.
+      </p>
+
+      <h3>Real-world examples</h3>
+      <ul>
+        <li>↩️ Undo in a program</li>
+        <li>🌐 Browser history — going back through recent pages</li>
+        <li>🍽️ A stack of plates</li>
+        <li>📦 A stack of boxes</li>
+        <li>💻 Function calls on the call stack</li>
+      </ul>
+
+      <h3>Important Stack Words</h3>
+      <div class="two-column">
+        <div class="card">
+          <strong>push</strong>
+          <p>Add something to the <strong>top</strong>.</p>
+        </div>
+        <div class="card">
+          <strong>pop</strong>
+          <p>Remove something from the <strong>top</strong>.</p>
+        </div>
+        <div class="card">
+          <strong>peek</strong>
+          <p>Look at the top value without removing it.</p>
+        </div>
+        <div class="card">
+          <strong>isEmpty</strong>
+          <p>Check whether the stack contains anything.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="queue">
+      <h2>🚶 Queue = FIFO</h2>
+
+      <h3>What does FIFO mean?</h3>
+      <p>
+        <strong>First In, First Out</strong>.
+      </p>
+      <p>
+        The <strong>first thing you add</strong> is the <strong>first thing you remove</strong>.
+      </p>
+
+      <div class="flow">
+        <div class="node">👤 A<br><small>FRONT</small></div>
+        <div class="arrow">→</div>
+        <div class="node">👤 B</div>
+        <div class="arrow">→</div>
+        <div class="node">👤 C<br><small>BACK</small></div>
+      </div>
+
+      <p>
+        If A arrived first, A gets served first.
+      </p>
+
+      <h3>Real-world examples</h3>
+      <ul>
+        <li>🎟️ People waiting in line</li>
+        <li>🖨️ Print jobs waiting for a printer</li>
+        <li>💬 Messages waiting to be processed</li>
+        <li>🍔 Orders waiting in a restaurant kitchen</li>
+        <li>🚦 Cars waiting at a traffic light</li>
+      </ul>
+
+      <h3>Important Queue Words</h3>
+      <div class="two-column">
+        <div class="card">
+          <strong>enqueue</strong>
+          <p>Add something to the <strong>back</strong>.</p>
+        </div>
+        <div class="card">
+          <strong>dequeue</strong>
+          <p>Remove something from the <strong>front</strong>.</p>
+        </div>
+        <div class="card">
+          <strong>peek</strong>
+          <p>Look at the front value without removing it.</p>
+        </div>
+        <div class="card">
+          <strong>isEmpty</strong>
+          <p>Check whether the queue contains anything.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>⚖️ Stack vs Queue</h2>
+
+      <div class="two-column">
+        <div class="card stack-card">
+          <h3>📚 Stack</h3>
+          <ul>
+            <li><strong>LIFO</strong></li>
+            <li>Last in → first out</li>
+            <li>Add at the top</li>
+            <li>Remove from the top</li>
+            <li><code>push()</code></li>
+            <li><code>pop()</code></li>
+            <li><code>peek()</code></li>
+          </ul>
+        </div>
+
+        <div class="card queue-card">
+          <h3>🚶 Queue</h3>
+          <ul>
+            <li><strong>FIFO</strong></li>
+            <li>First in → first out</li>
+            <li>Add at the back</li>
+            <li>Remove from the front</li>
+            <li><code>enqueue()</code></li>
+            <li><code>dequeue()</code></li>
+            <li><code>peek()</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="important">
+        <strong>⭐ Easy memory trick:</strong>
+        <p>
+          <strong>Stack = plates.</strong> You work from the top.
+        </p>
+        <p>
+          <strong>Queue = line.</strong> People enter at the back and leave from the front.
+        </p>
+      </div>
+    </section>
+
+    <section class="challenge">
+      <h2>🚀 Part 2 — Now Let's Build Them!</h2>
+
+      <p>
+        The challenge is called <strong>stack-and-queue</strong>.
+      </p>
+
+      <p>
+        You already have experience with <strong>Linked Lists</strong>.
+        This time, we will use a Linked List as the underlying storage for our
+        Stack and Queue.
+      </p>
+
+      <div class="tip">
+        👨‍🏫 <strong>Teacher Tip:</strong>
+        Don't think of Stack and Queue as completely new ideas.
+        Think of them as <strong>different rules for using Nodes</strong>.
+      </div>
+    </section>
+
+    <section>
+      <h2>🔗 Step 1 — The Node</h2>
+
+      <p>
+        A <strong>Node</strong> stores two important things:
+      </p>
+
+      <ol>
+        <li><strong>value</strong> — the information we want to store</li>
+        <li><strong>next</strong> — a pointer to the next Node</li>
+      </ol>
+
+      <div class="code-box">
+class Node {<br>
+&nbsp;&nbsp;constructor(value) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.value = value;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this.next = null;<br>
+&nbsp;&nbsp;}<br>
+}
+      </div>
+
+      <p>
+        <strong>Remember:</strong> <code>null</code> means there is currently no next Node.
+      </p>
+    </section>
+
+    <section class="stack">
+      <h2>📚 Step 2 — Build the Stack</h2>
+
+      <p>
+        A Stack starts with a property called <strong>top</strong>.
+      </p>
+
+      <div class="code-box">
+this.top = null;
+      </div>
+
+      <p>
+        An empty Stack has no top Node, so <code>top</code> starts as
+        <code>null</code>.
+      </p>
+
+      <div class="method">
+        <h4>1️⃣ push(value)</h4>
+        <p>Add a new Node to the <strong>top</strong>.</p>
+        <p><strong>Performance:</strong> O(1) — we can add it directly without walking through the list.</p>
+      </div>
+
+      <div class="method">
+        <h4>2️⃣ pop()</h4>
+        <p>Remove the Node at the <strong>top</strong>.</p>
+        <p>Return the removed Node's <strong>value</strong>.</p>
+        <p>If the Stack is empty, raise an exception.</p>
+      </div>
+
+      <div class="method">
+        <h4>3️⃣ peek()</h4>
+        <p>Look at the value at the <strong>top</strong> without removing it.</p>
+        <p>If the Stack is empty, raise an exception.</p>
+      </div>
+
+      <div class="method">
+        <h4>4️⃣ isEmpty()</h4>
+        <p>Return <code>true</code> when the Stack is empty.</p>
+        <p>Return <code>false</code> when the Stack contains Nodes.</p>
+      </div>
+    </section>
+
+    <section class="queue">
+      <h2>🚶 Step 3 — Build the Queue</h2>
+
+      <p>
+        A Queue starts with a property called <strong>front</strong>.
+      </p>
+
+      <div class="code-box">
+this.front = null;
+      </div>
+
+      <p>
+        An empty Queue has no front Node, so <code>front</code> starts as
+        <code>null</code>.
+      </p>
+
+      <div class="method">
+        <h4>1️⃣ enqueue(value)</h4>
+        <p>Add a new Node to the <strong>back</strong> of the Queue.</p>
+        <p><strong>Performance:</strong> O(1) — your implementation should be able to add directly at the back.</p>
+      </div>
+
+      <div class="method">
+        <h4>2️⃣ dequeue()</h4>
+        <p>Remove the Node at the <strong>front</strong>.</p>
+        <p>Return the removed Node's <strong>value</strong>.</p>
+        <p>If the Queue is empty, raise an exception.</p>
+      </div>
+
+      <div class="method">
+        <h4>3️⃣ peek()</h4>
+        <p>Look at the value at the <strong>front</strong> without removing it.</p>
+        <p>If the Queue is empty, raise an exception.</p>
+      </div>
+
+      <div class="method">
+        <h4>4️⃣ isEmpty()</h4>
+        <p>Return <code>true</code> when the Queue is empty.</p>
+        <p>Return <code>false</code> when the Queue contains Nodes.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧩 The Big Picture</h2>
+
+      <p>
+        The most important idea is that the <strong>Node</strong> and
+        <strong>Linked List</strong> give us the building blocks.
+        Stack and Queue tell us <strong>how those Nodes should be used</strong>.
+      </p>
+
+      <div class="two-column">
+        <div class="card stack-card">
+          <h3>Stack Rules</h3>
+          <p>⬆️ Add at TOP</p>
+          <p>⬆️ Remove from TOP</p>
+          <p>🔄 LIFO</p>
+        </div>
+
+        <div class="card queue-card">
+          <h3>Queue Rules</h3>
+          <p>➡️ Add at BACK</p>
+          <p>⬅️ Remove from FRONT</p>
+          <p>🔄 FIFO</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="check">
+      <h2>❓ Check Your Understanding</h2>
+
+      <ol>
+        <li>What does <strong>LIFO</strong> mean?</li>
+        <li>What does <strong>FIFO</strong> mean?</li>
+        <li>Which data structure is like a stack of plates?</li>
+        <li>Which data structure is like a line of people?</li>
+        <li>Where does a Stack add a new value?</li>
+        <li>Where does a Queue add a new value?</li>
+        <li>Where does a Stack remove a value?</li>
+        <li>Where does a Queue remove a value?</li>
+        <li>Why does an empty Stack have <code>top = null</code>?</li>
+        <li>Why does an empty Queue have <code>front = null</code>?</li>
+        <li>What does <code>peek()</code> do?</li>
+        <li>Why is O(1) important for <code>push()</code> and <code>enqueue()</code>?</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>🗺️ Suggested Implementation Order</h2>
+
+      <ol>
+        <li>Create or review the <strong>Node</strong> class.</li>
+        <li>Create the <strong>Stack</strong> class with <code>top</code>.</li>
+        <li>Implement <code>push()</code>.</li>
+        <li>Implement <code>pop()</code>.</li>
+        <li>Implement <code>peek()</code>.</li>
+        <li>Implement <code>isEmpty()</code>.</li>
+        <li>Test the Stack.</li>
+        <li>Create the <strong>Queue</strong> class with <code>front</code>.</li>
+        <li>Implement <code>enqueue()</code>.</li>
+        <li>Implement <code>dequeue()</code>.</li>
+        <li>Implement <code>peek()</code>.</li>
+        <li>Implement <code>isEmpty()</code>.</li>
+        <li>Test the Queue.</li>
+      </ol>
+
+      <div class="important">
+        <strong>!! Important:</strong>
+        <p>
+          You have access to the <strong>Node class</strong> and all the properties
+          on the <strong>Linked List class</strong>. Use what you already know.
+          The challenge is mainly about learning the rules for Stack and Queue behavior.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>💬 One-Sentence Summary</h2>
+
+      <div class="two-column">
+        <div class="card stack-card">
+          <h3>📚 STACK</h3>
+          <p><strong>Last in, first out.</strong> Add and remove from the top.</p>
+        </div>
+
+        <div class="card queue-card">
+          <h3>🚶 QUEUE</h3>
+          <p><strong>First in, first out.</strong> Add at the back and remove from the front.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      🎯 Remember the picture: <strong>Stack = plates</strong> | <strong>Queue = line</strong>
+    </div>
+
+  </main>
+</body>
+</html>

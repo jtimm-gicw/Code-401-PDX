@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Linked List Zip Demo</title>
+
+  <style>
+    /* =====================================================
+       PAGE SETUP
+       ===================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+      line-height: 1.7;
+      font-size: 18px;
+    }
+
+    header {
+      background: #243b53;
+      color: white;
+      text-align: center;
+      padding: 45px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.6rem;
+    }
+
+    header p {
+      max-width: 800px;
+      margin: 15px auto 0;
+      font-size: 1.2rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px 60px;
+    }
+
+
+    /* =====================================================
+       LESSON CARDS
+       ===================================================== */
+
+    section {
+      background: white;
+      margin: 30px 0;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      color: #243b53;
+      border-bottom: 3px solid #bcccdc;
+      padding-bottom: 10px;
+    }
+
+    h3 {
+      color: #334e68;
+    }
+
+    .important {
+      background: #fff7d6;
+      border-left: 6px solid #e0a800;
+      padding: 18px;
+      margin: 20px 0;
+      border-radius: 6px;
+    }
+
+    .student-tip {
+      background: #e8f5e9;
+      border-left: 6px solid #2e7d32;
+      padding: 18px;
+      margin: 20px 0;
+      border-radius: 6px;
+    }
+
+
+    /* =====================================================
+       LINKED LIST VISUALS
+       ===================================================== */
+
+    .linked-list {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 20px;
+      background: #edf2f7;
+      border-radius: 10px;
+    }
+
+    .node {
+      min-width: 65px;
+      padding: 14px 18px;
+      background: #2563eb;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 10px;
+      font-size: 1.2rem;
+    }
+
+    .list-two .node {
+      background: #7c3aed;
+    }
+
+    .zipped .node {
+      background: #047857;
+    }
+
+    .arrow {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: #475569;
+    }
+
+    .null {
+      padding: 8px;
+      font-family: monospace;
+      font-weight: bold;
+      color: #b91c1c;
+    }
+
+
+    /* =====================================================
+       CODE EXAMPLES
+       ===================================================== */
+
+    pre {
+      background: #172033;
+      color: #9ef01a;
+      padding: 20px;
+      overflow-x: auto;
+      border-radius: 10px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    code {
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .small-code {
+      background: #e2e8f0;
+      padding: 3px 7px;
+      border-radius: 5px;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+
+    /* =====================================================
+       STEP NUMBER
+       ===================================================== */
+
+    .step {
+      display: inline-block;
+      background: #243b53;
+      color: white;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+
+    /* =====================================================
+       REAL WORLD EXAMPLES
+       ===================================================== */
+
+    .examples {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(230px, 1fr)
+      );
+      gap: 20px;
+    }
+
+    .example-card {
+      background: #edf2f7;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .example-card h3 {
+      margin-top: 0;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    footer {
+      background: #243b53;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- ===================================================
+       HEADER
+       =================================================== -->
+
+  <header>
+    <h1>🔗 Linked List Zip</h1>
+
+    <p>
+      Learn how two Linked Lists can be combined by
+      alternating their nodes.
+    </p>
+  </header>
+
+
+  <main>
+
+    <!-- =================================================
+         SECTION 1
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Milestone 1</span>
+
+      <h2>🧠 First: What Does "Zip" Mean?</h2>
+
+      <p>
+        Imagine you have two Linked Lists.
+      </p>
+
+      <h3>List 1</h3>
+
+      <div class="linked-list">
+        <div class="node">A</div>
+        <div class="arrow">→</div>
+
+        <div class="node">C</div>
+        <div class="arrow">→</div>
+
+        <div class="node">E</div>
+        <div class="arrow">→</div>
+
+        <div class="null">null</div>
+      </div>
+
+
+      <h3>List 2</h3>
+
+      <div class="linked-list list-two">
+        <div class="node">B</div>
+        <div class="arrow">→</div>
+
+        <div class="node">D</div>
+        <div class="arrow">→</div>
+
+        <div class="node">F</div>
+        <div class="arrow">→</div>
+
+        <div class="null">null</div>
+      </div>
+
+
+      <p>
+        To <strong>zip</strong> the lists, we alternate
+        between them.
+      </p>
+
+
+      <h3>Zipped List</h3>
+
+      <div class="linked-list zipped">
+
+        <div class="node">A</div>
+        <div class="arrow">→</div>
+
+        <div class="node">B</div>
+        <div class="arrow">→</div>
+
+        <div class="node">C</div>
+        <div class="arrow">→</div>
+
+        <div class="node">D</div>
+        <div class="arrow">→</div>
+
+        <div class="node">E</div>
+        <div class="arrow">→</div>
+
+        <div class="node">F</div>
+        <div class="arrow">→</div>
+
+        <div class="null">null</div>
+
+      </div>
+
+
+      <div class="important">
+        <strong>Important:</strong>
+        Zipping does NOT mean sorting the values.
+
+        We simply take one node from List 1,
+        then one from List 2, and repeat.
+      </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION 2
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Milestone 2</span>
+
+      <h2>🌎 Why Would We Ever Do This?</h2>
+
+      <p>
+        The exact Linked List Zip problem is mainly useful
+        for learning how to safely change connections
+        between nodes.
+      </p>
+
+      <p>
+        However, the larger idea of
+        <strong>alternating between two groups of data</strong>
+        appears in real programs.
+      </p>
+
+
+      <div class="examples">
+
+        <div class="example-card">
+
+          <h3>🎵 Music</h3>
+
+          <p>
+            Imagine combining songs from two playlists.
+          </p>
+
+          <p>
+            Playlist A song → Playlist B song →
+            Playlist A song → Playlist B song
+          </p>
+
+        </div>
+
+
+        <div class="example-card">
+
+          <h3>🎮 Games</h3>
+
+          <p>
+            A game could alternate turns between players
+            or teams.
+          </p>
+
+          <p>
+            Team A → Team B → Team A → Team B
+          </p>
+
+        </div>
+
+
+        <div class="example-card">
+
+          <h3>📋 Tasks</h3>
+
+          <p>
+            A program could alternate tasks from two
+            different task lists.
+          </p>
+
+          <p>
+            Work → Personal → Work → Personal
+          </p>
+
+        </div>
+
+
+        <div class="example-card">
+
+          <h3>💬 Messages</h3>
+
+          <p>
+            Two streams of messages or events could be
+            combined into another sequence.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="student-tip">
+
+        <strong>Student Tip:</strong>
+
+        The most important lesson isn't memorizing
+        <span class="small-code">zipLists()</span>.
+
+        The important lesson is learning how to
+        <strong>change Linked List connections without
+        accidentally losing nodes.</strong>
+
+      </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION 3
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Milestone 3</span>
+
+      <h2>🔗 Remember How Nodes Work</h2>
+
+      <p>
+        A node normally contains two important things:
+      </p>
+
+      <ul>
+        <li>A <strong>value</strong></li>
+        <li>A reference to the <strong>next node</strong></li>
+      </ul>
+
+
+      <pre><code>class Node {
+
+  constructor(value) {
+
+    this.value = value;
+
+    this.next = null;
+
+  }
+
+}</code></pre>
+
+
+      <p>
+        For example:
+      </p>
+
+      <div class="linked-list">
+
+        <div class="node">A</div>
+        <div class="arrow">→</div>
+
+        <div class="node">C</div>
+        <div class="arrow">→</div>
+
+        <div class="node">E</div>
+        <div class="arrow">→</div>
+
+        <div class="null">null</div>
+
+      </div>
+
+
+      <p>
+        Node <strong>A</strong> has a
+        <span class="small-code">next</span>
+        connection pointing to node <strong>C</strong>.
+      </p>
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION 4
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Milestone 4</span>
+
+      <h2>🚨 The Big Challenge: Don't Lose the Next Node!</h2>
+
+      <p>
+        Suppose our first list contains:
+      </p>
+
+
+      <div class="linked-list">
+
+        <div class="node">A</div>
+        <div class="arrow">→</div>
+
+        <div class="node">C</div>
+        <div class="arrow">→</div>
+
+        <div class="node">E</div>
+
+      </div>
+
+
+      <p>
+        If we immediately change:
+      </p>
+
+
+      <pre><code>current1.next = current2;</code></pre>
+
+
+      <p>
+        then A will stop pointing to C.
+      </p>
+
+      <p>
+        That could cause us to lose our easy way
+        of reaching C.
+      </p>
+
+
+      <div class="important">
+
+        <strong>Solution:</strong>
+
+        Before changing the connection, save the next node
+        inside a temporary variable.
+
+      </div>
+
+
+      <pre><code>let next1 = current1.next;
+let next2 = current2.next;</code></pre>
+
+
+      <p>
+        Think of these variables like bookmarks.
+      </p>
+
+      <p>
+        We're saying:
+      </p>
+
+      <p>
+        <strong>
+          "Before I change these arrows, let me remember
+          where I was supposed to go next."
+        </strong>
+      </p>
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION 5
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Milestone 5</span>
+
+      <h2>🪜 The Four Main Steps</h2>
+
+      <p>
+        Each time through the lists, remember:
+      </p>
+
+
+      <h3>1️⃣ SAVE</h3>
+
+      <pre><code>let next1 = current1.next;
+let next2 = current2.next;</code></pre>
+
+
+      <h3>2️⃣ CONNECT</h3>
+
+      <pre><code>current1.next = current2;
+current2.next = next1;</code></pre>
+
+
+      <h3>3️⃣ MOVE</h3>
+
+      <pre><code>current1 = next1;
+current2 = next2;</code></pre>
+
+
+      <h3>4️⃣ REPEAT</h3>
+
+      <pre><code>while (current1 && current2) {
+
+  // save
+
+  // connect
+
+  // move
+
+}</code></pre>
+
+
+      <div class="student-tip">
+
+        <strong>Easy way to remember:</strong>
+
+        <h3>
+          SAVE → CONNECT → MOVE → REPEAT
+        </h3>
+
+      </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION 6
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Milestone 6</span>
+
+      <h2>🔬 Watch One Round Happen</h2>
+
+
+      <h3>Before</h3>
+
+      <pre><code>List 1:
+
+A → C → E → null
+
+
+List 2:
+
+B → D → F → null</code></pre>
+
+
+      <p>We start at:</p>
+
+      <pre><code>current1 = A
+current2 = B</code></pre>
+
+
+      <h3>Save</h3>
+
+      <pre><code>next1 = C
+next2 = D</code></pre>
+
+
+      <h3>Connect</h3>
+
+      <pre><code>A.next = B
+
+B.next = C</code></pre>
+
+
+      <p>Now part of our list looks like:</p>
+
+
+      <div class="linked-list zipped">
+
+        <div class="node">A</div>
+        <div class="arrow">→</div>
+
+        <div class="node">B</div>
+        <div class="arrow">→</div>
+
+        <div class="node">C</div>
+
+      </div>
+
+
+      <h3>Move</h3>
+
+      <pre><code>current1 = C
+current2 = D</code></pre>
+
+
+      <p>
+        Now we perform the same process again.
+      </p>
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION 7
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Milestone 7</span>
+
+      <h2>💻 The Complete zipLists Function</h2>
+
+
+      <pre><code>function zipLists(list1, list2) {
+
+  if (!list1.head) {
+    return list2;
+  }
+
+  if (!list2.head) {
+    return list1;
+  }
+
+  let current1 = list1.head;
+  let current2 = list2.head;
+
+  while (current1 && current2) {
+
+    let next1 = current1.next;
+    let next2 = current2.next;
+
+    current1.next = current2;
+
+    if (next1 === null) {
+      break;
+    }
+
+    current2.next = next1;
+
+    current1 = next1;
+    current2 = next2;
+  }
+
+  return list1;
+}</code></pre>
+
+
+      <div class="important">
+
+        Open your browser's developer tools and look at the
+        <strong>Console</strong>.
+
+        The JavaScript file prints each milestone and
+        example so you can follow what is happening.
+
+      </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION 8
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Milestone 8</span>
+
+      <h2>📏 What If the Lists Have Different Lengths?</h2>
+
+
+      <h3>Example</h3>
+
+      <pre><code>List 1:
+
+A → C → E → G
+
+
+List 2:
+
+B → D</code></pre>
+
+
+      <p>The result should be:</p>
+
+
+      <div class="linked-list zipped">
+
+        <div class="node">A</div>
+        <div class="arrow">→</div>
+
+        <div class="node">B</div>
+        <div class="arrow">→</div>
+
+        <div class="node">C</div>
+        <div class="arrow">→</div>
+
+        <div class="node">D</div>
+        <div class="arrow">→</div>
+
+        <div class="node">E</div>
+        <div class="arrow">→</div>
+
+        <div class="node">G</div>
+        <div class="arrow">→</div>
+
+        <div class="null">null</div>
+
+      </div>
+
+
+      <p>
+        Once List 2 runs out of nodes, the remaining
+        part of List 1 stays connected.
+      </p>
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION 9
+         ================================================= -->
+
+    <section>
+
+      <span class="step">Final Review</span>
+
+      <h2>🧠 What Should You Remember?</h2>
+
+      <p>
+        You do NOT need to memorize every line of code.
+      </p>
+
+      <p>
+        Remember what the program is trying to accomplish.
+      </p>
+
+
+      <pre><code>LIST 1: A → C → E
+
+LIST 2: B → D → F
+
+
+          ↓ ZIP ↓
+
+
+RESULT:
+
+A → B → C → D → E → F</code></pre>
+
+
+      <div class="student-tip">
+
+        <strong>The four words to remember:</strong>
+
+        <h3>
+          SAVE → CONNECT → MOVE → REPEAT
+        </h3>
+
+      </div>
+
+
+      <p>
+        We <strong>save</strong> the next nodes so we
+        don't lose them.
+      </p>
+
+      <p>
+        We <strong>connect</strong> nodes from the
+        two lists.
+      </p>
+
+      <p>
+        We <strong>move</strong> to the next pair.
+      </p>
+
+      <p>
+        Then we <strong>repeat</strong>.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <strong>Linked List Zip Demo</strong>
+
+    <p>
+      Open the browser console to follow the JavaScript
+      examples step-by-step.
+    </p>
+
+  </footer>
+
+
+  <!-- Connect our JavaScript file -->
+  <script src="linked-list-zip.js"></script>
+
+</body>
+</html>
