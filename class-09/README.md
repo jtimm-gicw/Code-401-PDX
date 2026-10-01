@@ -16,8 +16,11 @@ Reinforce learning from this module and create a project that could potentially 
 
 - Reading 09
   - Read auth bookmarks for project prep
-- Code Challenge
+  - Write down 2 ideas discussed in your group
+- Code Challenge 09
   - Mock Interviews
+- End of Module Project
+  - Build and deploy an Auth Server, as a group
 
 ## Classwork
 
