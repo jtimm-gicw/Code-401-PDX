@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trees, Binary Trees & BST — Visual Learning Lab</title>
+<style>
+:root{
+  --ink:#172033;--muted:#526077;--bg:#eef4ff;--card:#fff;--navy:#173b67;
+  --blue:#2563eb;--cyan:#0891b2;--green:#15803d;--orange:#c2410c;--purple:#7e22ce;
+  --line:#94a3b8;--soft:#e8efff;--yellow:#fff7cc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;font-size:20px;line-height:1.6;color:var(--ink);background:linear-gradient(180deg,#eaf2ff,#f8fbff)}
+header{background:linear-gradient(135deg,#122b4f,#245da0);color:white;padding:46px 24px;text-align:center}
+header h1{font-size:clamp(36px,5vw,58px);margin:0 0 10px}
+header p{max-width:900px;margin:auto;font-size:23px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:3px solid #dbe5f5;padding:12px;text-align:center}
+nav a{display:inline-block;margin:4px 8px;padding:8px 13px;border-radius:999px;text-decoration:none;color:#173b67;font-weight:bold;background:#edf4ff}
+main{max-width:1180px;margin:auto;padding:28px 18px 70px}
+section{background:var(--card);margin:24px 0;padding:30px;border-radius:20px;box-shadow:0 10px 30px #173b6715;border:1px solid #dbe5f5}
+h2{font-size:34px;color:#173b67;margin-top:0}
+h3{font-size:27px;color:#244c7c}
+.bigidea{font-size:25px;background:#eef6ff;border-left:8px solid var(--blue);padding:18px;border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.card{border:2px solid #d8e3f3;border-radius:16px;padding:20px;background:#fbfdff}
+.card strong{color:#173b67}
+.code{font-family:Consolas,Monaco,monospace;background:#101827;color:#e7f1ff;padding:18px;border-radius:14px;overflow:auto;font-size:18px;white-space:pre}
+.rule{font-size:26px;font-weight:bold;text-align:center;background:#f3f7ff;padding:14px;border-radius:12px}
+.tree-stage{min-height:420px;background:linear-gradient(#f8fbff,#edf5ff);border:2px solid #c9d9ee;border-radius:18px;position:relative;overflow:auto;padding:25px}
+svg{width:100%;min-width:720px;height:360px}
+.edge{stroke:#7890ae;stroke-width:4}
+.node circle{fill:white;stroke:#2563eb;stroke-width:5;transition:.25s}
+.node text{font-size:20px;font-weight:bold;fill:#172033;text-anchor:middle;dominant-baseline:middle}
+.node.active circle{fill:#fde68a;stroke:#c2410c;transform-origin:center}
+.node.found circle{fill:#bbf7d0;stroke:#15803d}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+button{font-size:19px;font-weight:bold;border:0;border-radius:11px;padding:12px 17px;background:#2563eb;color:white;cursor:pointer}
+button:hover,button:focus{filter:brightness(.9);outline:3px solid #93c5fd}
+button.secondary{background:#475569}
+button.green{background:#15803d}
+button.purple{background:#7e22ce}
+input{font-size:20px;padding:11px;border:2px solid #94a3b8;border-radius:10px;width:120px}
+.output{background:#fff8d8;border:2px solid #e8c64d;border-radius:12px;padding:15px;font-weight:bold;min-height:62px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:17px}
+.pill{padding:5px 10px;border-radius:999px;background:#edf4ff}
+.steps{counter-reset:step}
+.step{counter-increment:step;border-left:5px solid #7e22ce;margin:16px 0;padding:12px 18px;background:#faf5ff}
+.step:before{content:"STEP " counter(step);font-weight:bold;color:#7e22ce;display:block}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:700px){body{font-size:18px}.compare{grid-template-columns:1fr}section{padding:20px}svg{min-width:650px}}
+footer{text-align:center;padding:28px;background:#122b4f;color:white}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌳 Trees Visual Learning Lab</h1>
+  <p>Learn how a Node, Binary Tree, and Binary Search Tree work by seeing the structure, clicking through traversals, and adding/searching values yourself.</p>
+</header>
+<nav>
+  <a href="#idea">Tree Basics</a><a href="#binary">Binary Tree</a><a href="#traversal">Traversals</a>
+  <a href="#bst">BST</a><a href="#code-map">Code Map</a>
+</nav>
+<main>
+<section id="idea">
+  <h2>1. Start With One Node</h2>
+  <p class="bigidea">A <strong>node</strong> is one container in a tree. It stores a <strong>value</strong> and can point to a <strong>left child</strong> and a <strong>right child</strong>.</p>
+  <div class="grid">
+    <div class="card"><h3>🌱 Root</h3><p>The top node where the tree begins.</p></div>
+    <div class="card"><h3>👶 Child</h3><p>A node connected underneath another node.</p></div>
+    <div class="card"><h3>🍃 Leaf</h3><p>A node with no children.</p></div>
+    <div class="card"><h3>🔗 Edge</h3><p>The line connecting a parent node to a child.</p></div>
+  </div>
+  <div class="code">class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}</div>
+</section>
+
+<section id="binary">
+  <h2>2. What Makes It a Binary Tree?</h2>
+  <p><strong>Binary</strong> means each node can have at most <strong>two children</strong>: one left and one right. A regular Binary Tree does <em>not</em> require smaller values on the left.</p>
+  <div class="tree-stage">
+    <svg viewBox="0 0 800 360" aria-label="Example binary tree">
+      <line class="edge" x1="400" y1="65" x2="235" y2="155"/><line class="edge" x1="400" y1="65" x2="565" y2="155"/>
+      <line class="edge" x1="235" y1="155" x2="150" y2="270"/><line class="edge" x1="235" y1="155" x2="320" y2="270"/>
+      <line class="edge" x1="565" y1="155" x2="480" y2="270"/><line class="edge" x1="565" y1="155" x2="650" y2="270"/>
+      <g class="node"><circle cx="400" cy="60" r="38"/><text x="400" y="60">10</text></g>
+      <g class="node"><circle cx="235" cy="155" r="38"/><text x="235" y="155">5</text></g>
+      <g class="node"><circle cx="565" cy="155" r="38"/><text x="565" y="155">15</text></g>
+      <g class="node"><circle cx="150" cy="275" r="38"/><text x="150" y="275">2</text></g>
+      <g class="node"><circle cx="320" cy="275" r="38"/><text x="320" y="275">7</text></g>
+      <g class="node"><circle cx="480" cy="275" r="38"/><text x="480" y="275">12</text></g>
+      <g class="node"><circle cx="650" cy="275" r="38"/><text x="650" y="275">20</text></g>
+    </svg>
+  </div>
+</section>
+
+<section id="traversal">
+  <h2>3. Depth-First Traversals</h2>
+  <p>Traversal simply means <strong>visiting the nodes</strong>. The three methods visit the same tree but save the values in a different order.</p>
+  <div class="grid">
+    <div class="card"><h3>Pre Order</h3><div class="rule">ROOT → LEFT → RIGHT</div><p>Root goes first.</p></div>
+    <div class="card"><h3>In Order</h3><div class="rule">LEFT → ROOT → RIGHT</div><p>Root goes in the middle.</p></div>
+    <div class="card"><h3>Post Order</h3><div class="rule">LEFT → RIGHT → ROOT</div><p>Root goes last.</p></div>
+  </div>
+  <div class="controls">
+    <button onclick="startTraversal('pre')">▶ Pre Order</button>
+    <button class="green" onclick="startTraversal('in')">▶ In Order</button>
+    <button class="purple" onclick="startTraversal('post')">▶ Post Order</button>
+    <button class="secondary" onclick="resetTraversal()">Reset</button>
+  </div>
+  <div id="traversalOutput" class="output">Choose a traversal to watch the visit order.</div>
+  <p><strong>Instructor tip:</strong> Ask students to predict the next highlighted node before it changes.</p>
+</section>
+
+<section id="bst">
+  <h2>4. Binary Search Tree (BST)</h2>
+  <p class="bigidea">A BST adds an organization rule: <strong>smaller values go left; larger values go right.</strong> That rule helps us decide which direction to travel.</p>
+  <div class="compare">
+    <div class="card"><h3>⬅ Smaller</h3><p class="rule">value &lt; current → LEFT</p></div>
+    <div class="card"><h3>Larger ➡</h3><p class="rule">value &gt;= current → RIGHT</p></div>
+  </div>
+  <h3>Interactive BST</h3>
+  <p>Add a number. The page rebuilds the picture using the same comparison rule students implement in JavaScript.</p>
+  <div class="controls">
+    <input id="addValue" type="number" value="13" aria-label="Value to add">
+    <button onclick="addBSTFromPage()">➕ Add Value</button>
+    <input id="searchValue" type="number" value="12" aria-label="Value to search">
+    <button class="green" onclick="searchBSTFromPage()">🔎 Contains?</button>
+    <button class="secondary" onclick="resetBST()">Reset Tree</button>
+  </div>
+  <div id="bstMessage" class="output">Starting values: 10, 5, 15, 2, 7, 12, 20</div>
+  <div id="bstStage" class="tree-stage"></div>
+
+  <div class="steps">
+    <div class="step"><strong>Start at the root.</strong> This is our first comparison.</div>
+    <div class="step"><strong>Compare values.</strong> Smaller means left. Otherwise move right.</div>
+    <div class="step"><strong>Keep moving.</strong> Repeat the same decision at each node.</div>
+    <div class="step"><strong>Stop.</strong> For Add, stop at an empty position. For Contains, stop when the value is found or there are no more nodes.</div>
+  </div>
+</section>
+
+<section id="code-map">
+  <h2>5. How the Classes Fit Together</h2>
+  <div class="code">Node
+ ├── value
+ ├── left
+ └── right
+
+BinaryTree
+ ├── root
+ ├── preOrder()
+ ├── inOrder()
+ └── postOrder()
+
+BinarySearchTree extends BinaryTree
+ ├── inherits the traversal methods
+ ├── add(value)
+ └── contains(value)</div>
+  <p>A <strong>BinarySearchTree extends BinaryTree</strong>, meaning it gets the Binary Tree features and adds BST-specific features.</p>
+  <p class="bigidea">Open your browser's <strong>Developer Tools → Console</strong> while using this page. The connected <code>trees.js</code> file prints each learning milestone and its results.</p>
+</section>
+</main>
+<footer>🌳 Trees Learning Lab — build the picture first, then build the code.</footer>
+<script src="trees.js"></script>
+</body>
+</html>
