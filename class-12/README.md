@@ -2,7 +2,7 @@
 
 ## Overview
 
-Description Here
+Students will be learning about socket.io, namespaces, and using rooms to communicate between modules.
 
 ## Class Outline
 
