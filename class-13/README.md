@@ -6,7 +6,20 @@ To this point, we've built servers based on internal event processing and networ
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 13
+  - Discussion
+- Demo
+  - message queue
+  - multi-bracket valiation
+- Lab Prep
+  - message queue
+
+## Classwork
+
+- Labwork
+  - message queue
+- Code Challenge
+  - multi-bracket valiation
 
 ## Learning Objectives
 

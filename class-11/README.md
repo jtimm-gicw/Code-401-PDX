@@ -6,10 +6,19 @@ Today, we will leverage the ability of Javascript to raise events, monitor event
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
-- Code Review
-- Warmup question
-- Lecture
+- Reading 11
+  - Discussion
+- Demo
+  - Event-Driven Programming
+  - Queue w/ Two Stacks
+- Lab Prep
+  - Event-Driven Programming
+
+## Classwork
+
+- Event-Driven Programming
+- Code Challenge
+  - Queue w/ Two Stacks
 
 ## Learning Objectives
 

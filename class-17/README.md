@@ -6,7 +6,17 @@ AWS Lambda allows writing code that is triggered in the cloud, without thinking 
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Demo
+  - Binary Tree
+    - Finding the maximum
+    - tree-breadth-first
+
+### Classwork
+
+- Code Challenge 16
+  - Finding the maximum in a binary tree
+- Code Challenge 17
+  - list of all values in the tree, in the order they were encountered
 
 ## Learning Objectives
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Challenge 17 | Breadth-First Traversal</title>
+  <style>
+    :root { color-scheme:dark; --bg:#0a1327; --panel:#142542; --panel2:#1d3455; --text:#f6f9ff; --muted:#c2d6ee; --cyan:#69ddff; --green:#78e3ac; --gold:#ffd47d; --violet:#c7b5ff; --pink:#ff9dc0; }
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 15% 0%,#203f66,#0a1327 47%);color:var(--text);font:18px/1.6 system-ui,Segoe UI,Arial,sans-serif} main{max-width:1180px;margin:auto;padding:30px 22px 75px} h1{font-size:clamp(2rem,4vw,3.5rem);line-height:1.13;margin:.2em 0} h2{font-size:1.65rem;margin:0 0 12px} h3{margin:5px 0 12px} p{margin:.4em 0 1em} .eyebrow{color:var(--cyan);font-weight:800;letter-spacing:.11em;text-transform:uppercase;font-size:.85rem}.lead{font-size:1.18rem;color:var(--muted)} .panel{background:linear-gradient(145deg,rgba(29,52,85,.98),rgba(18,36,66,.98));border:1px solid #3b5a7d;border-radius:22px;padding:25px;margin-top:23px;box-shadow:0 16px 35px #0003} .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.pill{display:inline-block;background:#164d68;color:#bbf1ff;border-radius:100px;padding:5px 12px;font-weight:800;font-size:.9rem;margin:0 8px 7px 0}.highlight{color:var(--gold);font-weight:800}.tree-wrap{max-width:750px;margin:auto}.tree-svg{display:block;width:100%;height:auto}.tree-svg line{stroke:#9bbbe2;stroke-width:3}.tree-svg .node circle{fill:#244a76;stroke:#82dfff;stroke-width:3;transition:.2s}.tree-svg .node text{fill:white;font-size:24px;font-weight:800;text-anchor:middle;dominant-baseline:middle}.tree-svg .node.waiting circle{fill:#26558b;stroke:#75c9ff}.tree-svg .node.visited circle{fill:#205b49;stroke:#78e3ac}.tree-svg .node.current circle{fill:#ad6024;stroke:#ffd47d;stroke-width:5}.level{fill:#cbdafa;font-size:15px;font-weight:700}.legend{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;color:var(--muted)} .dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:middle}.queue,.result{display:flex;gap:9px;flex-wrap:wrap;min-height:51px;align-items:center;margin:7px 0 14px} .chip{min-width:49px;padding:7px 12px;background:#235681;border:2px solid #66bdf1;border-radius:12px;text-align:center;font-weight:800}.result .chip{background:#205b49;border-color:#78e3ac}.dim{color:var(--muted);font-style:italic} button{font:inherit;font-weight:800;background:var(--cyan);color:#10213a;border:none;border-radius:12px;padding:10px 20px;cursor:pointer;margin:5px 8px 5px 0}button:hover{filter:brightness(1.1)}button:disabled{opacity:.4;cursor:not-allowed}button.secondary{background:#345073;color:#fff}code{color:#ffe19e}pre{background:#09192e;border:1px solid #3a5270;border-radius:15px;padding:17px;overflow-x:auto;font-size:1rem;line-height:1.6}pre code{color:#e5f5ff}.step{color:var(--cyan);font-weight:900} .callout{border-left:5px solid var(--gold);background:#273653;padding:12px 18px;border-radius:9px}.exercise{border-top:1px solid #455e80;padding-top:18px;margin-top:18px}.footer{margin-top:22px;color:var(--muted)} :focus-visible{outline:3px solid #ffe19e;outline-offset:3px} @media(max-width:760px){.two{grid-template-columns:1fr}main{padding:20px 12px} .panel{padding:17px}.tree-svg .node text{font-size:25px}}
+  </style>
+  <script src="breadth-first.js" defer></script>
+</head>
+<body>
+<main>
+  <header><div class="eyebrow">Code 401 • Code Challenge 17 • JavaScript</div><h1>Breadth-First Traversal <span style="color:var(--cyan)">(BFS)</span></h1><p class="lead">Learn how to visit a binary tree <strong>one level at a time, left to right</strong>. Follow the animation, check the queue, and practice with JavaScript.</p><span class="pill">Binary Tree</span><span class="pill">Queue = FIFO</span><span class="pill">Time: O(n)</span></header>
+  <section class="panel"><h2>1. First, understand the idea</h2><div class="two"><div><p>A <strong>binary tree</strong> starts with a <strong>root</strong>. Each node can have a <strong>left child</strong>, a <strong>right child</strong>, both, or neither.</p><p><strong>Breadth-first traversal</strong> visits the top level, then the next level, then the next. On each level, it goes from left to right.</p><div class="callout">Think of reading rows of seats in a theater: finish a row before moving to the next.</div></div><div><h3>How do we remember the next node?</h3><p>We use a <strong class="highlight">queue</strong>. A queue follows <strong>FIFO</strong>: First In, First Out. Add children at the back and process nodes at the front.</p><pre><code>Remove node → Save its value
+Add left child → Add right child
+Repeat until queue is empty</code></pre></div></div></section>
+  <section class="panel" id="walkthrough"><h2>2. Follow the tree — step by step</h2><p>The circles are nodes. Click <strong>Next step</strong> to watch the queue and result change. You can also revisit earlier steps.</p><div class="tree-wrap"><svg class="tree-svg" viewBox="0 0 760 365" role="img" aria-label="Binary tree: root 10, children 5 and 20; 5 has children 3 and 7; 20 has children 15 and 25."><g opacity=".5"><text class="level" x="4" y="51">Level 0</text><text class="level" x="4" y="165">Level 1</text><text class="level" x="4" y="299">Level 2</text></g><g><line x1="380" y1="68" x2="220" y2="174"/><line x1="380" y1="68" x2="540" y2="174"/><line x1="220" y1="174" x2="110" y2="303"/><line x1="220" y1="174" x2="330" y2="303"/><line x1="540" y1="174" x2="440" y2="303"/><line x1="540" y1="174" x2="650" y2="303"/></g><g id="tree-nodes"><g class="node" data-value="10"><circle cx="380" cy="68" r="36"/><text x="380" y="69">10</text></g><g class="node" data-value="5"><circle cx="220" cy="174" r="36"/><text x="220" y="175">5</text></g><g class="node" data-value="20"><circle cx="540" cy="174" r="36"/><text x="540" y="175">20</text></g><g class="node" data-value="3"><circle cx="110" cy="303" r="36"/><text x="110" y="304">3</text></g><g class="node" data-value="7"><circle cx="330" cy="303" r="36"/><text x="330" y="304">7</text></g><g class="node" data-value="15"><circle cx="440" cy="303" r="36"/><text x="440" y="304">15</text></g><g class="node" data-value="25"><circle cx="650" cy="303" r="36"/><text x="650" y="304">25</text></g></g></svg></div><div class="legend"><span><i class="dot" style="background:#ad6024"></i>Current node</span><span><i class="dot" style="background:#26558b"></i>Waiting in queue</span><span><i class="dot" style="background:#205b49"></i>Already visited</span></div><div class="two" style="margin-top:18px"><div><h3>Queue <small>(front → back)</small></h3><div id="queue-display" class="queue" aria-live="polite"></div></div><div><h3>Result array</h3><div id="result-display" class="result" aria-live="polite"></div></div></div><p id="step-message" class="callout" aria-live="polite"></p><p class="step" id="step-counter"></p><button id="previous-btn" class="secondary" type="button">← Previous</button><button id="next-btn" type="button">Next step →</button><button id="reset-btn" class="secondary" type="button">↻ Start over</button></section>
+  <section class="panel"><h2>3. What does the function return?</h2><p>For the example tree above, each level is recorded left to right:</p><pre><code>Level 0:       10
+Level 1:        5, 20
+Level 2:        3, 7, 15, 25
+
+breadthFirst(tree)
+// [10, 5, 20, 3, 7, 15, 25]</code></pre><div class="two"><div><h3>Example B — one node</h3><pre><code>   99
+
+Result: [99]</code></pre></div><div><h3>Example C — uneven tree</h3><pre><code>      8
+     / \
+    4  12
+     \   \
+      6   14
+
+Result: [8, 4, 12, 6, 14]</code></pre></div></div><p class="callout"><strong>Edge case:</strong> If the tree has no root, return an empty array <code>[]</code>. BFS does <em>not</em> sort the numbers.</p></section>
+  <section class="panel"><h2>4. The algorithm in everyday language</h2><ol><li>Create an empty result array.</li><li>If the tree is empty, return the empty array.</li><li>Add the root to the queue.</li><li>Take the next node from the front of the queue.</li><li>Save its value in the result array.</li><li>Put its left child in the queue, if one exists.</li><li>Put its right child in the queue, if one exists.</li><li>Repeat until the queue is empty; return the result.</li></ol><h3>Pseudocode</h3><pre><code>FUNCTION breadthFirst(tree)
+  result = []
+  IF tree is empty: RETURN result
+  queue = [root]
+  WHILE queue has waiting nodes
+    current = next node in queue
+    ADD current.value TO result
+    IF current.left exists: ADD left TO queue
+    IF current.right exists: ADD right TO queue
+  RETURN result</code></pre></section>
+  <section class="panel"><h2>5. JavaScript: build a tree and traverse it</h2><p>Open <code>breadth-first.js</code> to see the full commented code. The two classes are <code>Node</code> (one node) and <code>BinaryTree</code> (the tree's root).</p><pre><code>const tree = new BinaryTree();
+tree.root = new Node(10);
+tree.root.left = new Node(5);
+tree.root.right = new Node(20);
+
+console.log(breadthFirst(tree));
+// [10, 5, 20]</code></pre><p><strong>Key JavaScript detail:</strong> In the file, we use a <code>front</code> index instead of <code>shift()</code> to read the next queue entry. That avoids repeatedly moving array elements.</p></section>
+  <section class="panel"><h2>6. Three live classroom exercises</h2><p>Students: go to the <strong>EXERCISES</strong> section in <code>breadth-first.js</code>. Follow the numbered TODO instructions. Run the file to see your answers in the browser console.</p><div class="exercise"><h3>Exercise 1 — Build the tree</h3><p>Create the root and connect children. Predict the left-to-right traversal. <strong>Goal:</strong> <code>[10, 5, 20, 3, 7, 15, 25]</code>.</p></div><div class="exercise"><h3>Exercise 2 — Trace an uneven tree</h3><p>Fill in the expected order and describe what changes in the queue when a child is missing. <strong>Goal:</strong> <code>[8, 4, 12, 6, 14]</code>.</p></div><div class="exercise"><h3>Exercise 3 — Implement BFS yourself</h3><p>Complete <code>breadthFirstPractice()</code> using the steps in its comments. Test the empty-tree and one-node edge cases.</p></div><p class="callout"><strong>Open the console:</strong> In Chrome or Edge, press <kbd>F12</kbd> and select <strong>Console</strong>. The script prints exercise checks and results, without flooding the console.</p></section>
+  <section class="panel"><h2>7. Explain the Big-O</h2><div class="two"><div><h3 style="color:var(--green)">Time: O(n)</h3><p>Every node is processed once. If the tree has 10 nodes, we process 10 nodes; if it has 100, we process 100. That is <strong>linear time</strong>.</p></div><div><h3 style="color:var(--violet)">Space: O(n)</h3><p>We store an array of results and a queue. In our code, the queue array can grow to hold all <code>n</code> nodes.</p></div></div><p class="callout"><strong>Interview answer:</strong> “I used a FIFO queue to process one level at a time. I visit each node once, so time is O(n), and the result and queue use O(n) space.”</p></section>
+  <p class="footer">Code Challenge 17 • Save this HTML file and <code>breadth-first.js</code> in the same folder. Open the HTML file in your browser.</p>
+</main>
+</body>
+</html>

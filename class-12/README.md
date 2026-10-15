@@ -6,7 +6,20 @@ Description Here
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 12
+  - Discussion
+- Demo
+  - Socket.io, namespace, web sockets
+  - FIFO: Animal Shelter
+- Lab Prep
+  - Socket.io
+
+## Classwork
+
+- Labwork
+  - Socket.io
+- Code Challenge
+  - FIFO: Animal Shelter
 
 ## Learning Objectives
 

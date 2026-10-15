@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>FIFO Animal Shelter</title>
+
+  <style>
+    /* =========================================================
+       PAGE STYLING
+       ========================================================= */
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      background: #f4f7fb;
+      color: #222;
+      font-size: 18px;
+    }
+
+    header {
+      background: #243b53;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    section {
+      background: white;
+      margin-bottom: 30px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      color: #243b53;
+      border-bottom: 3px solid #bcccdc;
+      padding-bottom: 10px;
+    }
+
+    h3 {
+      color: #334e68;
+    }
+
+    code {
+      font-size: 1rem;
+    }
+
+    pre {
+      background: #1f2933;
+      color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    .important {
+      background: #fff8dc;
+      border-left: 6px solid #f0b429;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .concept {
+      background: #eaf4ff;
+      border-left: 6px solid #2680c2;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .queue {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .animal {
+      padding: 15px 20px;
+      background: #e8f5e9;
+      border: 2px solid #4caf50;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .arrow {
+      font-size: 2rem;
+    }
+
+    .label {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #bcccdc;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #243b53;
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #243b53;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
+
+  <header>
+    <h1>🐶 🐱 FIFO Animal Shelter</h1>
+    <p>Learning Queues with Dogs and Cats</p>
+  </header>
+
+  <main>
+
+    <!-- =========================================================
+         SECTION 1
+         ========================================================= -->
+
+    <section>
+
+      <h2>🎯 Goal</h2>
+
+      <p>
+        Today we are learning how to create an
+        <strong>Animal Shelter</strong> that follows a
+        <strong>FIFO</strong> system.
+      </p>
+
+      <div class="important">
+        <strong>FIFO = First In, First Out</strong>
+      </div>
+
+      <p>
+        The animal that has been waiting the longest should be
+        the first animal of that species adopted.
+      </p>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 2
+         ========================================================= -->
+
+    <section>
+
+      <h2>🧠 Think About a Real Shelter</h2>
+
+      <p>Imagine these animals arrive in this order:</p>
+
+      <div class="queue">
+
+        <span class="animal">🐶 Buddy</span>
+
+        <span class="arrow">→</span>
+
+        <span class="animal">🐱 Luna</span>
+
+        <span class="arrow">→</span>
+
+        <span class="animal">🐶 Max</span>
+
+        <span class="arrow">→</span>
+
+        <span class="animal">🐱 Milo</span>
+
+      </div>
+
+      <p>
+        Buddy arrived before Max.
+      </p>
+
+      <p>
+        Therefore, if someone wants to adopt a dog,
+        <strong>Buddy should leave before Max.</strong>
+      </p>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 3
+         ========================================================= -->
+
+    <section>
+
+      <h2>📦 Our Data Structure</h2>
+
+      <p>
+        We can make the problem easier by keeping
+        <strong>two queues</strong>.
+      </p>
+
+      <h3>🐶 Dog Queue</h3>
+
+      <pre>
+FRONT                         BACK
+
+Buddy → Max → Rocky
+  ↑
+leaves first
+      </pre>
+
+      <h3>🐱 Cat Queue</h3>
+
+      <pre>
+FRONT                       BACK
+
+Luna → Milo → Zoe
+ ↑
+leaves first
+      </pre>
+
+      <div class="concept">
+
+        <strong>Remember:</strong>
+
+        <p>
+          Animals enter at the <strong>back</strong>
+          of the queue.
+        </p>
+
+        <p>
+          Animals leave from the <strong>front</strong>
+          of the queue.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 4
+         ========================================================= -->
+
+    <section>
+
+      <h2>➕ enqueue()</h2>
+
+      <p>
+        <code>enqueue()</code> means:
+      </p>
+
+      <div class="important">
+        Add something to the queue.
+      </div>
+
+      <p>For example:</p>
+
+      <pre>
+shelter.enqueue({
+  name: "Buddy",
+  species: "dog"
+});
+      </pre>
+
+      <p>
+        Our program checks the animal's species.
+      </p>
+
+      <pre>
+Is Buddy a dog?
+
+YES
+
+↓  
+
+Add Buddy to the dog queue.
+      </pre>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 5
+         ========================================================= -->
+
+    <section>
+
+      <h2>➖ dequeue()</h2>
+
+      <p>
+        <code>dequeue()</code> means:
+      </p>
+
+      <div class="important">
+        Remove something from the front of the queue.
+      </div>
+
+      <p>For example:</p>
+
+      <pre>
+shelter.dequeue("dog");
+      </pre>
+
+      <p>This means:</p>
+
+      <pre>
+Find the DOG queue.
+
+↓
+
+Find the dog at the FRONT.
+
+↓
+
+Remove that dog.
+
+↓
+
+Return that dog.
+      </pre>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 6
+         ========================================================= -->
+
+    <section>
+
+      <h2>🔄 Example</h2>
+
+      <p>Suppose our shelter currently looks like this:</p>
+
+      <h3>Dogs</h3>
+
+      <pre>
+Buddy → Max → Rocky
+      </pre>
+
+      <h3>Cats</h3>
+
+      <pre>
+Luna → Milo
+      </pre>
+
+      <p>Now we run:</p>
+
+      <pre>
+shelter.dequeue("dog");
+      </pre>
+
+      <p>Buddy leaves because Buddy is at the front.</p>
+
+      <pre>
+RETURN:
+
+Buddy
+      </pre>
+
+      <p>The dog queue becomes:</p>
+
+      <pre>
+Max → Rocky
+      </pre>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 7
+         ========================================================= -->
+
+    <section>
+
+      <h2>⚠️ Invalid Preference</h2>
+
+      <p>
+        Our shelter only works with:
+      </p>
+
+      <pre>
+"dog"
+
+or
+
+"cat"
+      </pre>
+
+      <p>If someone asks for:</p>
+
+      <pre>
+shelter.dequeue("bird");
+      </pre>
+
+      <p>we return:</p>
+
+      <pre>
+null
+      </pre>
+
+      <p>
+        <code>null</code> means that there is no valid animal
+        to return.
+      </p>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 8
+         ========================================================= -->
+
+    <section>
+
+      <h2>🧪 Testing Our Thinking</h2>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Expected Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>enqueue Buddy the dog</td>
+            <td>Buddy enters dog queue</td>
+          </tr>
+
+          <tr>
+            <td>enqueue Luna the cat</td>
+            <td>Luna enters cat queue</td>
+          </tr>
+
+          <tr>
+            <td>dequeue("dog")</td>
+            <td>Oldest dog is returned</td>
+          </tr>
+
+          <tr>
+            <td>dequeue("cat")</td>
+            <td>Oldest cat is returned</td>
+          </tr>
+
+          <tr>
+            <td>dequeue("bird")</td>
+            <td>null</td>
+          </tr>
+
+          <tr>
+            <td>dequeue from empty queue</td>
+            <td>null</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 9
+         ========================================================= -->
+
+    <section>
+
+      <h2>⏱️ Big-O</h2>
+
+      <p>
+        Big-O describes how much work our program has to do
+        as the amount of data grows.
+      </p>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Operation</th>
+            <th>Big-O</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>enqueue()</td>
+            <td>O(1)</td>
+            <td>Add directly to the back</td>
+          </tr>
+
+          <tr>
+            <td>dequeue()</td>
+            <td>O(1)</td>
+            <td>Remove directly from the front</td>
+          </tr>
+
+          <tr>
+            <td>Space</td>
+            <td>O(n)</td>
+            <td>We store all animals</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+      <div class="important">
+
+        <strong>Important JavaScript note:</strong>
+
+        <p>
+          If you use a normal JavaScript array and
+          <code>shift()</code>, removing the first item is
+          actually O(n).
+        </p>
+
+        <p>
+          A real Queue class can be designed so removing from
+          the front is O(1).
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 10
+         ========================================================= -->
+
+    <section>
+
+      <h2>💻 Open the Console</h2>
+
+      <p>
+        The JavaScript file connected to this page contains
+        our actual Animal Shelter demonstration.
+      </p>
+
+      <p>
+        Open your browser's developer tools and select
+        <strong>Console</strong>.
+      </p>
+
+      <p>You will see each step of the shelter demonstrated.</p>
+
+      <pre>
+1. Create shelter
+
+2. Add Buddy
+
+3. Add Luna
+
+4. Add Max
+
+5. Adopt a dog
+
+6. Adopt a cat
+
+7. Test an invalid preference
+      </pre>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    🐶 FIFO Animal Shelter 🐱
+    <br />
+    Data Structures & Algorithms
+  </footer>
+
+
+  <!-- Connect our JavaScript file -->
+  <script src="animal-shelter.js"></script>
+
+</body>
+</html>

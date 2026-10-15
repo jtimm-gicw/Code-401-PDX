@@ -20,6 +20,8 @@
 * 🗺️ **Build a map of the information**
 * ✏️ **Construct a fill-in-the-blank worksheet for the topic**
 
+## Classwork
+
 - Code Challenge 15
   - Binary & BST Trees
 - Career Class 15: Partner Power Hour
