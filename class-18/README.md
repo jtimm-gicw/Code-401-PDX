@@ -6,7 +6,17 @@ Mirroring our previous efforts in Express, today, we will be wiring up a complet
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Demo
+  - K-ary Trees
+    - FizzBuzz
+
+### Classwork
+
+- Code Challenge 18
+  - K-ary Trees
+    - FizzBuzz
+- Code Challenge 19
+  - Mock Interview
 
 ## Learning Objectives
 

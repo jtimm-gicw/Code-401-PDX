@@ -9,7 +9,20 @@ AWS provides 2 different means of providing inter-application messaging
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Demo
+  - K-ary Trees
+    - FizzBuzz
+- Mock Interview
+- Partner Power Hour
+
+### Classwork
+
+- Code Challenge 18
+  - K-ary Trees
+    - FizzBuzz
+- Code Challenge 19
+  - Mock Interview
+- Partner Power Hour
 
 ## Learning Objectives
 

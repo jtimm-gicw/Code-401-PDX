@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>K-ary Trees | Interactive JavaScript Lesson</title>
+  <style>
+    /* ===== 1. THEME: Accessible colors, large type, and spacing ===== */
+    :root { --ink:#122341; --muted:#475569; --blue:#135dbb; --teal:#087b75; --purple:#7042bd; --orange:#a9530b; --bg:#f5f8ff; --line:#d7e0ef; --white:#fff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--bg); font:18px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    .container { max-width:1120px; margin:auto; padding:0 24px; }
+    .hero { color:white; padding:56px 0 50px; background:linear-gradient(120deg,#142c68,#205cb2 58%,#087b75); }
+    .hero h1 { font-size:clamp(2.5rem,5vw,4rem); line-height:1.1; margin:10px 0 16px; }
+    .hero p { max-width:780px; font-size:1.2rem; margin:0; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.12em; font-weight:800; font-size:.85rem; }
+    nav { background:#fff; border-bottom:2px solid var(--line); }
+    nav .container { display:flex; flex-wrap:wrap; gap:12px 22px; padding-top:14px; padding-bottom:14px; }
+    nav a { color:var(--blue); font-size:1rem; font-weight:750; }
+    main { padding:34px 0 72px; }
+    section { background:white; border:1px solid var(--line); border-radius:20px; margin:0 0 26px; padding:30px; box-shadow:0 5px 18px #1223410a; }
+    h2 { font-size:1.85rem; line-height:1.25; margin:0 0 15px; }
+    h3 { font-size:1.28rem; margin:24px 0 8px; }
+    p { margin:10px 0 16px; }
+    code { background:#eaf0fa; border-radius:5px; padding:2px 6px; font-size:.97em; }
+    pre { background:#15243c; color:#f0f5ff; border-radius:12px; padding:22px; overflow:auto; line-height:1.55; font-size:1rem; }
+    pre code { background:none; padding:0; color:inherit; }
+    .lead { font-size:1.18rem; }
+    .info { background:#ecf6ff; border-left:6px solid var(--blue); border-radius:10px; padding:17px 20px; }
+    .tip { background:#e9f8f1; border-left:6px solid #158466; border-radius:10px; padding:17px 20px; }
+    .warning { background:#fff3df; border-left:6px solid #d48419; border-radius:10px; padding:17px 20px; }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:15px; margin:22px 0; }
+    .mini-card { padding:18px; background:#f5f8fe; border:1px solid var(--line); border-radius:14px; }
+    .mini-card h3 { margin:0 0 5px; }
+    .diagram { background:#f8fbff; border:1px solid var(--line); border-radius:16px; padding:16px; overflow-x:auto; margin:20px 0; }
+    .diagram svg { display:block; width:100%; min-width:340px; height:auto; }
+    .svg-edge { stroke:#62738d; stroke-width:4; stroke-linecap:round; }
+    .svg-node { fill:#2563b4; stroke:#173e78; stroke-width:3; }
+    .svg-node.secondary { fill:#0c8c80; stroke:#096158; }
+    .svg-node.leaf { fill:#804cca; stroke:#593293; }
+    .svg-value { fill:white; font-size:23px; font-weight:800; text-anchor:middle; dominant-baseline:middle; }
+    .svg-label { fill:#334155; font-size:17px; font-weight:700; }
+    .comparison { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .comparison .diagram { margin:6px 0; }
+    .comparison h3 { margin:0; }
+    .controls { display:flex; flex-wrap:wrap; gap:12px; margin:17px 0; }
+    button { border:0; padding:13px 22px; border-radius:11px; background:var(--blue); color:white; font:700 1rem system-ui,sans-serif; cursor:pointer; }
+    button.secondary { background:#52647e; }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    button:focus-visible,a:focus-visible { outline:4px solid #e8a333; outline-offset:3px; }
+    .output { background:#eef4ff; border:1px solid #b7c9eb; border-radius:12px; padding:16px; min-height:65px; font-size:1.08rem; }
+    .output strong { color:#163f8b; }
+    .chip { display:inline-block; padding:3px 11px; border-radius:22px; background:#e6e0f6; color:#512e92; font-weight:750; margin:3px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:12px 14px; text-align:left; border-bottom:1px solid var(--line); }
+    th { background:#e7effe; }
+    ol li, ul li { padding-bottom:6px; }
+    footer { text-align:center; color:var(--muted); padding:22px; }
+    @media(max-width:690px) { .comparison { grid-template-columns:1fr; } section { padding:21px; } body { font-size:17px; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+  <!-- ===== 2. PAGE HEADER: Explain what students will learn ===== -->
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Code 401 • Trees and algorithms</div>
+      <h1>🌳 Understanding K-ary Trees</h1>
+      <p>Learn what a k-ary tree is, how to build one in JavaScript, how to visit its nodes, and how to create a new FizzBuzz tree.</p>
+    </div>
+  </header>
+
+  <!-- ===== 3. QUICK NAVIGATION: Jump to each learning milestone ===== -->
+  <nav aria-label="Lesson sections"><div class="container">
+    <a href="#concept">1. Concept</a><a href="#building">2. Build a tree</a><a href="#dfs">3. DFS</a><a href="#fizzbuzz">4. FizzBuzz</a><a href="#practice">5. Practice</a>
+  </div></nav>
+
+  <main class="container">
+    <!-- ===== 4. CONCEPT: Define k, root, child, and leaf ===== -->
+    <section id="concept">
+      <h2>1. What is a k-ary tree?</h2>
+      <p class="lead">A <strong>k-ary tree</strong> is a collection of connected nodes. Each node can have <strong>up to k children</strong>.</p>
+      <div class="info"><strong>Example:</strong> If <code>k = 3</code>, each node may have 0, 1, 2, or 3 children. This is called a <strong>3-ary tree</strong>.</div>
+      <div class="diagram">
+        <svg viewBox="0 0 840 350" role="img" aria-label="3-ary tree: root 15 has children 3, 5, 7. Node 3 has children 30 and 8.">
+          <line class="svg-edge" x1="420" y1="73" x2="205" y2="192"/><line class="svg-edge" x1="420" y1="73" x2="420" y2="192"/><line class="svg-edge" x1="420" y1="73" x2="640" y2="192"/>
+          <line class="svg-edge" x1="205" y1="213" x2="125" y2="310"/><line class="svg-edge" x1="205" y1="213" x2="290" y2="310"/>
+          <circle class="svg-node" cx="420" cy="73" r="37"/><text class="svg-value" x="420" y="74">15</text>
+          <circle class="svg-node secondary" cx="205" cy="192" r="37"/><text class="svg-value" x="205" y="193">3</text>
+          <circle class="svg-node secondary" cx="420" cy="192" r="37"/><text class="svg-value" x="420" y="193">5</text>
+          <circle class="svg-node secondary" cx="640" cy="192" r="37"/><text class="svg-value" x="640" y="193">7</text>
+          <circle class="svg-node leaf" cx="125" cy="310" r="35"/><text class="svg-value" x="125" y="311">30</text>
+          <circle class="svg-node leaf" cx="290" cy="310" r="35"/><text class="svg-value" x="290" y="311">8</text>
+          <text class="svg-label" x="468" y="70">← Root</text><text class="svg-label" x="684" y="194">← Child / leaf</text>
+        </svg>
+      </div>
+      <div class="cards">
+        <div class="mini-card"><h3>🔵 Root</h3>The top node where the tree begins. Here, that is <strong>15</strong>.</div>
+        <div class="mini-card"><h3>🟢 Children</h3>Nodes directly connected below a parent. The root has children <strong>3, 5, 7</strong>.</div>
+        <div class="mini-card"><h3>🟣 Leaf</h3>A node without children. Here: <strong>30, 8, 5, 7</strong>.</div>
+      </div>
+      <div class="tip"><strong>Remember:</strong> A 3-ary tree does <em>not</em> require every node to have exactly three children. Three is only the maximum.</div>
+    </section>
+
+    <!-- ===== 5. BUILDING: Show the JavaScript structure ===== -->
+    <section id="building">
+      <h2>2. How do we build a tree in JavaScript?</h2>
+      <p>Each <strong>Node</strong> stores a <code>value</code> and a <code>children</code> array. The <strong>KaryTree</strong> stores the root.</p>
+      <pre><code>class Node {
+  constructor(value) {
+    this.value = value;
+    this.children = [];
+  }
+}
+
+class KaryTree {
+  constructor(root = null) {
+    this.root = root;
+  }
+}</code></pre>
+      <h3>Connecting parent and child</h3>
+      <pre><code>const root = new Node(15);
+const child3 = new Node(3);
+const child5 = new Node(5);
+const child7 = new Node(7);
+
+root.children.push(child3, child5, child7);
+child3.children.push(new Node(30), new Node(8));
+
+const tree = new KaryTree(root);</code></pre>
+      <p class="info"><strong>Notice:</strong> We use an array for children because a k-ary node can have more than two children. That is different from a binary tree's <code>left</code> and <code>right</code> properties.</p>
+    </section>
+
+    <!-- ===== 6. DFS: Interactive depth-first traversal ===== -->
+    <section id="dfs">
+      <h2>3. How do we visit every node? (DFS)</h2>
+      <p><strong>Depth-first search (DFS)</strong> goes down a branch before coming back to visit the next sibling. In this lesson, we visit each parent <em>before</em> its children. This is called <strong>preorder DFS</strong>.</p>
+      <div class="diagram">
+        <svg viewBox="0 0 840 350" role="img" aria-label="Depth-first visit sequence: 15, 3, 30, 8, 5, 7.">
+          <line class="svg-edge" x1="420" y1="70" x2="205" y2="190"/><line class="svg-edge" x1="420" y1="70" x2="420" y2="190"/><line class="svg-edge" x1="420" y1="70" x2="640" y2="190"/>
+          <line class="svg-edge" x1="205" y1="210" x2="125" y2="300"/><line class="svg-edge" x1="205" y1="210" x2="290" y2="300"/>
+          <g id="dfs-node-0"><circle class="svg-node" cx="420" cy="70" r="37"/><text class="svg-value" x="420" y="71">15</text></g>
+          <g id="dfs-node-1"><circle class="svg-node secondary" cx="205" cy="190" r="37"/><text class="svg-value" x="205" y="191">3</text></g>
+          <g id="dfs-node-2"><circle class="svg-node leaf" cx="125" cy="300" r="35"/><text class="svg-value" x="125" y="301">30</text></g>
+          <g id="dfs-node-3"><circle class="svg-node leaf" cx="290" cy="300" r="35"/><text class="svg-value" x="290" y="301">8</text></g>
+          <g id="dfs-node-4"><circle class="svg-node secondary" cx="420" cy="190" r="37"/><text class="svg-value" x="420" y="191">5</text></g>
+          <g id="dfs-node-5"><circle class="svg-node secondary" cx="640" cy="190" r="37"/><text class="svg-value" x="640" y="191">7</text></g>
+        </svg>
+      </div>
+      <div class="controls"><button id="dfs-next" type="button">Visit next node →</button><button id="dfs-reset" class="secondary" type="button">Reset DFS</button></div>
+      <div id="dfs-output" class="output" role="status" aria-live="polite">Press <strong>Visit next node</strong> to start at the root.</div>
+      <p><strong>Complete visit order:</strong> <span class="chip">15</span> → <span class="chip">3</span> → <span class="chip">30</span> → <span class="chip">8</span> → <span class="chip">5</span> → <span class="chip">7</span></p>
+      <div class="tip"><strong>Why DFS here?</strong> Recursion makes it easy to process a node, then process every one of its children using the same function.</div>
+    </section>
+
+    <!-- ===== 7. FIZZBUZZ: Show matching original/new tree structures ===== -->
+    <section id="fizzbuzz">
+      <h2>4. Code challenge: FizzBuzz Tree</h2>
+      <p>Build a <strong>new tree</strong> with the <strong>same parent-child connections</strong>. Replace each number using the FizzBuzz rules.</p>
+      <div class="table-wrap"><table><thead><tr><th>Rule</th><th>New value</th></tr></thead><tbody>
+        <tr><td>Divisible by both 3 and 5</td><td><strong>"FizzBuzz"</strong></td></tr>
+        <tr><td>Divisible by 3 only</td><td><strong>"Fizz"</strong></td></tr>
+        <tr><td>Divisible by 5 only</td><td><strong>"Buzz"</strong></td></tr>
+        <tr><td>Neither</td><td>Convert the number to a <strong>string</strong></td></tr>
+      </tbody></table></div>
+      <div class="warning"><strong>Order matters:</strong> Check “divisible by both” first, or 15 might incorrectly become "Fizz".</div>
+      <div class="comparison">
+        <div><h3>Original K-ary Tree</h3><div class="diagram"><svg viewBox="0 0 410 310" role="img" aria-label="Original tree with root 15, children 3, 5, 7, and grandchildren 30, 8 below 3.">
+          <path d="M205 57 L92 160 M205 57 L205 160 M205 57 L325 160 M92 176 L45 268 M92 176 L140 268" stroke="#69788d" stroke-width="4" fill="none"/>
+          <g fill="#2563b4" stroke="#163c75" stroke-width="3"><circle cx="205" cy="55" r="36"/><circle cx="92" cy="160" r="34"/><circle cx="205" cy="160" r="34"/><circle cx="325" cy="160" r="34"/><circle cx="45" cy="268" r="31"/><circle cx="140" cy="268" r="31"/></g>
+          <g class="svg-value"><text x="205" y="56">15</text><text x="92" y="161">3</text><text x="205" y="161">5</text><text x="325" y="161">7</text><text x="45" y="269">30</text><text x="140" y="269">8</text></g>
+        </svg></div></div>
+        <div><h3>New FizzBuzz Tree</h3><div class="diagram"><svg viewBox="0 0 410 310" role="img" aria-label="New tree with root FizzBuzz, children Fizz, Buzz, string 7, and grandchildren FizzBuzz and string 8 below Fizz.">
+          <path d="M205 57 L92 160 M205 57 L205 160 M205 57 L325 160 M92 176 L45 268 M92 176 L140 268" stroke="#69788d" stroke-width="4" fill="none"/>
+          <g fill="#087b75" stroke="#06534f" stroke-width="3"><rect x="149" y="23" width="112" height="64" rx="21"/><rect x="56" y="128" width="72" height="64" rx="20"/><rect x="164" y="128" width="82" height="64" rx="20"/><rect x="294" y="128" width="62" height="64" rx="20"/><rect x="1" y="239" width="90" height="56" rx="16"/><rect x="110" y="239" width="60" height="56" rx="16"/></g>
+          <g fill="white" text-anchor="middle" dominant-baseline="middle" font-weight="750"><text font-size="17" x="205" y="56">FizzBuzz</text><text font-size="18" x="92" y="161">Fizz</text><text font-size="18" x="205" y="161">Buzz</text><text font-size="21" x="325" y="161">7</text><text font-size="14" x="46" y="269">FizzBuzz</text><text font-size="21" x="140" y="269">8</text></g>
+        </svg></div></div>
+      </div>
+      <div class="controls"><button type="button" id="show-fizzbuzz">Show converted node values</button></div>
+      <div id="fizzbuzz-output" class="output" role="status" aria-live="polite">Press the button to run <code>fizzBuzzTree()</code> on our sample tree.</div>
+      <p class="tip"><strong>Important:</strong> The original tree is not changed. The function creates a different node for every original node.</p>
+    </section>
+
+    <!-- ===== 8. PRACTICE: Point students to the three guided JS exercises ===== -->
+    <section id="practice">
+      <h2>5. Live coding: Three practice exercises</h2>
+      <p>Open <code>k-ary-trees.js</code> alongside this HTML page. The JavaScript file contains step-by-step comments for all three exercises.</p>
+      <div class="cards">
+        <div class="mini-card"><h3>Exercise 1: Build</h3><p>Create a 3-ary tree. Add nodes using the <code>children</code> array.</p><strong>Goal:</strong> Understand parent-child connections.</div>
+        <div class="mini-card"><h3>Exercise 2: Traverse</h3><p>Visit nodes using preorder DFS and recursion.</p><strong>Goal:</strong> Read every value once.</div>
+        <div class="mini-card"><h3>Exercise 3: Transform</h3><p>Create a separate tree and apply FizzBuzz to each node.</p><strong>Goal:</strong> Keep the original tree unchanged.</div>
+      </div>
+      <h3>How to run the JavaScript exercises</h3>
+      <pre><code>node k-ary-trees.js</code></pre>
+      <p>If you open this HTML page in a browser, its buttons also use <code>k-ary-trees.js</code> to run examples.</p>
+    </section>
+  </main>
+  <footer>🌳 K-ary Trees • Build → Traverse → Transform • Code Challenge: tree-fizz-buzz</footer>
+  <!-- ===== 9. JAVASCRIPT: Keep this line at the end so the page loads first ===== -->
+  <script src="k-ary-trees.js"></script>
+</body>
+</html>

@@ -143,3 +143,21 @@ Why a deck? It's a helpful tool to keep you on time and on focus. Also, you will
   - Environment
   - API Fetching
   - Automation
+
+  ## Class Outline
+
+- Demo
+  - K-ary Trees
+    - FizzBuzz
+- Mock Interview
+- Partner Power Hour
+
+### Classwork
+
+- Code Challenge 18
+  - K-ary Trees
+    - FizzBuzz
+- Code Challenge 19
+  - Mock Interview
+- Partner Power Hour
+
