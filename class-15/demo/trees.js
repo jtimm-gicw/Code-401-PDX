@@ -7,7 +7,6 @@ Student Learning File
 Open index.html in a browser.
 Then open Developer Tools -> Console.
 
-This file follows the challenge in small milestones.
 
 BIG IDEA:
 A tree is made of Nodes.
