@@ -8,8 +8,21 @@ Component based UI systems like `React`, `Angular`, `Vue` and the like all opera
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 26
+  - Discussion
+- Demo
+  - React Components
+    - Class vs Function
+- Lab Prep
+  - components --> phase 1 of 4
 
+## Classwork
+
+- Labwork
+  - message queue
+- Code Challenge
+  - Insert Sort
+  
 ## Learning Objectives
 
 ### Students will be able to
