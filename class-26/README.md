@@ -19,10 +19,10 @@ Component based UI systems like `React`, `Angular`, `Vue` and the like all opera
 ## Classwork
 
 - Labwork
-  - message queue
+  - React components
 - Code Challenge
   - Insert Sort
-  
+
 ## Learning Objectives
 
 ### Students will be able to
