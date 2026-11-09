@@ -6,7 +6,22 @@ State is often more complex than simply updating a value directly. Often, we nee
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 29
+  - Discussion
+- Demo
+  - React Components
+    - Reducer Function
+- Lab Prep
+  - components --> phase 4 of 4
+
+## Classwork
+
+- Labwork
+  - Reducer Function
+- Career Class: 29 Workshop
+  - Prep: Interview role-play
+- Code Challenge
+  - Mock Interview
 
 ## Learning Objectives
 

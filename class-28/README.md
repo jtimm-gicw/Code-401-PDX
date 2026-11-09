@@ -8,7 +8,20 @@ Newer versions of React now allow for "function components" to also manage their
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 28
+  - Discussion
+- Demo
+  - React Components
+    - useEffect()
+- Lab Prep
+  - components --> phase 3 of 4
+
+## Classwork
+
+- Labwork
+  - useEffect()
+- Code Challenge
+  - Sorting: Comparison
 
 ## Learning Objectives
 
