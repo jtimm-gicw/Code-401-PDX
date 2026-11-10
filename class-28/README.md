@@ -22,6 +22,8 @@ Newer versions of React now allow for "function components" to also manage their
   - useEffect()
 - Code Challenge
   - Sorting: Comparison
+- Career Class 28
+  - Behavioral Interview Questions
 
 ## Learning Objectives
 
