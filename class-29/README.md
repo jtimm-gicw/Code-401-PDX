@@ -22,6 +22,7 @@ State is often more complex than simply updating a value directly. Often, we nee
   - Prep: Interview role-play
 - Code Challenge
   - Mock Interview
+    - breadth-first traversal
 
 ## Learning Objectives
 

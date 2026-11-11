@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#13264b" />
+  <title>Hash Tables | Interactive Code 401 Lesson</title>
+  <style>
+    /* =============================================
+       PAGE STYLES: All CSS is inside this HTML file.
+       No libraries or installations are required.
+       ============================================= */
+    :root { --ink:#13264b; --muted:#576781; --bg:#f4f7ff; --white:#fff; --blue:#4263e8; --pink:#ed3b9a; --green:#129b75; --yellow:#ffca46; --purple:#8447db; --line:#dce5f7; --shadow:0 18px 48px rgba(26,46,93,.09); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.65 system-ui,-apple-system,"Segoe UI",Arial,sans-serif; }
+    button, input, select { font:inherit; }
+    button { cursor:pointer; }
+    button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible { outline:3px solid #f6a609; outline-offset:3px; }
+    a { color:#254dba; }
+    code,pre { font-family:Consolas,"SFMono-Regular",monospace; }
+    code { background:#eaf0ff; padding:.08rem .32rem; border-radius:5px; }
+    pre { margin:0; background:#172a50; color:#ecf5ff; padding:20px; border-radius:14px; overflow-x:auto; font-size:15px; line-height:1.7; }
+    pre code { background:transparent; padding:0; color:inherit; }
+    .container { width:min(1120px,calc(100% - 36px)); margin:0 auto; }
+    .hero { padding:62px 0 70px; color:#fff; background:radial-gradient(circle at 80% 5%,#7248d9 0,transparent 37%),linear-gradient(125deg,#142a53,#273b85); position:relative; overflow:hidden; }
+    .hero::after { content:"#   { }   [ ]"; font:800 130px/1 monospace; color:#ffffff0d; position:absolute; right:-70px; bottom:-15px; transform:rotate(-10deg); pointer-events:none; }
+    .eyebrow { display:inline-block; color:#12264a; background:#ffe584; border-radius:100px; padding:6px 15px; font-size:13px; font-weight:900; letter-spacing:.11em; text-transform:uppercase; }
+    .hero h1 { font-size:clamp(38px,6vw,70px); line-height:1.1; margin:19px 0; letter-spacing:-.035em; max-width:850px; }
+    .hero h1 span { color:#ffdf5f; }
+    .hero p { max-width:740px; font-size:20px; color:#ebeeff; margin:0 0 28px; }
+    .hero-links { display:flex; flex-wrap:wrap; gap:12px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:0; text-decoration:none; border-radius:12px; padding:12px 19px; font-weight:800; min-height:48px; transition:transform .15s ease,box-shadow .15s ease; }
+    .btn:hover { transform:translateY(-2px); box-shadow:0 7px 16px #12264b26; }
+    .btn-primary { background:#ffcf52; color:#17264a; }
+    .btn-secondary { background:#fff; color:#243b88; }
+    .btn-outline { background:#eef2ff; color:#293e87; border:1px solid #d7dfff; }
+    .nav { background:#fff; border-bottom:1px solid var(--line); padding:12px 0; position:sticky; top:0; z-index:5; box-shadow:0 3px 15px #13264b09; }
+    .nav-inner { display:flex; align-items:center; flex-wrap:wrap; gap:10px 20px; }
+    .nav strong { margin-right:auto; white-space:nowrap; }
+    .nav a { text-decoration:none; font-weight:750; color:#355097; font-size:14px; }
+    section { scroll-margin-top:85px; padding:52px 0 18px; }
+    .section-kicker { font-size:13px; font-weight:900; text-transform:uppercase; letter-spacing:.12em; color:#6950ce; }
+    h2 { font-size:clamp(28px,4vw,40px); line-height:1.16; margin:10px 0 12px; letter-spacing:-.028em; }
+    h3 { font-size:22px; line-height:1.3; margin:0 0 12px; }
+    .intro { color:var(--muted); font-size:18px; max-width:820px; margin:0 0 22px; }
+    .grid { display:grid; gap:18px; }
+    .grid-2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .grid-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .card { background:#fff; border:1px solid var(--line); border-radius:20px; padding:26px; box-shadow:var(--shadow); }
+    .card p:last-child { margin-bottom:0; }
+    .callout { background:#fff9de; border-left:6px solid #ffca46; padding:16px 22px; border-radius:10px; margin:20px 0; }
+    .term { border-radius:16px; padding:21px; border:1px solid; }
+    .term .emoji { font-size:32px; display:block; margin-bottom:8px; }
+    .term h3 { margin-bottom:5px; }
+    .term p { margin:0; }
+    .term.pink { background:#fff0f9; border-color:#ffc5e6; }
+    .term.green { background:#e9fbf4; border-color:#a9e8d1; }
+    .term.blue { background:#eaf1ff; border-color:#bad0ff; }
+    .term.purple { background:#f4eefd; border-color:#d7c4ff; }
+    .term.yellow { background:#fff8e7; border-color:#ffe19b; }
+    .term.teal { background:#e9fafa; border-color:#aae4e6; }
+    .key { color:#a90064; font-weight:900; background:#ffd6ed; border-radius:7px; padding:2px 8px; }
+    .value { color:#00694d; font-weight:900; background:#c6f8df; border-radius:7px; padding:2px 8px; }
+    .bucket-label { color:#2348a5; font-weight:900; background:#dce7ff; border-radius:7px; padding:2px 8px; }
+    .flow { display:grid; grid-template-columns:1fr auto 1fr auto 1.25fr; gap:12px; align-items:center; padding:22px; background:#fff; border-radius:20px; border:1px solid var(--line); }
+    .flow-step { text-align:center; border-radius:15px; padding:20px 12px; min-height:140px; background:#eef3ff; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+    .flow-step strong { display:block; font-size:21px; margin:8px 0 3px; }
+    .flow-step small { color:var(--muted); }
+    .flow-arrow { font-size:30px; font-weight:900; color:var(--purple); }
+    .flow-step .big { font-size:28px; }
+    .table-display { display:grid; gap:9px; }
+    .bucket { display:flex; align-items:stretch; min-height:60px; border-radius:12px; overflow:hidden; border:2px solid #dce6f6; background:#fff; }
+    .bucket.active { border-color:#ffae15; background:#fffbee; box-shadow:0 0 0 3px #ffd97855; }
+    .bucket-index { flex:none; display:flex; align-items:center; justify-content:center; width:60px; font-size:21px; font-weight:900; background:#e6efff; color:#244db3; border-right:2px solid #dce6f6; }
+    .bucket.active .bucket-index { background:#ffd85f; color:#342400; }
+    .bucket-entries { display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:10px 12px; min-width:0; }
+    .entry { display:inline-flex; gap:7px; align-items:center; border-radius:9px; padding:8px 10px; background:#f2edff; border:1px solid #d9caff; font-size:15px; }
+    .empty { color:#78869d; font-style:italic; }
+    .playground { display:grid; grid-template-columns:.93fr 1.07fr; gap:20px; }
+    .controls { background:#fff; border:1px solid var(--line); border-radius:18px; padding:23px; }
+    .controls label { display:block; font-weight:800; margin:12px 0 5px; }
+    .controls input,.controls select { width:100%; padding:12px; border-radius:11px; border:2px solid #cddaf3; background:#fff; color:var(--ink); min-width:0; }
+    .control-buttons { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+    .result { margin-top:17px; padding:13px 15px; border-radius:12px; background:#e9f8f2; border:1px solid #b8e7d5; color:#0b6349; min-height:72px; overflow-wrap:anywhere; font-family:Consolas,monospace; font-size:15px; }
+    .instructions { background:#edf2ff; border:1px solid #c9d8ff; border-radius:13px; padding:16px 20px; margin:20px 0; }
+    .step-list { padding-left:23px; margin:12px 0; }
+    .step-list li { margin-bottom:7px; }
+    .exercise { border-left:6px solid var(--purple); }
+    .exercise:nth-child(2) { border-left-color:#f0529c; }
+    .exercise:nth-child(3) { border-left-color:#10a87e; }
+    .pill { display:inline-block; background:#ede7ff; color:#5930ad; font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; border-radius:20px; padding:4px 10px; margin-bottom:10px; }
+    .exercise-output { border-radius:12px; padding:16px; background:#14284c; color:#ddf8e5; margin-top:12px; min-height:70px; font:15px/1.6 Consolas,monospace; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .exercise .btn { margin-top:12px; }
+    .code-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .footer { margin-top:65px; background:#17284d; color:#fff; padding:36px 0; }
+    .footer p { margin:0; color:#dde6ff; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media(max-width:820px) { .grid-3,.grid-2,.playground,.code-grid { grid-template-columns:1fr; } .flow { grid-template-columns:1fr; } .flow-arrow { text-align:center; transform:rotate(90deg); } .nav { position:static; } section { scroll-margin-top:18px; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .btn { transition:none; } }
+  </style>
+  <!-- JavaScript is loaded with defer so the HTML is ready when the script runs. -->
+  <script src="hash-tables.js" defer></script>
+</head>
+<body>
+  <!-- SECTION 1: Lesson title and quick navigation. -->
+  <header class="hero">
+    <div class="container">
+      <span class="eyebrow">Code 401 • Data Structures & Algorithms</span>
+      <h1>Hash Tables <span>Made Simple.</span></h1>
+      <p>Learn keys, values, hashing, buckets, and collisions. Then build a hash table in JavaScript and try three live classroom exercises.</p>
+      <div class="hero-links">
+        <a class="btn btn-primary" href="#concept">Start learning ↓</a>
+        <a class="btn btn-secondary" href="#playground">Try the live demo →</a>
+      </div>
+    </div>
+  </header>
+  <nav class="nav" aria-label="Lesson sections">
+    <div class="container nav-inner"><strong>🗂️ HASH TABLE LAB</strong><a href="#concept">Concept</a><a href="#steps">How it works</a><a href="#playground">Live playground</a><a href="#methods">Methods</a><a href="#exercises">3 exercises</a><a href="#interview">Interview tips</a></div>
+  </nav>
+  <main>
+    <!-- SECTION 2: Explain a hash table using an everyday analogy. -->
+    <section id="concept"><div class="container">
+      <div class="section-kicker">01 / The big idea</div>
+      <h2>What is a hash table?</h2>
+      <p class="intro">Imagine a <strong>filing cabinet</strong>. Instead of opening every drawer to find a document, a rule tells you exactly which drawer to look in. A hash table works in a similar way.</p>
+      <div class="grid grid-3">
+        <article class="term pink"><span class="emoji">🏷️</span><h3>Key</h3><p>The label we search with: <span class="key">"cat"</span></p></article>
+        <article class="term green"><span class="emoji">📄</span><h3>Value</h3><p>The information attached to the key: <span class="value">"Milo"</span></p></article>
+        <article class="term purple"><span class="emoji">⚙️</span><h3>Hash function</h3><p>A repeatable rule that converts the key into an array index.</p></article>
+        <article class="term blue"><span class="emoji">🗄️</span><h3>Bucket</h3><p>A storage slot inside the underlying array.</p></article>
+        <article class="term yellow"><span class="emoji">💥</span><h3>Collision</h3><p>Two <em>different</em> keys land in the same bucket.</p></article>
+        <article class="term teal"><span class="emoji">🚀</span><h3>Why use one?</h3><p>Quickly find a student grade, username, price, or inventory quantity.</p></article>
+      </div>
+      <div class="callout"><strong>📣 Tell students:</strong> The key is <span class="key">what we look up</span>. The value is <span class="value">what we want to find</span>. The hash function tells us <span class="bucket-label">where to look</span>.</div>
+    </div></section>
+
+    <!-- SECTION 3: Four-step visual explanation and a collision example. -->
+    <section id="steps"><div class="container">
+      <div class="section-kicker">02 / Visual walk-through</div><h2>How does a hash table work?</h2>
+      <p class="intro">Our classroom example has <strong>five buckets: 0, 1, 2, 3, 4</strong>. We store the key <span class="key">"cat"</span> with the value <span class="value">"Milo"</span>.</p>
+      <div class="flow" aria-label="Key cat enters hash function, maps to bucket 2, stores value Milo">
+        <div class="flow-step"><span class="big">🏷️</span><strong><span class="key">"cat"</span></strong><small>1. Choose a key</small></div>
+        <span class="flow-arrow" aria-hidden="true">➜</span>
+        <div class="flow-step"><span class="big">⚙️</span><strong>hash("cat") = 2</strong><small>2. Calculate an index</small></div>
+        <span class="flow-arrow" aria-hidden="true">➜</span>
+        <div class="flow-step"><span class="big">🗄️</span><strong><span class="bucket-label">Bucket 2</span></strong><small>3. Store <span class="key">cat</span> → <span class="value">Milo</span></small></div>
+      </div>
+      <div class="grid grid-2" style="margin-top:18px">
+        <div class="card"><h3>🧮 Where does index 2 come from?</h3><p>For this <em>learning-only</em> hash function, add the character codes:</p><pre><code>"cat" → 99 + 97 + 116 = 312
+312 % 5 = 2
+// % means "remainder"
+// Put the entry in bucket 2.</code></pre><p>Using the same function and table size always gives the same index for the same key.</p></div>
+        <div class="card"><h3>💥 What if two keys collide?</h3><p>Our simple function sends both <span class="key">"cat"</span> and <span class="key">"act"</span> to <strong>bucket 2</strong>.</p><pre><code>Bucket 2:
+[ { key: "cat", value: "Milo" },
+  { key: "act", value: "verb" } ]</code></pre><p>We keep <strong>both entries</strong> and compare the actual keys when retrieving one.</p></div>
+      </div>
+    </div></section>
+
+    <!-- SECTION 4: Interactive demo that updates buckets in real time. -->
+    <section id="playground"><div class="container">
+      <div class="section-kicker">03 / Hands-on demo</div><h2>Interactive hash table playground</h2>
+      <p class="intro">Pick a method, enter a key and value, and watch the five buckets change. <strong>Try "cat" and "act" to see a collision.</strong></p>
+      <div class="playground">
+        <div class="controls">
+          <h3>⚡ Test a method</h3>
+          <label for="method">Method</label><select id="method"><option value="set">set(key, value)</option><option value="get">get(key)</option><option value="has">has(key)</option><option value="keys">keys()</option><option value="hash">hash(key)</option></select>
+          <label for="key">Key</label><input id="key" type="text" value="cat" autocomplete="off" placeholder="Example: cat" />
+          <div id="value-field"><label for="value">Value</label><input id="value" type="text" value="Milo" placeholder="Example: Milo" /></div>
+          <div class="control-buttons"><button class="btn btn-primary" id="run-method" type="button">▶ Run method</button><button class="btn btn-outline" id="reset-table" type="button">↺ Reset table</button></div>
+          <div id="result" class="result" role="status" aria-live="polite">Choose a method and click “Run method.”</div>
+          <p style="font-size:14px;color:var(--muted)">Values entered here are strings. The JavaScript examples below also demonstrate numeric values.</p>
+        </div>
+        <div class="card"><h3>🗄️ Your buckets <small style="color:var(--muted)">(size = 5)</small></h3><div id="buckets" class="table-display" aria-live="polite"></div><div class="callout" style="margin-bottom:0">💡 A bucket can hold <strong>more than one</strong> key–value pair. That's how we handle collisions in this demo.</div></div>
+      </div>
+    </div></section>
+
+    <!-- SECTION 5: Reference table explaining exactly what each assignment method does. -->
+    <section id="methods"><div class="container">
+      <div class="section-kicker">04 / Code challenge requirements</div><h2>The five methods you must build</h2>
+      <p class="intro">Every method should have <strong>one clear job</strong>. The <code>hash()</code> method is reusable: <code>set()</code>, <code>get()</code>, and <code>has()</code> call it.</p>
+      <div class="grid grid-2">
+        <article class="card"><h3>1. <code>hash(key)</code></h3><p>Convert the key into a valid index in the underlying array.</p><pre><code>hash("cat") // 2</code></pre></article>
+        <article class="card"><h3>2. <code>set(key, value)</code></h3><p>Add a pair. If the key already exists, replace its value. Handle collisions.</p><pre><code>set("cat", "Milo")
+set("cat", "Luna") // update</code></pre></article>
+        <article class="card"><h3>3. <code>get(key)</code></h3><p>Search the correct bucket and return the matching value. Return <code>undefined</code> for a missing key.</p><pre><code>get("cat") // "Luna"</code></pre></article>
+        <article class="card"><h3>4. <code>has(key)</code></h3><p>Return <code>true</code> if the key exists; otherwise <code>false</code>.</p><pre><code>has("cat") // true</code></pre></article>
+        <article class="card"><h3>5. <code>keys()</code></h3><p>Return an array of every key stored in the table.</p><pre><code>keys() // ["cat", ...]</code></pre></article>
+        <article class="card"><h3>⚠️ Important edge cases</h3><p>Duplicate keys, missing keys, keys sharing a bucket, and values like <code>0</code>, <code>false</code>, or <code>undefined</code>.</p></article>
+      </div>
+    </div></section>
+
+    <!-- SECTION 6: Three student exercises; the JS file contains the worked steps. -->
+    <section id="exercises"><div class="container">
+      <div class="section-kicker">05 / Live coding practice</div><h2>Three classroom exercises</h2>
+      <p class="intro">Open <strong>hash-tables.js</strong> and find the headings <code>EXERCISE 1</code>, <code>EXERCISE 2</code>, and <code>EXERCISE 3</code>. Follow the comments and try to type each solution before looking at the completed example.</p>
+      <div class="grid grid-3">
+        <article class="card exercise"><span class="pill">Exercise 1 · Beginner</span><h3>🧮 Hash a key</h3><p>Build a simple character-code hash function that maps a word to bucket 0–4.</p><ol class="step-list"><li>Start with <code>total = 0</code>.</li><li>Loop through the characters.</li><li>Add each character code.</li><li>Return <code>total % 5</code>.</li></ol><button id="exercise-1" class="btn btn-outline" type="button">▶ Run example 1</button><div id="exercise-1-output" class="exercise-output" aria-live="polite">Click to see a worked example.</div></article>
+        <article class="card exercise"><span class="pill">Exercise 2 · Beginner+</span><h3>📦 Store and retrieve</h3><p>Create a grade book. Add students, retrieve a grade, then update an existing key.</p><ol class="step-list"><li>Create a Hashtable.</li><li>Use <code>set()</code> to add entries.</li><li>Use <code>get()</code> to retrieve.</li><li>Use <code>set()</code> to update a grade.</li></ol><button id="exercise-2" class="btn btn-outline" type="button">▶ Run example 2</button><div id="exercise-2-output" class="exercise-output" aria-live="polite">Click to see a worked example.</div></article>
+        <article class="card exercise"><span class="pill">Exercise 3 · Challenge</span><h3>💥 Handle a collision</h3><p>Store two different keys in the same bucket. Confirm both still work.</p><ol class="step-list"><li>Add <code>"cat"</code> and <code>"act"</code>.</li><li>Check their bucket index.</li><li>Use <code>get()</code> and <code>has()</code>.</li><li>Inspect <code>keys()</code>.</li></ol><button id="exercise-3" class="btn btn-outline" type="button">▶ Run example 3</button><div id="exercise-3-output" class="exercise-output" aria-live="polite">Click to see a worked example.</div></article>
+      </div>
+      <div class="instructions"><strong>👨‍🏫 Instructor tip:</strong> Each exercise has clear steps followed by working reference code in the JavaScript file. Hide the reference code while students discuss their own solution. Afterward, run the corresponding example to compare the results. Open DevTools → Console to inspect the important milestones.</div>
+    </div></section>
+
+    <!-- SECTION 7: Simple whiteboard interview notes and Big-O. -->
+    <section id="interview"><div class="container">
+      <div class="section-kicker">06 / Interview preparation</div><h2>How to explain this on a whiteboard</h2>
+      <div class="grid grid-2">
+        <div class="card"><h3>🎤 What the student should say</h3><p>“I use <code>hash(key)</code> to choose a bucket. Then I store or find the key–value pair in that bucket. If two keys land in the same bucket, I compare the original keys so I find the correct entry.”</p><h3>🧠 Follow this order</h3><ol class="step-list"><li>Restate the problem.</li><li>Identify normal and edge cases.</li><li>Draw five buckets and a collision.</li><li>Explain the algorithm in plain words.</li><li>Write pseudocode, then JavaScript.</li><li>Dry-run the result and explain Big-O.</li></ol></div>
+        <div class="card"><h3>⏱️ Big-O, explained simply</h3><p><strong>Average <code>set/get/has</code>: O(1)</strong> with a well-distributed hash and controlled bucket sizes. This means lookup is usually fast.</p><p><strong>Worst case: O(n)</strong> when lots of keys collide and one bucket must be searched.</p><p><strong><code>keys()</code>: O(n)</strong> because it must collect all n keys.</p><p><strong>Important detail:</strong> Our example <code>hash(key)</code> takes O(k) for a key of length k, because it visits each character. Our simple function is for learning—not production security or performance.</p></div>
+      </div>
+      <div class="callout"><strong>✅ Success check:</strong> Can students explain what the key and value are, why hashing picks a bucket, what a collision is, why updating an existing key must not add a duplicate, and why worst-case lookups can be slow?</div>
+    </div></section>
+  </main>
+  <footer class="footer"><div class="container"><strong>Hash Tables | Code 401 Classroom Demo</strong><p>Open index.html in a browser. Keep hash-tables.js in the same folder. No npm packages required.</p></div></footer>
+</body>
+</html>

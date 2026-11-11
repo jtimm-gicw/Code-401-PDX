@@ -18,7 +18,30 @@ Using the React "Context API" we can create an manage state in a more "global" f
 
 ## Today's Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 30
+  - Teach me about:
+    - Hash Tables
+- Reading 31
+  - Discussion
+- Demo
+  - What are hash tables?
+  - ToDo app
+    - context API
+- Lab Prep
+  - context API
+    - phase 1 of 3
+
+**Note:**
+- Phase 1, Class 31: context API
+- Phase 2, Class 32, add settings
+- Phase 3, Class 33, add <Auth> & <Login> --> *Extra Credit - NOT REQUIRED*
+
+## Classwork
+
+- Labwork
+  - context API
+- Code Challenge 31
+  - hash tables: repeated words
 
 ## Notes
 
