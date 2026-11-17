@@ -32,9 +32,10 @@ Using the React "Context API" we can create an manage state in a more "global" f
     - phase 1 of 3
 
 **Note:**
+
 - Phase 1, Class 31: context API
 - Phase 2, Class 32, add settings
-- Phase 3, Class 33, add <Auth> & <Login> --> *Extra Credit - NOT REQUIRED*
+- Phase 3, Class 33, add `<Auth>` & `<Login>` --> *Extra Credit - NOT REQUIRED*
 
 ## Classwork
 
