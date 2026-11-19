@@ -18,7 +18,29 @@ Using the React "Context API" we can create an manage state in a more "global" f
 
 ## Today's Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 32
+  - Discussion
+- Demo
+  - ToDo app
+    - add settings
+- Lab Prep
+  - settings setup
+    - phase 2 of 3
+
+**Note:**
+
+- Phase 1, Class 31: context API
+- Phase 2, Class 32, add settings
+- Phase 3, Class 33, add `<Auth>` & `<Login>` --> *Extra Credit - NOT REQUIRED*
+
+## Classwork
+
+- Labwork
+  - Lab 32
+    - add settings
+- Code Challenge 32
+  - binary trees
+    - find common values
 
 ## Notes
 
