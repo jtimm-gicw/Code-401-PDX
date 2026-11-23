@@ -2,11 +2,21 @@
 
 ## Class Outline
 
-<!-- To Be Completed By Instructor -->
+- Reading 32
+  - Teach me about:
+    - Graphs
+- Demo
+  - Graph Implementation
+- Code Challenge
+  - Graphs
+  - Mock Interview
+- Career: Class 35:
+  - Partner Power Hour
+    - Report #7
 
 ## Learning Objectives
 
-### Data Structure: <!-- TBD: Fill In Name -->
+### Data Structure:
 
 - Implement
 - Document

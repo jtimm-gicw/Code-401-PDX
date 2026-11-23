@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111735" />
+  <meta name="description" content="A beginner-friendly, interactive lesson on graphs and adjacency lists in JavaScript." />
+  <title>Graph Lab | JavaScript Graphs</title>
+  <style>
+    /* =========================================================
+       1. GLOBAL STYLES: Easy-to-read type, colors, and spacing
+       ========================================================= */
+    :root {
+      --ink: #17203d;
+      --muted: #53617b;
+      --background: #f4f7ff;
+      --surface: #ffffff;
+      --border: #dce4f4;
+      --purple: #6e42d3;
+      --blue: #246de2;
+      --green: #16866a;
+      --orange: #ba6515;
+      --shadow: 0 16px 42px rgba(24, 44, 92, 0.09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--background); color: var(--ink); font: 18px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: #2256b3; }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 4px solid #f1ba3e; outline-offset: 3px; }
+    .container { width: min(1160px, calc(100% - 36px)); margin-inline: auto; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .77rem; font-weight: 800; color: #cbb7ff; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(2.25rem, 5vw, 4.4rem); letter-spacing: -.045em; line-height: 1.12; margin-bottom: 18px; }
+    h2 { font-size: clamp(1.65rem, 3vw, 2.25rem); letter-spacing: -.025em; line-height: 1.2; }
+    h3 { font-size: 1.2rem; }
+    p { color: var(--muted); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+    code { font-size: .91em; }
+    .inline-code { border-radius: 5px; background: #ecf1ff; color: #253b8a; padding: 2px 5px; }
+    .topbar { background: #111735; padding: 14px 0; color: #fff; border-bottom: 1px solid #343c64; }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+    .brand { color: #fff; text-decoration: none; font-weight: 850; letter-spacing: -.02em; }
+    .brand span { display: inline-block; background: #f5d84a; color: #222044; border-radius: 7px; padding: 1px 8px; margin-right: 7px; }
+    nav { display: flex; gap: 17px; flex-wrap: wrap; }
+    nav a { color: #e6e8ff; text-decoration: none; font-size: .85rem; font-weight: 700; }
+    nav a:hover { text-decoration: underline; }
+    .hero { color: white; background: radial-gradient(circle at 85% 20%, #394b97, transparent 33%), linear-gradient(135deg,#111735,#26205a 74%,#47318a); padding: 64px 0 76px; }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 28px; }
+    .hero h1 span { color: #f9d95c; }
+    .hero p { color: #e4e8fc; max-width: 690px; font-size: 1.07rem; }
+    .hero-art { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.17); border-radius: 25px; padding: 18px; }
+    .hero-art svg { width: 100%; display: block; height: auto; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .button { padding: 10px 18px; border: 2px solid transparent; border-radius: 11px; font-weight: 750; background: var(--blue); color: white; transition: transform .14s, filter .14s; }
+    .button:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
+    .button:disabled { opacity: .5; cursor: not-allowed; }
+    .button.secondary { background: #fff; color: #263772; border-color: #dce5fb; }
+    .button.ghost { background: transparent; color: #fff; border-color: #b8b4ff; }
+    .button.warn { background: #fff2df; color: #945105; border-color: #e4c499; }
+    .button.small { font-size: .89rem; padding: 8px 11px; }
+    main { padding: 38px 0 64px; }
+    section { scroll-margin-top: 24px; margin-bottom: 45px; }
+    .section-intro { max-width: 850px; }
+    .tag { display: inline-block; border-radius: 40px; font-size: .73rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; padding: 4px 12px; background: #e6dcff; color: #5b2db6; margin-bottom: 9px; }
+    .card { background: var(--surface); padding: 25px; border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); }
+    .concept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .concept-card { border-top: 6px solid var(--purple); }
+    .concept-card:nth-child(2) { border-top-color: var(--blue); }
+    .concept-card:nth-child(3) { border-top-color: var(--green); }
+    .concept-icon { display: inline-grid; place-items: center; font-size: 1.8rem; width: 55px; height: 55px; border-radius: 13px; background: #f1ecff; margin-bottom: 11px; }
+    .concept-card:nth-child(2) .concept-icon { background: #e6f0ff; }
+    .concept-card:nth-child(3) .concept-icon { background: #ddf7ec; }
+    .concept-card p { margin-bottom: 0; }
+    .lab-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(330px,.9fr); gap: 18px; }
+    .stack { display: grid; gap: 18px; align-content: start; }
+    .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+    .panel-heading h3 { margin-bottom: 0; }
+    .graph-stage { min-height: 340px; border: 2px dashed #bdccef; background: radial-gradient(#dfe7fa 1.2px, transparent 1.2px) 0 0/22px 22px, #fbfcff; border-radius: 15px; display: grid; place-items: center; overflow: hidden; }
+    #graph-svg { width: 100%; max-height: 450px; display: block; }
+    .graph-edge { stroke: #7181a6; stroke-width: 4; stroke-linecap: round; }
+    .edge-weight { font-weight: 850; font-size: 16px; fill: #4b327f; stroke: #fff; stroke-width: 6; paint-order: stroke; }
+    .graph-node { stroke: #182b50; stroke-width: 3; }
+    .node-label { font-weight: 900; font-size: 20px; fill: #132342; text-anchor: middle; dominant-baseline: middle; }
+    .graph-node-group { cursor: pointer; }
+    .graph-node-group:focus-visible .graph-node { stroke: #b65b00; stroke-width: 6; }
+    .graph-node-group.is-selected .graph-node { stroke: #e29a13; stroke-width: 6; }
+    .legend { display: flex; gap: 20px; flex-wrap: wrap; color: var(--muted); font-size: .85rem; margin-top: 12px; }
+    .legend strong { color: var(--ink); }
+    .swatch { display: inline-block; height: 16px; width: 16px; border-radius: 50%; background: #b7d0ff; border: 2px solid #253962; vertical-align: middle; margin-right: 5px; }
+    .controls { display: grid; gap: 13px; }
+    .control-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    label { display: grid; gap: 5px; color: #344261; font-weight: 750; font-size: .88rem; }
+    input, select { width: 100%; min-width: 0; color: var(--ink); background: #fff; border: 2px solid #cbd7ed; border-radius: 10px; padding: 9px 10px; }
+    input[type=number] { font-variant-numeric: tabular-nums; }
+    .control-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+    .status { padding: 10px 14px; background: #eef5ff; border-left: 5px solid var(--blue); color: #273b63; border-radius: 8px; margin-top: 12px; font-size: .89rem; }
+    .status.error { background: #fff1ef; color: #912c23; border-left-color: #c8473b; }
+    .status.success { background: #e7f8ed; color: #176241; border-left-color: #2e9b59; }
+    .stats { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .stat { flex: 1; min-width: 95px; background: #eff3ff; border-radius: 12px; padding: 11px 12px; }
+    .stat strong { display: block; font-size: 1.7rem; line-height: 1.15; color: #4e34a7; }
+    .stat span { font-size: .75rem; font-weight: 700; color: var(--muted); }
+    .code-display { background: #17203c; color: #e8f1ff; padding: 17px 20px; border-radius: 13px; overflow-x: auto; margin: 0; font-size: .84rem; line-height: 1.7; white-space: pre; }
+    .help-text { font-size: .83rem; margin: 10px 0 0; }
+    .neighbor-list { min-height: 28px; color: #28427b; font-weight: 750; }
+    .pill { display: inline-block; background: #edf4ff; border: 1px solid #c5d7f5; padding: 3px 10px; margin: 4px; border-radius: 100px; color: #253b75; }
+    .notes { background: #fef5dd; border: 1px solid #ead28e; padding: 18px 22px; border-radius: 15px; }
+    .notes p { color: #6c5017; margin-bottom: 0; }
+    .example-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .sample { border: 1px solid #d7e1f1; background: #fff; border-radius: 15px; padding: 20px; }
+    .sample h3 { margin-bottom: 8px; }
+    .sample pre { background: #17203c; color: #e8f1ff; padding: 15px; overflow-x: auto; border-radius: 10px; font-size: .84rem; line-height: 1.6; }
+    .sample p { margin-bottom: 0; }
+    .lesson-list { display: grid; gap: 14px; }
+    .exercise { border: 1px solid #d2dbf1; border-radius: 16px; overflow: hidden; background: white; }
+    .exercise summary { list-style: none; cursor: pointer; padding: 18px 21px; display: flex; gap: 12px; align-items: center; justify-content: space-between; font-weight: 850; background: #f7f8ff; }
+    .exercise summary::-webkit-details-marker { display: none; }
+    .exercise summary::after { content: '+'; font-size: 1.6rem; color: var(--purple); }
+    .exercise[open] summary::after { content: '−'; }
+    .exercise-body { padding: 20px 22px 22px; }
+    .exercise-body ol { margin-top: 0; padding-left: 24px; }
+    .exercise-body li { padding-bottom: 5px; }
+    .result { padding: 10px 13px; color: #243b63; background: #f0f5ff; border-radius: 9px; margin-top: 11px; white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .83rem; }
+    .result.error { background: #fff0ec; color: #822b20; }
+    .footer { padding: 24px 0; background: #111735; color: #cbd6ff; }
+    .footer p { color: #cbd6ff; margin: 0; font-size: .85rem; }
+    @media (max-width: 840px) { .hero-grid, .lab-grid, .example-grid { grid-template-columns: 1fr; } .hero-art { max-width: 460px; } .concept-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 500px) { body { font-size: 16px; } .card { padding: 17px; } .control-row { grid-template-columns: 1fr; } .graph-stage { min-height: 280px; } .hero { padding: 44px 0; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+  <!-- JavaScript is kept in a separate file so students can edit it in class. -->
+  <script src="graphs.js" defer></script>
+</head>
+<body>
+  <!-- =========================================================
+       HEADER: Page title and links to the teaching sections
+       ========================================================= -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top"><span>JS</span> Graph Lab</a>
+      <nav aria-label="Main navigation">
+        <a href="#learn">Learn</a>
+        <a href="#playground">Playground</a>
+        <a href="#examples">Examples</a>
+        <a href="#exercises">Practice</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO: A quick explanation and a friendly graph drawing -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Data Structures • Beginner Friendly</span>
+        <h1 id="hero-title">Graphs in <span>JavaScript</span></h1>
+        <p>A graph shows how things connect. A <strong>vertex</strong> is a thing (like a city). An <strong>edge</strong> is a connection (like a road). A <strong>weight</strong> is a number describing that connection (like distance).</p>
+        <div class="hero-actions">
+          <a href="#playground" class="button secondary">Try the Interactive Graph ↓</a>
+          <a href="#exercises" class="button ghost">Start Practice Exercises</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="A sample graph with three vertices A, B, and C, with weighted edges from A to B and from A to C" role="img">
+        <svg viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#f0e4ff" stroke-width="5" stroke-linecap="round"><path d="M172 61 L69 190"/><path d="M190 61 L300 190"/></g>
+          <g font-size="22" font-weight="900" fill="#ffe16a"><text x="92" y="113">5</text><text x="263" y="113">2</text></g>
+          <g stroke="#21244d" stroke-width="4"><circle cx="180" cy="60" r="43" fill="#dac7ff"/><circle cx="66" cy="195" r="43" fill="#a9d3ff"/><circle cx="301" cy="195" r="43" fill="#b6f0d9"/></g>
+          <g font-size="34" font-weight="900" fill="#162042" text-anchor="middle"><text x="180" y="72">A</text><text x="66" y="207">B</text><text x="301" y="207">C</text></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- =========================================================
+         SECTION 1: Three key graph concepts, explained simply
+         ========================================================= -->
+    <section id="learn" aria-labelledby="learn-title">
+      <div class="section-intro">
+        <span class="tag">1 • Understand</span>
+        <h2 id="learn-title">A graph is a list of connections</h2>
+        <p>Imagine a map of cities and roads. In our challenge, we will store those connections using an <strong>adjacency list</strong> — a list of the neighbors for each vertex.</p>
+      </div>
+      <div class="concept-grid">
+        <article class="card concept-card">
+          <div class="concept-icon" aria-hidden="true">📍</div>
+          <h3>Vertex (node)</h3>
+          <p>One item in the graph, such as a city. <strong>A</strong>, <strong>B</strong>, and <strong>C</strong> are vertices.</p>
+        </article>
+        <article class="card concept-card">
+          <div class="concept-icon" aria-hidden="true">🔗</div>
+          <h3>Edge</h3>
+          <p>A line connecting two vertices. For this lesson, edges work in <strong>both directions</strong>.</p>
+        </article>
+        <article class="card concept-card">
+          <div class="concept-icon" aria-hidden="true">⚖️</div>
+          <h3>Weight</h3>
+          <p>A number attached to an edge, such as miles or travel cost. We use <strong>1</strong> when no weight is given.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECTION 2: Interactive graph visualization and controls
+         ========================================================= -->
+    <section id="playground" aria-labelledby="playground-title">
+      <div class="section-intro">
+        <span class="tag">2 • Explore</span>
+        <h2 id="playground-title">Interactive graph playground</h2>
+        <p>Start with the sample graph or build your own. Click a vertex to inspect its neighbors. The diagram and adjacency list update together.</p>
+      </div>
+      <div class="lab-grid">
+        <!-- LEFT: The graph's visual representation -->
+        <div class="stack">
+          <article class="card">
+            <div class="panel-heading">
+              <h3>Graph diagram</h3>
+              <button type="button" class="button small secondary" id="reset-btn">↺ Load example</button>
+            </div>
+            <div class="graph-stage">
+              <svg id="graph-svg" viewBox="0 0 560 390" role="img" aria-label="Interactive graph: click a vertex to see its neighbors"></svg>
+            </div>
+            <div class="legend"><span><span class="swatch"></span><strong>Circle</strong> = vertex</span><span><strong>Line</strong> = edge</span><span><strong>Number</strong> = weight</span></div>
+            <p class="help-text">We draw each undirected edge once. In the adjacency list, the connection is stored for <em>both</em> vertices.</p>
+          </article>
+          <article class="card">
+            <div class="panel-heading"><h3>Adjacency list</h3><span class="tag" style="margin:0">Live view</span></div>
+            <div class="stats">
+              <div class="stat"><strong id="vertex-count">0</strong><span>Vertices (size)</span></div>
+              <div class="stat"><strong id="edge-count">0</strong><span>Edges</span></div>
+            </div>
+            <pre class="code-display" id="adjacency-output" aria-label="Current adjacency list"></pre>
+            <p class="help-text">In JavaScript, <code class="inline-code">Map</code> stores each vertex with a list of its connected vertices and weights.</p>
+          </article>
+        </div>
+        <!-- RIGHT: Form controls, query tool, and feedback -->
+        <div class="stack">
+          <article class="card">
+            <h3>Add a vertex</h3>
+            <p>Add a new city. It starts with no roads.</p>
+            <form id="vertex-form" class="controls">
+              <label for="vertex-name">Vertex name
+                <input id="vertex-name" name="vertexName" placeholder="Example: D" maxlength="10" required autocomplete="off" />
+              </label>
+              <button class="button" type="submit">+ Add vertex</button>
+            </form>
+          </article>
+          <article class="card">
+            <h3>Add an edge</h3>
+            <p>Connect two existing cities. The connection goes both ways.</p>
+            <form id="edge-form" class="controls">
+              <div class="control-row">
+                <label for="from-vertex">From
+                  <select id="from-vertex" required></select>
+                </label>
+                <label for="to-vertex">To
+                  <select id="to-vertex" required></select>
+                </label>
+              </div>
+              <label for="edge-weight">Weight (optional)
+                <input type="number" id="edge-weight" min="0" step="any" placeholder="Default: 1" />
+              </label>
+              <button class="button" type="submit">↔ Connect vertices</button>
+            </form>
+          </article>
+          <article class="card">
+            <h3>Inspect neighbors</h3>
+            <p>Choose a vertex or click a circle in the diagram.</p>
+            <label for="inspect-vertex">Selected vertex
+              <select id="inspect-vertex"></select>
+            </label>
+            <div id="neighbor-output" class="neighbor-list" aria-live="polite" style="margin-top: 12px;"></div>
+          </article>
+          <div id="status" class="status" role="status" aria-live="polite">Example loaded: A connects to B (5) and C (2).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECTION 3: Examples to connect diagrams to JavaScript
+         ========================================================= -->
+    <section id="examples" aria-labelledby="examples-title">
+      <div class="section-intro">
+        <span class="tag">3 • Connect the ideas</span>
+        <h2 id="examples-title">What does this look like in JavaScript?</h2>
+        <p>These examples show how the picture, the stored data, and the five challenge methods fit together.</p>
+      </div>
+      <div class="example-grid">
+        <article class="sample">
+          <h3>Example A: Adjacency list</h3>
+          <pre><code>A → B (5), C (2)
+B → A (5)
+C → A (2)</code></pre>
+          <p>A has two neighbors. B and C each have one neighbor. Each connection appears on both sides because our graph is undirected.</p>
+        </article>
+        <article class="sample">
+          <h3>Example B: Create connections</h3>
+          <pre><code>const graph = new Graph();
+const A = graph.addVertex('A');
+const B = graph.addVertex('B');
+const C = graph.addVertex('C');
+
+graph.addEdge(A, B, 5);
+graph.addEdge(A, C, 2);</code></pre>
+          <p>First create the vertices. Then connect them using <code class="inline-code">addEdge()</code>.</p>
+        </article>
+        <article class="sample">
+          <h3>Example C: Ask the graph questions</h3>
+          <pre><code>graph.size();
+// 3
+
+graph.getVertices();
+// [A, B, C] (vertex objects)
+
+graph.getNeighbors(A);
+// [{ vertex: B, weight: 5 },
+//  { vertex: C, weight: 2 }]</code></pre>
+          <p>Each method has one job: count, list, or inspect.</p>
+        </article>
+        <article class="sample">
+          <h3>Example D: Handle an error</h3>
+          <pre><code>const missing = new Vertex('X');
+
+graph.addEdge(A, missing);
+// Error: Both vertices must
+// already be in the graph.</code></pre>
+          <p>Helpful errors tell the student exactly what went wrong instead of silently changing the graph.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECTION 4: Three live coding practice exercises
+         ========================================================= -->
+    <section id="exercises" aria-labelledby="exercises-title">
+      <div class="section-intro">
+        <span class="tag">4 • Practice together</span>
+        <h2 id="exercises-title">Three live coding exercises</h2>
+        <p>Open <code class="inline-code">graphs.js</code> in VS Code. Find the heading <strong>STUDENT EXERCISES</strong>. Do the TODO steps in order. Then press the matching <strong>Run check</strong> button here to see if your code works.</p>
+      </div>
+      <div class="lesson-list">
+        <details class="exercise" open>
+          <summary>🟣 Exercise 1 — Create and count vertices</summary>
+          <div class="exercise-body">
+            <ol>
+              <li>Create a new <code>Graph</code>.</li>
+              <li>Add vertices <code>'Home'</code>, <code>'School'</code>, and <code>'Park'</code>.</li>
+              <li>Return the graph from <code>exercise1()</code>.</li>
+              <li>Check that <code>size()</code> is <strong>3</strong>.</li>
+            </ol>
+            <button type="button" class="button small" data-exercise="1">Run check for Exercise 1</button>
+            <div class="result" id="exercise1-result" aria-live="polite">Not checked yet.</div>
+          </div>
+        </details>
+        <details class="exercise">
+          <summary>🔵 Exercise 2 — Connect cities with weighted edges</summary>
+          <div class="exercise-body">
+            <ol>
+              <li>Create a new <code>Graph</code> and add vertices <code>A</code>, <code>B</code>, and <code>C</code>.</li>
+              <li>Connect <code>A</code> to <code>B</code> with weight <strong>5</strong>.</li>
+              <li>Connect <code>A</code> to <code>C</code> with weight <strong>2</strong>.</li>
+              <li>Return the graph and check that edges work both ways.</li>
+            </ol>
+            <button type="button" class="button small" data-exercise="2">Run check for Exercise 2</button>
+            <div class="result" id="exercise2-result" aria-live="polite">Not checked yet.</div>
+          </div>
+        </details>
+        <details class="exercise">
+          <summary>🟢 Exercise 3 — Inspect neighbors and handle errors</summary>
+          <div class="exercise-body">
+            <ol>
+              <li>Create a new <code>Graph</code> with vertices <code>X</code> and <code>Y</code>.</li>
+              <li>Connect them without giving a weight (default should be <strong>1</strong>).</li>
+              <li>Return <code>{ graph, neighbors, errorMessage }</code> from <code>exercise3()</code>, where <code>neighbors</code> comes from <code>getNeighbors(X)</code>.</li>
+              <li>Use <code>try/catch</code> to get a helpful message when asking for neighbors of a vertex that does not exist.</li>
+            </ol>
+            <button type="button" class="button small" data-exercise="3">Run check for Exercise 3</button>
+            <div class="result" id="exercise3-result" aria-live="polite">Not checked yet.</div>
+          </div>
+        </details>
+      </div>
+      <div class="notes" style="margin-top:18px">
+        <h3 style="margin-bottom:7px">👩‍🏫 Instructor tip</h3>
+        <p>The <strong>Graph class is already implemented</strong> as a reference so the interactive demo works immediately. Students practice <em>using</em> its methods in the three TODO functions. For an extra challenge, hide a method's implementation and ask students to rebuild it using the comments as clues.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER: Attribution for the classroom demo -->
+  <footer class="footer">
+    <div class="container"><p>JavaScript Graph Lab • Class practice • Open index.html in a browser, then edit graphs.js in VS Code.</p></div>
+  </footer>
+</body>
+</html>
