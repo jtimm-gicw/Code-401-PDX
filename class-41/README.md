@@ -6,7 +6,44 @@ Create a native, in-stallable mobile application
 
 ## Class Outline
 
-<!-- To be completed by instructor -->
+- Reading 41
+  - Discussion
+    - React Native
+- Demo
+  - Creating a React Native app
+  - What is the difference between React and React Native
+- Code Challenge
+  - Mock Interview
+- Lab 41
+  - Milestone 1: MVP
+    - Create wireframe
+    - Create and clone your repo
+    - Create your first React Native app
+      - Problem Domain
+      - What is your MVP?
+      - Tests
+        - Accessibility
+        - etc.
+      - Process & Documentation
+      - Add any resources
+    - Begin your presentation deck
+      - [Presentation Deck](https://docs.google.com/presentation/d/1NeXKKEpjK2DDme8EwlZBsJndUqIgGYzWrY6FAYtNTf0/edit?slide=id.g2accd1c413_3_31#slide=id.g2accd1c413_3_31)
+      - Make sure your app is working properly before demo
+
+## Classwork
+
+- Labwork
+  - Lab 41
+    - Create a React Native app
+- Code Challenge 41
+  - Mock Interview
+
+## Core Requirements
+
+- Use any, all, most, or none of what you learned ...
+  - Make sure it works great
+  - Make sure it looks amazing
+  - Make sure it's covered in tests
 
 ## Learning Objectives
 

@@ -2,7 +2,7 @@
 
 ## Class Outline
 
-- Reading 32
+- Reading 35
   - Teach me about:
     - Graphs
 - Demo
@@ -13,6 +13,13 @@
 - Career: Class 35:
   - Partner Power Hour
     - Report #7
+
+## Classwork
+
+- Code Challenge 35
+  - Graphs
+  - Mock Interview
+    - Find the max value in a binary tree
 
 ## Learning Objectives
 
